@@ -96,6 +96,10 @@ class CalendarViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.Lazily, "")
 
     fun selectDay(date: Calendar) { _selectedDate.value = date }
+
+    /** Returns the currently selected date, or null if none. */
+    fun getSelectedDate(): Calendar? = _selectedDate.value
+
     fun goToToday() {
         _displayedMonth.value = Calendar.getInstance().apply {
             set(Calendar.DAY_OF_MONTH, 1)
@@ -112,21 +116,45 @@ class CalendarViewModel @Inject constructor(
         description: String = "",
         location: String = "",
         allDay: Boolean = false,
-        color: Int = 0xFF3B82D4.toInt()
+        color: Int = 0xFF3B82D4.toInt(),
+        date: Calendar = Calendar.getInstance(),
+        startHour: Int = 9,
+        startMinute: Int = 0,
+        endHour: Int = 10,
+        endMinute: Int = 0,
+        reminderMinutes: Int = 15
     ) {
         viewModelScope.launch {
-            val now = _selectedDate.value?.timeInMillis ?: System.currentTimeMillis()
+            val startCal = (date.clone() as Calendar).apply {
+                set(Calendar.HOUR_OF_DAY, startHour)
+                set(Calendar.MINUTE, startMinute)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            val endCal = (date.clone() as Calendar).apply {
+                set(Calendar.HOUR_OF_DAY, endHour)
+                set(Calendar.MINUTE, endMinute)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            // If end is before start, push end to next day
+            if (endCal.timeInMillis <= startCal.timeInMillis) {
+                endCal.add(Calendar.DAY_OF_MONTH, 1)
+            }
             calendarDao.insertEvent(
                 CalendarEventEntity(
-                    title       = title,
-                    description = description,
-                    location    = location,
-                    allDay      = allDay,
-                    color       = color,
-                    startTime   = now,
-                    endTime     = now + 3_600_000L
+                    title           = title,
+                    description     = description,
+                    location        = location,
+                    allDay          = allDay,
+                    color           = color,
+                    startTime       = startCal.timeInMillis,
+                    endTime         = endCal.timeInMillis,
+                    reminderMinutes = reminderMinutes
                 )
             )
+            // Update selected date to the event date so the grid highlights it
+            _selectedDate.value = date.clone() as Calendar
         }
     }
 

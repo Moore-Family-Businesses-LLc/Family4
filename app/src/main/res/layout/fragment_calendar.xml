@@ -11,13 +11,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- ── Branded header bar ── -->
+        <com.family4.app.ui.common.SectionHeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:headerTitle="Calendar"/>
+
         <!-- ── Month navigation bar ── -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="52dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="4dp"
             android:background="@color/bg_surface">
 
             <ImageButton
@@ -34,9 +40,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textAppearance="@style/TextAppearance.Family4.SectionTitle"
+                android:textSize="17sp"
                 android:gravity="center"/>
 
             <!-- Today button -->
@@ -68,26 +73,34 @@
             android:background="@color/bg_surface">
 
             <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"
-                android:text="S" android:gravity="center" android:textSize="12sp" android:textColor="@color/error_red" android:textStyle="bold"/>
+                android:text="SUN" android:gravity="center" android:textSize="10sp"
+                android:textColor="@color/error_red" android:textStyle="bold" android:letterSpacing="0.06"/>
             <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"
-                android:text="M" android:gravity="center" android:textSize="12sp" android:textColor="@color/text_muted"/>
+                android:text="MON" android:gravity="center" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.06"/>
             <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"
-                android:text="T" android:gravity="center" android:textSize="12sp" android:textColor="@color/text_muted"/>
+                android:text="TUE" android:gravity="center" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.06"/>
             <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"
-                android:text="W" android:gravity="center" android:textSize="12sp" android:textColor="@color/text_muted"/>
+                android:text="WED" android:gravity="center" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.06"/>
             <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"
-                android:text="T" android:gravity="center" android:textSize="12sp" android:textColor="@color/text_muted"/>
+                android:text="THU" android:gravity="center" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.06"/>
             <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"
-                android:text="F" android:gravity="center" android:textSize="12sp" android:textColor="@color/text_muted"/>
+                android:text="FRI" android:gravity="center" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.06"/>
             <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"
-                android:text="S" android:gravity="center" android:textSize="12sp" android:textColor="@color/error_red" android:textStyle="bold"/>
+                android:text="SAT" android:gravity="center" android:textSize="10sp"
+                android:textColor="@color/error_red" android:textStyle="bold" android:letterSpacing="0.06"/>
         </LinearLayout>
 
-        <!-- ── Calendar grid — programmatically filled, fixed height per row ── -->
+        <!-- ── Calendar grid — programmatically filled ── -->
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/calendarGrid"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="0dp"
+            android:layout_weight="5"
             app:columnCount="7"
             app:rowCount="6"
             android:background="@color/bg_primary"/>
@@ -96,42 +109,84 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/bg_surface"/>
+            android:background="@color/divider"/>
 
-        <!-- ── Selected day label ── -->
-        <TextView
-            android:id="@+id/tvSelectedDayLabel"
+        <!-- ── Selected day label with event count chip ── -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:paddingHorizontal="16dp"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:text="Events this month"
-            android:textSize="13sp"
-            android:textColor="@color/accent_cyan"
-            android:textStyle="bold"
-            android:background="@color/bg_surface"/>
+            android:paddingHorizontal="16dp"
+            android:background="@color/bg_surface">
+
+            <TextView
+                android:id="@+id/tvSelectedDayLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Events this month"
+                android:textSize="13sp"
+                android:textColor="@color/accent_cyan"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipEventCount"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 events"
+                android:textSize="11sp"
+                app:chipBackgroundColor="@color/bg_elevated"
+                app:chipStrokeColor="@color/accent_cyan"
+                app:chipStrokeWidth="1dp"
+                android:textColor="@color/accent_cyan"
+                android:visibility="gone"/>
+        </LinearLayout>
 
         <!-- ── Events list ── -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvEvents"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:paddingHorizontal="12dp"
-            android:paddingBottom="16dp"
+            android:paddingBottom="80dp"
             android:clipToPadding="false"/>
 
-        <!-- ── Empty events state ── -->
-        <TextView
+        <!-- ── Empty events state (logo watermark pattern) ── -->
+        <LinearLayout
             android:id="@+id/tvNoEvents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No events. Tap + to add one."
+            android:orientation="vertical"
             android:gravity="center"
-            android:textSize="14sp"
-            android:textColor="@color/text_muted"
             android:padding="24dp"
-            android:visibility="gone"/>
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_logo_small"
+                android:alpha="0.15"
+                android:layout_marginBottom="12dp"
+                android:importantForAccessibility="no"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No events"
+                android:textAppearance="@style/TextAppearance.Family4.CardTitle"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap + to add an event"
+                android:textSize="13sp"
+                android:textColor="@color/text_muted"
+                android:gravity="center"/>
+        </LinearLayout>
 
     </LinearLayout>
 
