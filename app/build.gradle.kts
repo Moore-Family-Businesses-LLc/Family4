@@ -202,6 +202,9 @@ dependencies {
     implementation(libs.car.app)
     implementation(libs.car.app.projected)
 
+    // Health Connect
+    implementation(libs.health.connect)
+
     // Animations
     implementation(libs.lottie)
 

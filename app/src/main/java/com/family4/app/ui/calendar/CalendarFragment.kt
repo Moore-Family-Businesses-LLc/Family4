@@ -62,7 +62,7 @@ class CalendarFragment : Fragment() {
             adapter = eventsAdapter
         }
 
-        eventsAdapter.onEventClick  = { event -> viewModel.selectEvent(event) }
+        eventsAdapter.onEventClick  = { event -> showEditEventDialog(event) }
         eventsAdapter.onDeleteClick = { event -> viewModel.deleteEvent(event) }
 
         binding.btnPrevMonth.setOnClickListener { viewModel.prevMonth() }
@@ -271,6 +271,127 @@ class CalendarFragment : Fragment() {
                     reminderMinutes = reminder
                 )
             }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    // ── Edit event dialog ─────────────────────────────────────────────────────
+    private fun showEditEventDialog(event: com.family4.app.data.db.entity.CalendarEventEntity) {
+        val pickedColor = intArrayOf(event.color)
+        dialogDate = Calendar.getInstance().apply { timeInMillis = event.startTime }
+        val startCal = Calendar.getInstance().apply { timeInMillis = event.startTime }
+        val endCal   = Calendar.getInstance().apply { timeInMillis = event.endTime }
+        dialogStartHour   = startCal.get(Calendar.HOUR_OF_DAY)
+        dialogStartMinute = startCal.get(Calendar.MINUTE)
+        dialogEndHour     = endCal.get(Calendar.HOUR_OF_DAY)
+        dialogEndMinute   = endCal.get(Calendar.MINUTE)
+
+        val dialogView    = layoutInflater.inflate(R.layout.dialog_add_event, null)
+        val tvDate        = dialogView.findViewById<TextView>(R.id.tvEventDate)
+        val tvStartTime   = dialogView.findViewById<TextView>(R.id.tvEventStartTime)
+        val tvEndTime     = dialogView.findViewById<TextView>(R.id.tvEventEndTime)
+        val layoutTimeRow = dialogView.findViewById<LinearLayout>(R.id.layoutTimeRow)
+        val switchAllDay  = dialogView.findViewById<SwitchMaterial>(R.id.switchAllDay)
+        val colorRow      = dialogView.findViewById<LinearLayout>(R.id.colorRow)
+        val chipGroupReminder = dialogView.findViewById<ChipGroup>(R.id.chipGroupReminder)
+        val etTitle       = dialogView.findViewById<TextInputEditText>(R.id.etEventTitle)
+        val etDesc        = dialogView.findViewById<TextInputEditText>(R.id.etEventDesc)
+        val etLocation    = dialogView.findViewById<TextInputEditText>(R.id.etEventLocation)
+
+        // Pre-fill fields
+        etTitle.setText(event.title)
+        etDesc.setText(event.description)
+        etLocation.setText(event.location)
+        switchAllDay.isChecked = event.allDay
+        layoutTimeRow.isVisible = !event.allDay
+
+        val dateFmt = SimpleDateFormat("EEE, MMM d", Locale.getDefault())
+        tvDate.text = dateFmt.format(dialogDate.time)
+
+        fun fmtTime(h: Int, m: Int) = String.format(Locale.getDefault(), "%02d:%02d", h, m)
+        tvStartTime.text = fmtTime(dialogStartHour, dialogStartMinute)
+        tvEndTime.text   = fmtTime(dialogEndHour, dialogEndMinute)
+
+        // Date picker
+        tvDate.setOnClickListener {
+            DatePickerDialog(requireContext(), { _, y, m, d ->
+                dialogDate.set(y, m, d)
+                tvDate.text = dateFmt.format(dialogDate.time)
+            }, dialogDate.get(Calendar.YEAR), dialogDate.get(Calendar.MONTH),
+                dialogDate.get(Calendar.DAY_OF_MONTH)).show()
+        }
+        switchAllDay.setOnCheckedChangeListener { _, checked -> layoutTimeRow.isVisible = !checked }
+        tvStartTime.setOnClickListener {
+            TimePickerDialog(requireContext(), { _, h, m ->
+                dialogStartHour = h; dialogStartMinute = m
+                tvStartTime.text = fmtTime(h, m)
+            }, dialogStartHour, dialogStartMinute, true).show()
+        }
+        tvEndTime.setOnClickListener {
+            TimePickerDialog(requireContext(), { _, h, m ->
+                dialogEndHour = h; dialogEndMinute = m
+                tvEndTime.text = fmtTime(h, m)
+            }, dialogEndHour, dialogEndMinute, true).show()
+        }
+
+        // Color swatches
+        eventColors.forEach { color ->
+            val swatch = android.view.View(requireContext()).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    (36 * resources.displayMetrics.density).toInt(),
+                    (36 * resources.displayMetrics.density).toInt()
+                ).also { lp -> lp.marginEnd = (8 * resources.displayMetrics.density).toInt() }
+                val circle = android.graphics.drawable.GradientDrawable()
+                circle.shape = android.graphics.drawable.GradientDrawable.OVAL
+                circle.setColor(color); background = circle
+                if (color == pickedColor[0]) { scaleX = 1.25f; scaleY = 1.25f }
+                setOnClickListener {
+                    pickedColor[0] = color
+                    colorRow.children.forEach { v -> v.scaleX = 1f; v.scaleY = 1f }
+                    scaleX = 1.25f; scaleY = 1.25f
+                }
+            }
+            colorRow.addView(swatch)
+        }
+
+        // Pre-select reminder chip
+        val reminderChipId = when (event.reminderMinutes) {
+            5    -> R.id.chipReminder5
+            30   -> R.id.chipReminder30
+            60   -> R.id.chipReminder60
+            else -> R.id.chipReminder15
+        }
+        chipGroupReminder.check(reminderChipId)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Edit Event")
+            .setView(dialogView)
+            .setPositiveButton("Save") { _, _ ->
+                val title = etTitle.text?.toString()?.trim() ?: ""
+                if (title.isBlank()) return@setPositiveButton
+                val reminder = when (chipGroupReminder.checkedChipId) {
+                    R.id.chipReminder5  -> 5
+                    R.id.chipReminder30 -> 30
+                    R.id.chipReminder60 -> 60
+                    else                -> 15
+                }
+                val allDay = switchAllDay.isChecked
+                viewModel.updateEvent(
+                    original       = event,
+                    title          = title,
+                    description    = etDesc.text?.toString() ?: "",
+                    location       = etLocation.text?.toString() ?: "",
+                    allDay         = allDay,
+                    color          = pickedColor[0],
+                    date           = dialogDate,
+                    startHour      = if (allDay) 0 else dialogStartHour,
+                    startMinute    = if (allDay) 0 else dialogStartMinute,
+                    endHour        = if (allDay) 23 else dialogEndHour,
+                    endMinute      = if (allDay) 59 else dialogEndMinute,
+                    reminderMinutes = reminder
+                )
+            }
+            .setNeutralButton("Delete") { _, _ -> viewModel.deleteEvent(event) }
             .setNegativeButton("Cancel", null)
             .show()
     }
