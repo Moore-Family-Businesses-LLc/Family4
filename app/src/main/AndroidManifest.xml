@@ -120,6 +120,14 @@
             </intent-filter>
         </service>
 
+        <!-- PIN lock screen — shown when app resumes after being backgrounded -->
+        <activity
+            android:name=".ui.pin.PinLockActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Family4.NoActionBar"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+
         <!-- Stealth Calculator Activity (disguise for invisible mode) -->
         <activity
             android:name=".ui.stealth.StealthCalculatorActivity"

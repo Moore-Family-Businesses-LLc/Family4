@@ -1,7 +1,11 @@
 package com.family4.app.ui.main
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,10 +23,15 @@ import androidx.navigation.ui.setupWithNavController
 import com.family4.app.R
 import com.family4.app.ai.AppAgentActionDispatcher
 import com.family4.app.ai.FamilyAIAssistant
+import com.family4.app.data.prefs.SettingsKeys
+import com.family4.app.data.prefs.settingsDataStore
 import com.family4.app.databinding.ActivityMainBinding
+import com.family4.app.ui.pin.PinLockActivity
 import com.google.android.material.badge.BadgeDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,6 +44,19 @@ class MainActivity : AppCompatActivity() {
 
     /** Badge counters for the bottom navigation. */
     private val viewModel: MainViewModel by viewModels()
+
+    /** Timestamp (elapsedRealtime) when the app was last moved to background. */
+    private var backgroundedAt = 0L
+
+    /** Result launcher for the PIN lock screen. */
+    private val pinLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != Activity.RESULT_OK) {
+            // Wrong PIN — finish so the app is removed from recents too
+            finishAffinity()
+        }
+    }
 
     /** Injected dispatcher — routes AI actions into nav + Room */
     @Inject lateinit var agentDispatcher: AppAgentActionDispatcher
@@ -213,6 +235,33 @@ class MainActivity : AppCompatActivity() {
         badge.badgeTextColor = ContextCompat.getColor(this, R.color.bg_primary)
     }
 
+    override fun onStop() {
+        super.onStop()
+        backgroundedAt = SystemClock.elapsedRealtime()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPinOnResume()
+    }
+
+    /**
+     * If the app PIN is enabled and the app was backgrounded for more than
+     * [PIN_GRACE_MS] milliseconds, launch the PIN lock screen.
+     */
+    private fun checkPinOnResume() {
+        val elapsed = SystemClock.elapsedRealtime() - backgroundedAt
+        if (backgroundedAt == 0L || elapsed < PIN_GRACE_MS) return
+
+        lifecycleScope.launch {
+            val pinEnabled = settingsDataStore.data.map { it[SettingsKeys.APP_PIN_ENABLED] ?: false }.first()
+            val pinHash    = settingsDataStore.data.map { it[SettingsKeys.APP_PIN] }.first()
+            if (pinEnabled && !pinHash.isNullOrEmpty()) {
+                pinLauncher.launch(Intent(this@MainActivity, PinLockActivity::class.java))
+            }
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
@@ -220,5 +269,7 @@ class MainActivity : AppCompatActivity() {
     private companion object {
         /** Counts above 99 render as "99+". */
         const val MAX_BADGE_DIGITS = 2
+        /** App must be backgrounded longer than this before PIN is re-checked. */
+        const val PIN_GRACE_MS = 10_000L
     }
 }

@@ -83,6 +83,11 @@
     <!-- About -->
     <string name="about_tagline">Stay close. Stay safe.</string>
 
+    <!-- PIN lock -->
+    <string name="pin_enter_prompt">Enter your PIN to continue</string>
+    <string name="pin_incorrect">Incorrect PIN — try again</string>
+    <string name="pin_lock_title">App Locked</string>
+
     <!-- Parent Zone / Stealth -->
     <string name="parent_zone">Parent Zone</string>
     <string name="stealth_mode">Stealth Mode</string>
