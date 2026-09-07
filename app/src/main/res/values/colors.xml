@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ── Brand palette ─────────────────────────────────── -->
+    <color name="brand_navy_dark">#FF1A1A2E</color>
+    <color name="brand_navy">#FF16213E</color>
+    <color name="brand_blue">#FF0F3460</color>
+    <color name="accent_cyan">#FF00D4FF</color>
+    <color name="accent_purple">#FF7B2FFF</color>
+    <color name="accent_blue">#FF3B82D4</color>
+    <color name="accent_red">#FFFF3D71</color>
+    <color name="accent_green">#FF00E096</color>
+    <color name="accent_orange">#FFFFAA00</color>
+
+    <!-- ── Backgrounds ───────────────────────────────────── -->
+    <color name="bg_primary">#FF1A1A2E</color>
+    <color name="bg_surface">#FF1E2240</color>
+    <color name="bg_card">#FF242844</color>
+    <color name="bg_elevated">#FF2D325A</color>
+
+    <!-- ── Text ──────────────────────────────────────────── -->
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#FFCCD1E4</color>
+    <color name="text_muted">#FF8892B0</color>
+    <color name="text_disabled">#FF4A5580</color>
+
+    <!-- ── Note color palette (Google Keep style) ────────── -->
+    <color name="note_white">#FFFFFFFF</color>
+    <color name="note_red">#FFFAAFA8</color>
+    <color name="note_orange">#FFF39F76</color>
+    <color name="note_yellow">#FFFFF8B8</color>
+    <color name="note_green">#FFE2F6D3</color>
+    <color name="note_teal">#FFB4DDD3</color>
+    <color name="note_blue">#FFAECCDC</color>
+    <color name="note_purple">#FFD3BFDB</color>
+    <color name="note_pink">#FFF28B82</color>
+    <color name="note_gray">#FFE9E9E9</color>
+
+    <!-- ── Status / Utility ──────────────────────────────── -->
+    <color name="online_green">#FF00E096</color>
+    <color name="offline_gray">#FF8892B0</color>
+    <color name="error_red">#FFCF6679</color>
+    <color name="warning_amber">#FFFFAA00</color>
+    <color name="divider">#1AFFFFFF</color>
+
+    <!-- Bottom nav -->
+    <color name="bottom_nav_active">#FF00D4FF</color>
+    <color name="bottom_nav_inactive">#FF8892B0</color>
+
+</resources>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Family4 App Logo — 512x512 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213E;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7B2FFF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF3D71;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="roundedRect">
+      <rect width="512" height="512" rx="110" ry="110"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="110" ry="110" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid lines -->
+  <g opacity="0.06" stroke="#00D4FF" stroke-width="1">
+    <line x1="0" y1="128" x2="512" y2="128"/>
+    <line x1="0" y1="256" x2="512" y2="256"/>
+    <line x1="0" y1="384" x2="512" y2="384"/>
+    <line x1="128" y1="0" x2="128" y2="512"/>
+    <line x1="256" y1="0" x2="256" y2="512"/>
+    <line x1="384" y1="0" x2="384" y2="512"/>
+  </g>
+
+  <!-- Outer orbit ring -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="url(#accentGrad)"
+          stroke-width="2.5" opacity="0.35"/>
+
+  <!-- Inner orbit ring -->
+  <circle cx="256" cy="256" r="148" fill="none" stroke="url(#accentGrad)"
+          stroke-width="1.5" opacity="0.2"/>
+
+  <!-- Central shield shape -->
+  <path d="M256 96 L340 130 L340 230 Q340 310 256 370 Q172 310 172 230 L172 130 Z"
+        fill="url(#accentGrad)" opacity="0.15"/>
+  <path d="M256 96 L340 130 L340 230 Q340 310 256 370 Q172 310 172 230 L172 130 Z"
+        fill="none" stroke="url(#accentGrad)" stroke-width="2.5" filter="url(#glow)"/>
+
+  <!-- Family figure group — 4 stylized people -->
+  <!-- Parent left (large) -->
+  <circle cx="200" cy="195" r="22" fill="url(#accentGrad)" opacity="0.9"/>
+  <path d="M166 260 Q166 235 200 235 Q234 235 234 260 L234 285 L166 285 Z"
+        fill="url(#accentGrad)" opacity="0.9"/>
+
+  <!-- Parent right (large) -->
+  <circle cx="312" cy="195" r="22" fill="#7B2FFF" opacity="0.9"/>
+  <path d="M278 260 Q278 235 312 235 Q346 235 346 260 L346 285 L278 285 Z"
+        fill="#7B2FFF" opacity="0.9"/>
+
+  <!-- Child left (small) -->
+  <circle cx="228" cy="296" r="15" fill="#00D4FF" opacity="0.85"/>
+  <path d="M208 330 Q208 312 228 312 Q248 312 248 330 L248 348 L208 348 Z"
+        fill="#00D4FF" opacity="0.85"/>
+
+  <!-- Child right (small) -->
+  <circle cx="284" cy="296" r="15" fill="#FF6B6B" opacity="0.85"/>
+  <path d="M264 330 Q264 312 284 312 Q304 312 304 330 L304 348 L264 348 Z"
+        fill="#FF6B6B" opacity="0.85"/>
+
+  <!-- Connecting line between parents (family bond) -->
+  <line x1="222" y1="195" x2="290" y2="195" stroke="url(#heartGrad)"
+        stroke-width="2.5" stroke-dasharray="5,3" opacity="0.7"/>
+
+  <!-- Heart at center of bond line -->
+  <path d="M256 183 C256 183 248 175 243 180 C238 185 238 193 256 205
+           C274 193 274 185 269 180 C264 175 256 183 256 183 Z"
+        fill="url(#heartGrad)" filter="url(#glow)" opacity="0.95"/>
+
+  <!-- "4" numeral — bold, bottom right quadrant -->
+  <text x="390" y="390" font-family="'SF Pro Display', 'Roboto', 'Arial Black', sans-serif"
+        font-size="88" font-weight="900" fill="url(#accentGrad)"
+        opacity="0.9" filter="url(#glow)">4</text>
+
+  <!-- App name: Family -->
+  <text x="256" y="450" font-family="'SF Pro Display', 'Roboto', 'Arial', sans-serif"
+        font-size="42" font-weight="700" fill="white"
+        text-anchor="middle" letter-spacing="6" opacity="0.95">FAMILY</text>
+
+  <!-- Accent underline -->
+  <rect x="180" y="458" width="152" height="3" rx="2" fill="url(#accentGrad)" opacity="0.8"/>
+
+  <!-- Signal dots (walkie-talkie / connected feel) -->
+  <circle cx="96" cy="256" r="5" fill="#00D4FF" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="416" cy="256" r="5" fill="#7B2FFF" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="256" cy="96" r="5" fill="#00D4FF" opacity="0.5" filter="url(#glow)"/>
+
+</svg>

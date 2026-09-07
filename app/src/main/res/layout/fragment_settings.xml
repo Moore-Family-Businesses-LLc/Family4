@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- Header -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/bg_surface"
+        app:title="Settings"
+        app:titleTextColor="@color/text_primary"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Notifications -->
+            <TextView android:text="Notifications" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:textAllCaps="true"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp" android:layout_marginTop="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:padding="12dp"
+                android:layout_marginBottom="4dp">
+                <TextView android:text="Push Notifications" android:textColor="@color/text_primary"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchNotifications"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:trackTint="@color/accent_cyan"/>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNotificationSettings"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Notification Settings"
+                android:layout_marginBottom="16dp"
+                app:strokeColor="@color/accent_cyan"
+                android:textColor="@color/accent_cyan"/>
+
+            <!-- Privacy & Security -->
+            <TextView android:text="Privacy &amp; Security" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:textAllCaps="true"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp" android:layout_marginTop="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:padding="12dp"
+                android:layout_marginBottom="4dp">
+                <TextView android:text="Biometric Lock" android:textColor="@color/text_primary"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBiometric"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:trackTint="@color/accent_cyan"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:padding="12dp"
+                android:layout_marginBottom="16dp">
+                <TextView android:text="SOS Auto-Call 911" android:textColor="@color/text_primary"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchSosAutoCall"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:trackTint="@color/error_red"/>
+            </LinearLayout>
+
+            <!-- Family Sharing -->
+            <TextView android:text="Family Sharing" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:textAllCaps="true"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp" android:layout_marginTop="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:padding="12dp"
+                android:layout_marginBottom="4dp">
+                <TextView android:text="Share Location with Family" android:textColor="@color/text_primary"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchLocationSharing"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:trackTint="@color/accent_cyan"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:padding="12dp"
+                android:layout_marginBottom="16dp">
+                <TextView android:text="Google Drive Backup" android:textColor="@color/text_primary"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchDriveBackup"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    app:trackTint="@color/accent_cyan"/>
+            </LinearLayout>
+
+            <!-- Data -->
+            <TextView android:text="Data &amp; Account" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:textAllCaps="true"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp" android:layout_marginTop="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnClearHistory"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Clear Chat History"
+                android:layout_marginBottom="8dp"
+                app:strokeColor="@color/text_muted"
+                android:textColor="@color/text_secondary"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignOut"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Sign Out"
+                android:textColor="@color/error_red"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:text="More Features"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Feature grid — reuses same card style as Dashboard -->
+        <androidx.gridlayout.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:columnCount="2"
+            app:rowCount="5">
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardWalkie" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="📻" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Walkie-Talkie" android:textSize="11sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardSos" style="@style/Widget.Family4.Card" app:cardBackgroundColor="#3AFF0000" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="🆘" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="SOS" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/error_red" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardHealth" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="❤️" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Health" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardAlbums" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="🖼️" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Albums" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardWeather" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="🌤️" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Weather" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardTasks" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="✅" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Tasks" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardNotes" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="📝" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Notes" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardCalendar" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="📅" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Calendar" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardFiles" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="📁" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Files" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardSettings" style="@style/Widget.Family4.Card" android:layout_width="0dp" android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="⚙️" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Settings" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- AI Assistant — full-width highlight card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAi"
+                style="@style/Widget.Family4.Card"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_columnSpan="2"
+                app:cardBackgroundColor="#1A00D4FF"
+                android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <ImageView android:layout_width="36dp" android:layout_height="36dp"
+                        android:src="@drawable/ic_ai_assistant" android:contentDescription="AI" android:layout_marginEnd="14dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:text="FamilyBot AI" android:textSize="16sp" android:textStyle="bold"
+                            android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                        <TextView android:text="Powered by Gemini — ask me anything!"
+                            android:textSize="11sp" android:textColor="@color/accent_cyan"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <TextView android:text="→" android:textSize="20sp" android:textColor="@color/accent_cyan"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.gridlayout.widget.GridLayout>
+
+    </LinearLayout>
+
+</ScrollView>

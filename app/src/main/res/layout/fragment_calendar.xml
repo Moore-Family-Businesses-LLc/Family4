@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- Month header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@color/bg_surface">
+        <ImageButton android:id="@+id/btnPrevMonth" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ic_chevron_left" android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="Previous"/>
+        <TextView android:id="@+id/tvMonthYear" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="January 2025" android:textSize="18sp" android:textStyle="bold" android:textColor="@color/text_primary" android:gravity="center"/>
+        <ImageButton android:id="@+id/btnNextMonth" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ic_chevron_right" android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="Next"/>
+    </LinearLayout>
+
+    <!-- Calendar grid -->
+    <GridLayout
+        android:id="@+id/calendarGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="7"/>
+
+    <!-- Events list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEvents"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="16dp"/>
+
+    <!-- Add event FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/accent_cyan"
+        android:src="@drawable/ic_add"
+        app:tint="@color/bg_primary"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Add Event"/>
+
+</LinearLayout>

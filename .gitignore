@@ -1,0 +1,21 @@
+﻿# Android Studio / Gradle
+.gradle/
+.idea/
+*.iml
+local.properties
+*.keystore
+*.jks
+
+# Build outputs
+build/
+app/build/
+app/schemas/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+google-services.json
+*.env
+secrets.properties

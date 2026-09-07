@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AI Bot message bubble (left) -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="start"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="4dp">
+
+    <ImageView android:layout_width="28dp" android:layout_height="28dp"
+        android:src="@drawable/ic_ai_assistant"
+        android:layout_marginEnd="6dp"
+        android:layout_gravity="bottom"
+        android:contentDescription="FamilyBot"/>
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:maxWidth="280dp"
+        android:background="@drawable/bg_bubble_theirs"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp">
+        <TextView android:id="@+id/tvMessage" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="14sp" android:textColor="@color/text_primary"/>
+        <TextView android:id="@+id/tvTime" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="10sp" android:textColor="@color/text_muted"
+            android:layout_gravity="end" android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+</LinearLayout>

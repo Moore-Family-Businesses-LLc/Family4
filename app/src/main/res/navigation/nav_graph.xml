@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_dashboard">
+
+    <!-- ── Dashboard / Home ── -->
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="com.family4.app.ui.dashboard.DashboardFragment"
+        android:label="@string/nav_home"
+        tools:layout="@layout/fragment_dashboard"/>
+
+    <!-- ── Camera ── -->
+    <fragment
+        android:id="@+id/nav_camera"
+        android:name="com.family4.app.ui.camera.CameraFragment"
+        android:label="@string/nav_camera"
+        tools:layout="@layout/fragment_camera"/>
+
+    <!-- ── Chat list ── -->
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.family4.app.ui.chat.ChatListFragment"
+        android:label="@string/nav_chat"
+        tools:layout="@layout/fragment_chat_list">
+        <action
+            android:id="@+id/action_chat_to_detail"
+            app:destination="@id/nav_chat_detail"/>
+    </fragment>
+
+    <!-- ── Chat detail ── -->
+    <fragment
+        android:id="@+id/nav_chat_detail"
+        android:name="com.family4.app.ui.chat.ChatDetailFragment"
+        android:label="@string/chat_detail"
+        tools:layout="@layout/fragment_chat_detail">
+        <argument
+            android:name="memberId"
+            app:argType="string"/>
+    </fragment>
+
+    <!-- ── Map / Location ── -->
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.family4.app.ui.map.MapFragment"
+        android:label="@string/nav_map"
+        tools:layout="@layout/fragment_map"/>
+
+    <!-- ── More (grid of remaining features) ── -->
+    <fragment
+        android:id="@+id/nav_more"
+        android:name="com.family4.app.ui.more.MoreFragment"
+        android:label="@string/nav_more"
+        tools:layout="@layout/fragment_more"/>
+
+    <!-- ── Notes list ── -->
+    <fragment
+        android:id="@+id/nav_notes"
+        android:name="com.family4.app.ui.notes.NotesFragment"
+        android:label="@string/nav_notes"
+        tools:layout="@layout/fragment_notes">
+        <action
+            android:id="@+id/action_notes_to_detail"
+            app:destination="@id/nav_note_detail"/>
+    </fragment>
+
+    <!-- ── Note detail ── -->
+    <fragment
+        android:id="@+id/nav_note_detail"
+        android:name="com.family4.app.ui.notes.NoteDetailFragment"
+        android:label="@string/note_detail"
+        tools:layout="@layout/fragment_note_detail">
+        <argument
+            android:name="noteId"
+            app:argType="long"
+            android:defaultValue="-1"/>
+    </fragment>
+
+    <!-- ── Calendar ── -->
+    <fragment
+        android:id="@+id/nav_calendar"
+        android:name="com.family4.app.ui.calendar.CalendarFragment"
+        android:label="@string/nav_calendar"
+        tools:layout="@layout/fragment_calendar"/>
+
+    <!-- ── Files ── -->
+    <fragment
+        android:id="@+id/nav_files"
+        android:name="com.family4.app.ui.files.FilesFragment"
+        android:label="@string/nav_files"
+        tools:layout="@layout/fragment_files"/>
+
+    <!-- ── Walkie-Talkie ── -->
+    <fragment
+        android:id="@+id/nav_walkie_talkie"
+        android:name="com.family4.app.ui.walkie.WalkieTalkieFragment"
+        android:label="@string/nav_walkie"
+        tools:layout="@layout/fragment_walkie_talkie"/>
+
+    <!-- ── Emergency SOS ── -->
+    <fragment
+        android:id="@+id/nav_sos"
+        android:name="com.family4.app.ui.sos.EmergencySOSFragment"
+        android:label="@string/nav_sos"
+        tools:layout="@layout/fragment_sos"/>
+
+    <!-- ── Health ── -->
+    <fragment
+        android:id="@+id/nav_health"
+        android:name="com.family4.app.ui.health.HealthFragment"
+        android:label="@string/nav_health"
+        tools:layout="@layout/fragment_health"/>
+
+    <!-- ── Photo Albums ── -->
+    <fragment
+        android:id="@+id/nav_albums"
+        android:name="com.family4.app.ui.albums.AlbumsFragment"
+        android:label="@string/nav_albums"
+        tools:layout="@layout/fragment_albums"/>
+
+    <!-- ── Weather ── -->
+    <fragment
+        android:id="@+id/nav_weather"
+        android:name="com.family4.app.ui.weather.WeatherFragment"
+        android:label="@string/nav_weather"
+        tools:layout="@layout/fragment_weather"/>
+
+    <!-- ── Tasks / To-Do ── -->
+    <fragment
+        android:id="@+id/nav_tasks"
+        android:name="com.family4.app.ui.tasks.TasksFragment"
+        android:label="@string/nav_tasks"
+        tools:layout="@layout/fragment_tasks"/>
+
+    <!-- ── Settings ── -->
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.family4.app.ui.settings.SettingsFragment"
+        android:label="@string/nav_settings"
+        tools:layout="@layout/fragment_settings"/>
+
+    <!-- ── AI Assistant ── -->
+    <fragment
+        android:id="@+id/nav_ai_assistant"
+        android:name="com.family4.app.ui.ai.AIAssistantFragment"
+        android:label="@string/nav_ai"
+        tools:layout="@layout/fragment_ai_assistant"/>
+
+</navigation>

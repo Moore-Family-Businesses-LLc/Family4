@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ── Base application theme ─────────────────────────── -->
+    <style name="Theme.Family4" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/accent_cyan</item>
+        <item name="colorPrimaryVariant">@color/accent_purple</item>
+        <item name="colorOnPrimary">@color/bg_primary</item>
+        <item name="colorSecondary">@color/accent_purple</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+        <item name="colorSurface">@color/bg_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorBackground">@color/bg_primary</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="colorError">@color/error_red</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:navigationBarColor">@color/bg_surface</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="materialAlertDialogTheme">@style/Theme.Family4.Dialog</item>
+    </style>
+
+    <!-- ── No action bar ──────────────────────────────────── -->
+    <style name="Theme.Family4.NoActionBar" parent="Theme.Family4">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- ── Splash screen ─────────────────────────────────── -->
+    <style name="Theme.Family4.Splash" parent="Theme.Family4.NoActionBar">
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- ── Camera (fully immersive) ──────────────────────── -->
+    <style name="Theme.Family4.Camera" parent="Theme.Family4.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+
+    <!-- ── ActionBar overlay ─────────────────────────────── -->
+    <style name="ThemeOverlay.Family4.ActionBar" parent="ThemeOverlay.Material3.Dark.ActionBar">
+        <item name="colorControlNormal">@color/text_primary</item>
+    </style>
+
+    <!-- ── Alert Dialog ───────────────────────────────────── -->
+    <style name="Theme.Family4.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/bg_surface</item>
+    </style>
+
+    <!-- ── Card ───────────────────────────────────────────── -->
+    <style name="Widget.Family4.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/bg_card</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <!-- ── FAB ────────────────────────────────────────────── -->
+    <style name="Widget.Family4.Fab" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">@color/accent_cyan</item>
+        <item name="tint">@color/bg_primary</item>
+    </style>
+
+    <!-- ── Bottom navigation ─────────────────────────────── -->
+    <style name="Widget.Family4.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_nav_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_selector</item>
+        <item name="itemActiveIndicatorColor">@color/accent_cyan</item>
+    </style>
+
+    <!-- ── PTT Button ────────────────────────────────────── -->
+    <style name="Widget.Family4.PTTButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/accent_blue</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="cornerRadius">90dp</item>
+    </style>
+
+</resources>

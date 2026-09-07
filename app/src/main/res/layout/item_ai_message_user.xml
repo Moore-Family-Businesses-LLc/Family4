@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AI User message bubble (right) -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="end"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="4dp">
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:maxWidth="280dp"
+        android:background="@drawable/bg_bubble_mine"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp">
+        <TextView android:id="@+id/tvMessage" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="14sp" android:textColor="#1F2328"/>
+        <TextView android:id="@+id/tvTime" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="10sp" android:textColor="#57606A"
+            android:layout_gravity="end" android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+</LinearLayout>

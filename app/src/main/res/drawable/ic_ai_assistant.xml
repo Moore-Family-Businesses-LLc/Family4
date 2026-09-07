@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+    <!-- AI sparkle / stars icon for the Family Assistant -->
+    <path android:fillColor="#00D4FF"
+        android:pathData="M12,2L13.5,8.5L20,10L13.5,11.5L12,18L10.5,11.5L4,10L10.5,8.5L12,2z"/>
+    <path android:fillColor="#7B2FFF"
+        android:pathData="M19,14L20,17L23,18L20,19L19,22L18,19L15,18L18,17L19,14z"/>
+    <path android:fillColor="#00D4FF" android:fillAlpha="0.6"
+        android:pathData="M5,2L5.8,4.2L8,5L5.8,5.8L5,8L4.2,5.8L2,5L4.2,4.2L5,2z"/>
+</vector>
