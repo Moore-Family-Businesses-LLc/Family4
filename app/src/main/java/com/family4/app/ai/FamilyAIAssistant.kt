@@ -380,7 +380,9 @@ Return JSON: {"level":"low|medium|high|critical","summary":"...","immediateActio
         }.filterNotNull().toList()
     }
 
-    private fun extractSources(response: com.google.ai.client.generativeai.type.GenerateContentResponse): List<String> {
+    private fun extractSources(
+        @Suppress("UNUSED_PARAMETER") response: com.google.ai.client.generativeai.type.GenerateContentResponse
+    ): List<String> {
         // Grounding metadata is not yet available in Gemini SDK 0.9.0 — return empty
         return emptyList()
     }

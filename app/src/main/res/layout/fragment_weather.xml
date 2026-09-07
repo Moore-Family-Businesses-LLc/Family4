@@ -4,8 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_primary"
-    android:gravity="center">
+    android:background="@color/bg_primary">
+
+    <com.family4.app.ui.common.SectionHeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:headerTitle="Weather"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
 
     <ProgressBar
         android:id="@+id/progressWeather"
@@ -106,5 +117,7 @@
         android:layout_marginTop="16dp"
         app:strokeColor="@color/accent_cyan"
         android:textColor="@color/accent_cyan"/>
+
+</LinearLayout>
 
 </LinearLayout>

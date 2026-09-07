@@ -36,4 +36,7 @@ interface NoteDao {
 
     @Query("SELECT COUNT(*) FROM notes WHERE isArchived = 0")
     suspend fun getNoteCount(): Int
+
+    @Query("SELECT COUNT(*) FROM notes WHERE isArchived = 0")
+    fun getNoteCountFlow(): Flow<Int>
 }

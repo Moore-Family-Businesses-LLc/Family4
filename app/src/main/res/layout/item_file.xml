@@ -1,74 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:gravity="center_vertical"
-    android:background="?attr/selectableItemBackground">
-
-    <ImageView
-        android:id="@+id/ivFileIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_upload"
-        android:layout_marginEnd="12dp"/>
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:paddingVertical="12dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="4dp"
+        android:gravity="center_vertical"
+        android:background="?attr/selectableItemBackground">
 
-        <TextView
-            android:id="@+id/tvFileName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="middle"/>
+        <!-- File type icon in a tinted circle -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="14dp"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/bg_elevated">
+            <ImageView
+                android:id="@+id/ivFileIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_upload"
+                app:tint="@color/accent_cyan"/>
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvFileSize"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvFileName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/text_muted"
-                android:layout_marginEnd="8dp"/>
+                android:textSize="14sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="middle"/>
 
-            <TextView
-                android:id="@+id/tvFileDate"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/text_muted"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
 
+                <TextView
+                    android:id="@+id/tvFileSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_muted"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvFileDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_muted"/>
+
+            </LinearLayout>
         </LinearLayout>
+
+        <!-- Overflow button -->
+        <ImageView
+            android:id="@+id/btnFileOverflow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_more_vert"
+            app:tint="@color/text_muted"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="More options"
+            android:padding="8dp"/>
+
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/btnShare"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/ic_send"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:tint="@color/accent_cyan"
-        android:contentDescription="Share"/>
-
-    <ImageButton
-        android:id="@+id/btnDelete"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/ic_close_white"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:tint="@color/error_red"
-        android:contentDescription="Delete"/>
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

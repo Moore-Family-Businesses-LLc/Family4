@@ -27,4 +27,10 @@ interface BoardDao {
 
     @Query("DELETE FROM board_posts WHERE createdAt < :before AND pinned = 0")
     suspend fun pruneOld(before: Long)
+
+    @Query("SELECT COUNT(*) FROM board_posts")
+    suspend fun getPostCount(): Int
+
+    @Query("SELECT content FROM board_posts WHERE pinned = 0 ORDER BY createdAt DESC LIMIT :limit")
+    fun getRecentPostContents(limit: Int = 5): Flow<List<String>>
 }

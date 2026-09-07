@@ -60,4 +60,26 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="ok">OK</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">STAY CLOSE. STAY SAFE.</string>
+    <string name="splash_footer">SECURED WITH END-TO-END ENCRYPTION</string>
+
+    <!-- Chat -->
+    <string name="chat_today">Today</string>
+    <string name="chat_yesterday">Yesterday</string>
+
+    <!-- Notes -->
+    <string name="note_color_label">Note color</string>
+    <!-- Empty states -->
+    <string name="empty_chats_title">No family members yet</string>
+    <string name="empty_chats_hint">Tap + to add someone to your family</string>
+    <string name="empty_notes_title">No notes yet</string>
+    <string name="empty_notes_hint">Tap + to write your first note</string>
+    <string name="empty_tasks_title">Nothing on the list</string>
+    <string name="empty_tasks_hint">Tap + to add a task for the family</string>
+    <string name="add_family_member">Add family member</string>
+
+    <!-- About -->
+    <string name="about_tagline">Stay close. Stay safe.</string>
 </resources>

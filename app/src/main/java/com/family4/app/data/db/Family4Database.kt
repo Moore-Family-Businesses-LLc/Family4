@@ -21,7 +21,7 @@ import com.family4.app.data.db.entity.*
         PhotoEntity::class,
         BoardPostEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 @TypeConverters(Converters::class)

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Internal layout for SectionHeaderView. Not used directly in screens —
+    add <com.family4.app.ui.common.SectionHeaderView> instead.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <ImageView
+        android:id="@+id/headerLogo"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_logo_small"
+        android:alpha="0.85"
+        android:importantForAccessibility="no"
+        android:contentDescription="@string/app_name"/>
+
+    <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.Family4.SectionTitle"/>
+
+    <ImageView
+        android:id="@+id/headerAction"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:tint="@color/text_secondary"/>
+
+</merge>

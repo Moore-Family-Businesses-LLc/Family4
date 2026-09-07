@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Attributes for com.family4.app.ui.common.SectionHeaderView -->
+    <declare-styleable name="SectionHeaderView">
+        <!-- Screen title shown next to the logo mark. -->
+        <attr name="headerTitle" format="string"/>
+        <!-- Optional trailing action icon; hidden when absent. -->
+        <attr name="headerActionIcon" format="reference"/>
+        <!-- Content description for that action icon. -->
+        <attr name="headerActionDescription" format="string"/>
+        <!-- Set false to drop the logo mark on screens that already brand themselves. -->
+        <attr name="headerShowLogo" format="boolean"/>
+    </declare-styleable>
+</resources>

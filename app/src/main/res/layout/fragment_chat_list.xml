@@ -6,45 +6,89 @@
     android:layout_height="match_parent"
     android:background="@color/bg_primary">
 
-    <!-- Encryption badge at top -->
+    <!-- Header, banner and list stack vertically; previously they were loose
+         CoordinatorLayout children overlapping each other, held apart by a
+         hardcoded 36dp margin on the list. -->
     <LinearLayout
-        android:id="@+id/encryptedBanner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@color/bg_surface"
-        android:paddingVertical="6dp"
-        android:paddingHorizontal="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/encrypted_badge"
-            android:textSize="11sp"
-            android:textColor="@color/accent_green"/>
-    </LinearLayout>
-
-    <!-- Chat list -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvChats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="36dp"
-        android:paddingBottom="80dp"
-        android:clipToPadding="false"/>
+        android:orientation="vertical">
 
-    <!-- Empty state -->
-    <TextView
+        <com.family4.app.ui.common.SectionHeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:headerTitle="Family Chat"/>
+
+        <!-- Encryption badge -->
+        <LinearLayout
+            android:id="@+id/encryptedBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/bg_surface"
+            android:paddingVertical="6dp"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/encrypted_badge"
+                android:textSize="11sp"
+                android:textColor="@color/accent_green"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+
+        <!-- Chat list -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChats"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="88dp"
+            android:clipToPadding="false"/>
+
+    </LinearLayout>
+
+    <!-- Empty state — standard pattern: watermark, title, hint -->
+    <LinearLayout
         android:id="@+id/tvEmptyChats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:orientation="vertical"
         android:gravity="center"
-        android:text="No family members yet.\nTap + to add someone."
-        android:textSize="16sp"
-        android:textColor="@color/text_muted"
         android:padding="32dp"
-        android:visibility="gone"/>
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_logo_small"
+            android:alpha="0.2"
+            android:layout_marginBottom="18dp"
+            android:importantForAccessibility="no"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_chats_title"
+            android:textAppearance="@style/TextAppearance.Family4.CardTitle"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_chats_hint"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:textColor="@color/text_muted"/>
+    </LinearLayout>
 
     <!-- FAB: Add family member -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -53,9 +97,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
-        app:backgroundTint="@color/accent_cyan"
         android:src="@drawable/ic_add"
+        app:backgroundTint="@color/accent_cyan"
         app:tint="@color/bg_primary"
-        android:contentDescription="Add family member"/>
+        android:contentDescription="@string/add_family_member"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

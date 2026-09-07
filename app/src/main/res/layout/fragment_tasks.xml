@@ -11,6 +11,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+    <com.family4.app.ui.common.SectionHeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:headerTitle="Tasks"/>
+
         <!-- Active Tasks Header -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,12 +64,47 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
-            android:paddingBottom="80dp"
+            android:paddingBottom="16dp"
             android:clipToPadding="false"/>
 
     </LinearLayout>
 
     <!-- FAB floats over the CoordinatorLayout -->
+        <!-- Empty state — standard pattern: watermark, title, hint -->
+    <LinearLayout
+        android:id="@+id/tasksEmptyState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_logo_small"
+            android:alpha="0.2"
+            android:layout_marginBottom="18dp"
+            android:importantForAccessibility="no"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_tasks_title"
+            android:textAppearance="@style/TextAppearance.Family4.CardTitle"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_tasks_hint"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:textColor="@color/text_muted"/>
+    </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddTask"
         android:layout_width="wrap_content"

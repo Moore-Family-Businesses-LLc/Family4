@@ -5,35 +5,73 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Title -->
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Event title"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Event title *"
         android:layout_marginBottom="12dp">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
-            android:imeOptions="actionNext"/>
-
+            android:inputType="textCapSentences"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Description -->
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Description (optional)"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
+        android:hint="Description"
+        android:layout_marginBottom="12dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEventDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:minLines="2"/>
-
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="3"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Location -->
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location (optional)"
+        android:layout_marginBottom="12dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEventLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- All-day toggle -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+        <TextView android:text="All day"
+            android:textColor="@color/text_primary" android:textSize="14sp"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"/>
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchAllDay"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Color row -->
+    <TextView android:text="Color"
+        android:textColor="@color/text_muted" android:textSize="12sp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"/>
+    <LinearLayout
+        android:id="@+id/colorRow"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal"/>
 
 </LinearLayout>

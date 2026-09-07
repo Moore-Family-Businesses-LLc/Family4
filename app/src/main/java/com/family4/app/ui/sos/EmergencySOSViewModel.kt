@@ -17,12 +17,11 @@ class EmergencySOSViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun triggerSOS() = viewModelScope.launch {
-        val lastLocation = locationDao.getLatestLocation("self")
-        val members = memberDao.getAllMembers()
         // In a real implementation:
         // 1. Send push notification to all members with GPS coordinates
-        // 2. POST to emergency endpoint
-        // 3. Optionally dial 911
+        // 2. POST to emergency endpoint using locationDao.getLatestLocation("self")
+        // 3. Notify memberDao.getAllMembers()
+        // 4. Optionally dial 911
         // For now we expose a state that the Fragment observes to launch the dialer
     }
 }

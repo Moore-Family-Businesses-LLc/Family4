@@ -65,6 +65,7 @@ class CameraFragment : Fragment() {
         if (allPermissionsGranted()) {
             startCamera()
         } else {
+            @Suppress("DEPRECATION")
             requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
     }
@@ -113,12 +114,14 @@ class CameraFragment : Fragment() {
             .requireLensFacing(lensFacing)
             .build()
 
+        @Suppress("DEPRECATION")
         val preview = Preview.Builder()
             .setTargetAspectRatio(AspectRatio.RATIO_16_9)
             .build()
             .also { it.setSurfaceProvider(binding.viewFinder.surfaceProvider) }
 
         // HDR Image Capture
+        @Suppress("DEPRECATION")
         val imageCaptureBuilder = ImageCapture.Builder()
             .setTargetAspectRatio(AspectRatio.RATIO_16_9)
             .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
@@ -194,8 +197,9 @@ class CameraFragment : Fragment() {
         capture.takePicture(outputOptions, ContextCompat.getMainExecutor(requireContext()),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val msg = "Photo saved"
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Photo saved to Camera Roll", Toast.LENGTH_SHORT).show()
+                    // Save to app album
+                    output.savedUri?.let { uri -> viewModel.savePhotoToAlbum(uri) }
                     binding.flashOverlay.apply {
                         isVisible = true
                         animate().alpha(0f).setDuration(300).withEndAction {

@@ -7,21 +7,23 @@
     android:orientation="vertical"
     android:background="@color/bg_primary">
 
-    <!-- Header -->
+    <!-- ── Header ───────────────────────────────────────────────────── -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="14dp"
         android:background="@color/bg_surface">
 
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:src="@drawable/ic_board"
             android:contentDescription="Board"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            app:tint="@color/accent_cyan"/>
 
         <TextView
             android:layout_width="0dp"
@@ -32,67 +34,155 @@
             android:textStyle="bold"
             android:textColor="@color/text_primary"/>
 
-        <TextView
+        <!-- Online count badge -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipOnlineCount"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="📌 Shared Announcements"
+            android:text="● 0 online"
             android:textSize="11sp"
-            android:textColor="@color/accent_cyan"/>
+            app:chipBackgroundColor="@color/bg_elevated"
+            app:chipStrokeColor="@color/online_green"
+            app:chipStrokeWidth="1dp"
+            android:textColor="@color/online_green"/>
+
     </LinearLayout>
 
-    <!-- Post feed -->
+    <!-- ── Post feed ───────────────────────────────────────────────── -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPosts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingTop="8dp"
+        android:paddingTop="6dp"
         android:paddingBottom="8dp"/>
 
-    <!-- Empty state -->
+    <!-- ── Empty state ─────────────────────────────────────────────── -->
     <TextView
         android:id="@+id/tvEmptyState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No posts yet.\nShare something with your family!"
+        android:text="No posts yet.\nShare something with your family! 👇"
         android:textColor="@color/text_secondary"
         android:textSize="14sp"
         android:gravity="center"
         android:padding="32dp"
         android:visibility="gone"/>
 
-    <!-- Composer bar -->
+    <!-- ── Composer ──────────────────────────────────────────────── -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="12dp"
-        android:background="@color/bg_surface">
+        android:orientation="vertical"
+        android:background="@color/bg_surface"
+        android:elevation="8dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPostInput"
-            android:layout_width="0dp"
+        <!-- Post type selector chips -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Share with your family…"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_secondary"
-            android:background="@drawable/bg_input_field"
-            android:padding="12dp"
-            android:maxLines="4"
-            android:inputType="textMultiLine|textCapSentences"
-            android:layout_marginEnd="10dp"/>
+            android:scrollbars="none"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="4dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPost"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupPostType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTypeChat"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💬 Chat"
+                    android:checked="true"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"
+                    android:textColor="@color/text_primary"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTypeAnnouncement"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📢 Announce"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"
+                    android:textColor="@color/text_primary"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTypeEvent"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎉 Event"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"
+                    android:textColor="@color/text_primary"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTypePhoto"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📸 Photo"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"
+                    android:textColor="@color/text_primary"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTypeTask"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✅ Task"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"
+                    android:textColor="@color/text_primary"/>
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <!-- Input row -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Post"
-            android:textSize="13sp"
-            android:backgroundTint="@color/accent_cyan"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="4dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPostInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Share with your family…"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:background="@drawable/bg_input_field"
+                android:padding="12dp"
+                android:maxLines="4"
+                android:inputType="textMultiLine|textCapSentences"
+                android:layout_marginEnd="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPost"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post"
+                android:textSize="13sp"
+                app:backgroundTint="@color/accent_cyan"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

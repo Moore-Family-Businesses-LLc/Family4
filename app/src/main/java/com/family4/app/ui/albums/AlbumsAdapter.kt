@@ -1,6 +1,7 @@
 package com.family4.app.ui.albums
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -20,6 +21,9 @@ class AlbumsAdapter : ListAdapter<PhotoAlbumEntity, AlbumsAdapter.VH>(DIFF) {
             b.tvAlbumName.text = album.name
             b.tvAlbumDate.text = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
                 .format(Date(album.createdAt))
+            b.tvPhotoCount.text = "0 photos"   // photo count wired when real photos are added
+            b.ivAlbumCover.visibility = View.GONE
+            b.tvAlbumEmoji.visibility = View.VISIBLE
             b.root.setOnClickListener { onAlbumClick?.invoke(album) }
             b.btnDeleteAlbum.setOnClickListener { onDeleteClick?.invoke(album) }
         }
