@@ -24,3 +24,10 @@ secrets.properties
 build_log*.txt
 build_output*.txt
 Claude outputs/
+
+# Temp watermark-removal artifacts
+corner_*.png
+/login_screen.mp4
+logo.jpg
+gemini_generated_video_5011face.mp4
+app/src/main/assets/
