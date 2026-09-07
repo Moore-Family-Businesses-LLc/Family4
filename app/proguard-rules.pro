@@ -153,3 +153,13 @@
     public static ** inflate(android.view.LayoutInflater);
     public static ** inflate(android.view.LayoutInflater, android.view.ViewGroup, boolean);
 }
+
+# ── Android Auto / Car App Library ───────────────────────────────────────────
+-keep class androidx.car.app.** { *; }
+-keep interface androidx.car.app.** { *; }
+-dontwarn androidx.car.app.**
+-keep class com.family4.app.auto.** { *; }
+
+# ── OBD / Vehicle layer ───────────────────────────────────────────────────────
+-keep class com.family4.app.vehicle.** { *; }
+-keepclassmembers class com.family4.app.vehicle.** { *; }

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- Header -->
+    <com.family4.app.ui.common.SectionHeaderView
+        android:id="@+id/vehicleHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:headerTitle="Vehicle"
+        app:headerActionIcon="@drawable/ic_more_vert"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ── Connection status bar ─────────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/connectionCard"
+                style="@style/Widget.Family4.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="14dp">
+
+                    <!-- OBD status -->
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:text="OBD-II" android:textSize="10sp"
+                            android:textColor="@color/text_muted" android:letterSpacing="0.08"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                        <TextView android:id="@+id/tvObdStatus"
+                            android:text="Not connected"
+                            android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/text_muted"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <!-- BlueLink status -->
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:text="BLUELINK" android:textSize="10sp"
+                            android:textColor="@color/text_muted" android:letterSpacing="0.08"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                        <TextView android:id="@+id/tvBlueLinkStatus"
+                            android:text="Stub data"
+                            android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/accent_blue"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <!-- Connect button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnConnectObd"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Connect"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/accent_cyan"
+                        android:textColor="@color/bg_primary"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Live gauges ────────────────────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Family4.Card.Glass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView android:text="LIVE" android:textSize="10sp"
+                        android:textColor="@color/accent_cyan" android:letterSpacing="0.12"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <!-- RPM gauge -->
+                        <com.family4.app.ui.vehicle.GaugeView
+                            android:id="@+id/gaugeRpm"
+                            android:layout_width="0dp"
+                            android:layout_height="150dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Speed gauge -->
+                        <com.family4.app.ui.vehicle.GaugeView
+                            android:id="@+id/gaugeSpeed"
+                            android:layout_width="0dp"
+                            android:layout_height="150dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Engine metrics grid ───────────────────────────────────── -->
+            <TextView android:text="ENGINE" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.10"
+                android:textAllCaps="true" android:textStyle="bold"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginBottom="8dp">
+
+                <include layout="@layout/item_metric_card" android:id="@+id/metricEngineLoad"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginEnd="4dp"/>
+                <include layout="@layout/item_metric_card" android:id="@+id/metricThrottle"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginHorizontal="4dp"/>
+                <include layout="@layout/item_metric_card" android:id="@+id/metricTorque"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="4dp"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginBottom="12dp">
+                <include layout="@layout/item_metric_card" android:id="@+id/metricCoolant"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginEnd="4dp"/>
+                <include layout="@layout/item_metric_card" android:id="@+id/metricOilTemp"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginHorizontal="4dp"/>
+                <include layout="@layout/item_metric_card" android:id="@+id/metricIntakeTemp"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="4dp"/>
+            </LinearLayout>
+
+            <!-- ── Fuel & Air ─────────────────────────────────────────────── -->
+            <TextView android:text="FUEL &amp; AIR" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.10"
+                android:textAllCaps="true" android:textStyle="bold"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginBottom="12dp">
+                <include layout="@layout/item_metric_card" android:id="@+id/metricFuelLevel"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginEnd="4dp"/>
+                <include layout="@layout/item_metric_card" android:id="@+id/metricMaf"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginHorizontal="4dp"/>
+                <include layout="@layout/item_metric_card" android:id="@+id/metricBattery"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="4dp"/>
+            </LinearLayout>
+
+            <!-- ── BlueLink / Vehicle status ─────────────────────────────── -->
+            <TextView android:text="VEHICLE STATUS" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.10"
+                android:textAllCaps="true" android:textStyle="bold"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Family4.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+
+                    <!-- Doors + engine row -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:layout_marginBottom="12dp">
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:id="@+id/tvDoorIcon" android:text="🔒"
+                                android:textSize="26sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                            <TextView android:id="@+id/tvDoorStatus" android:text="Locked"
+                                android:textSize="11sp" android:textColor="@color/accent_green"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:id="@+id/tvEngineIcon" android:text="🔑"
+                                android:textSize="26sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                            <TextView android:id="@+id/tvEngineStatus" android:text="Off"
+                                android:textSize="11sp" android:textColor="@color/text_muted"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:id="@+id/tvOdometerLabel" android:text="ODO"
+                                android:textSize="10sp" android:textColor="@color/text_muted"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                            <TextView android:id="@+id/tvOdometer" android:text="—"
+                                android:textSize="18sp" android:textStyle="bold" android:textColor="@color/text_primary"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                            <TextView android:text="km" android:textSize="10sp" android:textColor="@color/text_muted"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Tire pressure -->
+                    <TextView android:text="TIRE PRESSURE (psi)"
+                        android:textSize="10sp" android:textColor="@color/text_muted"
+                        android:letterSpacing="0.08" android:layout_marginBottom="8dp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+                    <androidx.gridlayout.widget.GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:columnCount="2" app:rowCount="2"
+                        app:useDefaultMargins="true">
+
+                        <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.Family4.Card" app:cardCornerRadius="8dp"
+                            android:layout_width="0dp" app:layout_columnWeight="1"
+                            android:layout_height="56dp" android:layout_margin="3dp">
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                android:gravity="center" android:orientation="vertical">
+                                <TextView android:text="FL" android:textSize="9sp" android:textColor="@color/text_muted"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                <TextView android:id="@+id/tvTireFl" android:text="—"
+                                    android:textSize="15sp" android:textStyle="bold" android:textColor="@color/accent_cyan"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.Family4.Card" app:cardCornerRadius="8dp"
+                            android:layout_width="0dp" app:layout_columnWeight="1"
+                            android:layout_height="56dp" android:layout_margin="3dp">
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                android:gravity="center" android:orientation="vertical">
+                                <TextView android:text="FR" android:textSize="9sp" android:textColor="@color/text_muted"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                <TextView android:id="@+id/tvTireFr" android:text="—"
+                                    android:textSize="15sp" android:textStyle="bold" android:textColor="@color/accent_cyan"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.Family4.Card" app:cardCornerRadius="8dp"
+                            android:layout_width="0dp" app:layout_columnWeight="1"
+                            android:layout_height="56dp" android:layout_margin="3dp">
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                android:gravity="center" android:orientation="vertical">
+                                <TextView android:text="RL" android:textSize="9sp" android:textColor="@color/text_muted"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                <TextView android:id="@+id/tvTireRl" android:text="—"
+                                    android:textSize="15sp" android:textStyle="bold" android:textColor="@color/accent_cyan"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.Family4.Card" app:cardCornerRadius="8dp"
+                            android:layout_width="0dp" app:layout_columnWeight="1"
+                            android:layout_height="56dp" android:layout_margin="3dp">
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                android:gravity="center" android:orientation="vertical">
+                                <TextView android:text="RR" android:textSize="9sp" android:textColor="@color/text_muted"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                <TextView android:id="@+id/tvTireRr" android:text="—"
+                                    android:textSize="15sp" android:textStyle="bold" android:textColor="@color/accent_cyan"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </androidx.gridlayout.widget.GridLayout>
+
+                    <!-- Remote commands -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:layout_marginTop="12dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLockDoors"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
+                            android:text="Lock" android:textSize="12sp" android:layout_marginEnd="4dp"
+                            app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnUnlockDoors"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
+                            android:text="Unlock" android:textSize="12sp" android:layout_marginHorizontal="4dp"
+                            app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnRemoteStart"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
+                            android:text="Start" android:textSize="12sp" android:layout_marginStart="4dp"
+                            app:strokeColor="@color/accent_green" android:textColor="@color/accent_green"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── DTC Fault codes ─────────────────────────────────────── -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+                <TextView android:text="FAULT CODES" android:textSize="10sp"
+                    android:textColor="@color/text_muted" android:letterSpacing="0.10"
+                    android:textAllCaps="true" android:textStyle="bold"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnScanDtc"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content" android:layout_height="32dp"
+                    android:text="Scan" android:textSize="12sp" android:textColor="@color/accent_cyan"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClearDtc"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content" android:layout_height="32dp"
+                    android:text="Clear" android:textSize="12sp" android:textColor="@color/error_red"/>
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/dtcCard"
+                style="@style/Widget.Family4.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+                <LinearLayout android:id="@+id/llDtcCodes"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="14dp">
+                    <TextView android:text="No fault codes detected ✓"
+                        android:textSize="13sp" android:textColor="@color/accent_green"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Trip history ───────────────────────────────────────────── -->
+            <TextView android:text="TRIP HISTORY" android:textSize="10sp"
+                android:textColor="@color/text_muted" android:letterSpacing="0.10"
+                android:textAllCaps="true" android:textStyle="bold"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTrips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -39,6 +39,7 @@ class MoreFragment : Fragment() {
         binding.cardPolls.setOnClickListener { findNavController().navigate(R.id.nav_polls) }
         binding.cardShopping.setOnClickListener { findNavController().navigate(R.id.nav_shopping) }
         binding.cardBedtime.setOnClickListener { findNavController().navigate(R.id.nav_bedtime) }
+        binding.cardVehicle.setOnClickListener { findNavController().navigate(R.id.nav_vehicle) }
         binding.cardBackup.setOnClickListener {
             com.family4.app.workers.DriveBackupWorker.schedule(requireContext())
             com.google.android.material.snackbar.Snackbar

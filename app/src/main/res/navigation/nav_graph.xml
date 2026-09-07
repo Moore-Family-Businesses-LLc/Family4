@@ -227,4 +227,11 @@
         android:label="Bedtime Alerts"
         tools:layout="@layout/fragment_bedtime"/>
 
+    <!-- ── Vehicle / OBD-II Dashboard ── -->
+    <fragment
+        android:id="@+id/nav_vehicle"
+        android:name="com.family4.app.ui.vehicle.VehicleFragment"
+        android:label="Vehicle"
+        tools:layout="@layout/fragment_vehicle"/>
+
 </navigation>

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.family4.app.data.db.Family4Database
 import com.family4.app.data.db.dao.*
+import com.family4.app.vehicle.model.VehicleTripDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,4 +40,6 @@ object DatabaseModule {
     @Provides fun providePollDao(db: Family4Database): PollDao = db.pollDao()
     @Provides fun provideShoppingDao(db: Family4Database): ShoppingDao = db.shoppingDao()
     @Provides fun provideBedtimeDao(db: Family4Database): BedtimeDao = db.bedtimeDao()
+    // ── v5 DAOs ──
+    @Provides fun provideVehicleTripDao(db: Family4Database): VehicleTripDao = db.vehicleTripDao()
 }

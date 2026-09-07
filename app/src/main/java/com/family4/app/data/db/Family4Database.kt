@@ -6,6 +6,8 @@ import androidx.room.TypeConverters
 import com.family4.app.data.db.converters.Converters
 import com.family4.app.data.db.dao.*
 import com.family4.app.data.db.entity.*
+import com.family4.app.vehicle.model.VehicleTripDao
+import com.family4.app.vehicle.model.VehicleTripEntity
 
 @Database(
     entities = [
@@ -27,9 +29,11 @@ import com.family4.app.data.db.entity.*
         ChoreEntity::class,
         PollEntity::class,
         ShoppingItemEntity::class,
-        BedtimeAlertEntity::class
+        BedtimeAlertEntity::class,
+        // ── v5 additions ──
+        VehicleTripEntity::class
     ],
-    version = 4,
+    version = 5,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -51,4 +55,6 @@ abstract class Family4Database : RoomDatabase() {
     abstract fun pollDao(): PollDao
     abstract fun shoppingDao(): ShoppingDao
     abstract fun bedtimeDao(): BedtimeDao
+    // ── v5 DAOs ──
+    abstract fun vehicleTripDao(): VehicleTripDao
 }

@@ -30,6 +30,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
@@ -110,6 +111,29 @@
         <service
             android:name=".services.ChatSyncService"
             android:exported="false" />
+
+        <!-- OBD-II poll service — foreground, connected device type -->
+        <service
+            android:name=".vehicle.obd.ObdPollService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+
+        <!-- Android Auto / Car App entry point -->
+        <service
+            android:name=".auto.Family4CarAppService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="androidx.car.app.CarAppService" />
+                <category android:name="androidx.car.app.category.POI" />
+            </intent-filter>
+            <meta-data
+                android:name="androidx.car.app.minCarApiLevel"
+                android:value="1" />
+            <meta-data
+                android:name="com.google.android.gms.car.application"
+                android:resource="@xml/automotive_app_desc" />
+        </service>
 
         <!-- Firebase Cloud Messaging Service -->
         <service

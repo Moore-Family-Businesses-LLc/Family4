@@ -47,6 +47,8 @@ android {
         buildConfigField("String", "TURN_USERNAME",       "\"openrelayproject\"")
         buildConfigField("String", "TURN_CREDENTIAL",     "\"openrelayproject\"")
         buildConfigField("String", "STUN_SERVER_URL",     "\"stun:stun.l.google.com:19302\"")
+        buildConfigField("String", "BLUELINK_CLIENT_ID",     "\"${localProp("BLUELINK_CLIENT_ID")}\"")
+        buildConfigField("String", "BLUELINK_CLIENT_SECRET", "\"${localProp("BLUELINK_CLIENT_SECRET")}\"")
 
         // Room schema export
         javaCompileOptions {
@@ -195,6 +197,10 @@ dependencies {
     // Media
     implementation(libs.exoplayer)
     implementation(libs.exoplayer.ui)
+
+    // Android Auto / Car App Library
+    implementation(libs.car.app)
+    implementation(libs.car.app.projected)
 
     // Animations
     implementation(libs.lottie)

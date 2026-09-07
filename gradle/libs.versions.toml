@@ -43,6 +43,7 @@ googleHttpClient = "1.45.0"
 generativeai = "0.9.0"
 splashscreen = "1.0.1"
 gridlayout = "1.0.0"
+car-app = "1.4.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -162,3 +163,7 @@ generativeai = { group = "com.google.ai.client.generativeai", name = "generative
 
 # Splash screen
 splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+
+# Android Auto / Car App Library
+car-app = { group = "androidx.car.app", name = "app", version.ref = "car-app" }
+car-app-projected = { group = "androidx.car.app", name = "app-projected", version.ref = "car-app" }
