@@ -1,69 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    Task list item card.
+    Priority accent strip on left: red=Urgent, orange=High, cyan=Normal, green=Low.
+    Supports completed strike-through via cbTask.isChecked.
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Family4.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:gravity="center_vertical"
-    android:background="?attr/selectableItemBackground">
-
-    <CheckBox
-        android:id="@+id/cbTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:buttonTint="@color/accent_cyan"/>
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="12dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:minHeight="64dp">
 
-        <TextView
-            android:id="@+id/tvTaskTitle"
+        <!-- Priority accent strip -->
+        <View
+            android:id="@+id/priorityStrip"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@color/accent_cyan"/>
+
+        <!-- Checkbox -->
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"/>
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="4dp"
+            app:buttonTint="@color/accent_cyan"/>
 
+        <!-- Content -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingVertical="12dp"
+            android:paddingEnd="8dp">
 
             <TextView
-                android:id="@+id/tvTaskPriority"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvTaskTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="11sp"
-                android:layout_marginEnd="8dp"/>
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:maxLines="2"
+                android:ellipsize="end"/>
 
-            <TextView
-                android:id="@+id/tvTaskDue"
-                android:layout_width="wrap_content"
+            <!-- Meta row: list name + due date -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="11sp"
-                android:textColor="@color/accent_cyan"
-                android:layout_marginEnd="8dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="4dp">
 
+                <!-- List badge -->
+                <TextView
+                    android:id="@+id/tvTaskList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textColor="@color/bg_primary"
+                    android:background="@drawable/bg_chip_cyan"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:layout_marginEnd="8dp"/>
+
+                <!-- Due date -->
+                <TextView
+                    android:id="@+id/tvTaskDue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_muted"
+                    android:drawablePadding="4dp"/>
+
+                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+
+                <!-- Priority label -->
+                <TextView
+                    android:id="@+id/tvTaskPriority"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_muted"/>
+            </LinearLayout>
+
+            <!-- Description (optional, hidden if empty) -->
             <TextView
-                android:id="@+id/tvTaskList"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvTaskDesc"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="11sp"
-                android:textColor="@color/text_muted"/>
+                android:textSize="12sp"
+                android:textColor="@color/text_muted"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:visibility="gone"/>
+
         </LinearLayout>
+
+        <!-- Delete button -->
+        <ImageView
+            android:id="@+id/btnDeleteTask"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_delete"
+            app:tint="@color/text_muted"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="10dp"
+            android:contentDescription="Delete task"/>
+
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/btnDeleteTask"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_close_white"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:tint="@color/error_red"
-        android:contentDescription="Delete task"/>
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

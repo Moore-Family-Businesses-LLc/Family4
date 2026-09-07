@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FF1C1C1E"
+    android:padding="16dp">
+
+    <!-- Display -->
+    <TextView
+        android:id="@+id/tvCalcDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="52sp"
+        android:textColor="#FFFFFFFF"
+        android:gravity="end"
+        android:paddingEnd="8dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="12dp"
+        android:maxLines="2"
+        android:ellipsize="start"/>
+
+    <!-- Pattern lock (hidden until triggered) -->
+    <com.family4.app.ui.stealth.PatternLockView
+        android:id="@+id/patternLockView"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="8dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvCalcHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="13sp"
+        android:textColor="#FF8892B0"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Calc button grid -->
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:columnCount="4"
+        app:rowCount="5"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <!-- Row 1: Clear, ±, %, ÷ -->
+        <Button android:id="@+id/btnCClear" style="@style/CalcBtnFunc" app:layout_columnWeight="1" android:text="C"/>
+        <Button style="@style/CalcBtnFunc" app:layout_columnWeight="1" android:text="±"/>
+        <Button style="@style/CalcBtnFunc" app:layout_columnWeight="1" android:text="%"/>
+        <Button android:id="@+id/btnCDiv" style="@style/CalcBtnOp" app:layout_columnWeight="1" android:text="÷"/>
+
+        <!-- Row 2: 7 8 9 × -->
+        <Button android:id="@+id/btnC7" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="7"/>
+        <Button android:id="@+id/btnC8" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="8"/>
+        <Button android:id="@+id/btnC9" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="9"/>
+        <Button android:id="@+id/btnCMul" style="@style/CalcBtnOp" app:layout_columnWeight="1" android:text="×"/>
+
+        <!-- Row 3: 4 5 6 - -->
+        <Button android:id="@+id/btnC4" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="4"/>
+        <Button android:id="@+id/btnC5" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="5"/>
+        <Button android:id="@+id/btnC6" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="6"/>
+        <Button android:id="@+id/btnCSub" style="@style/CalcBtnOp" app:layout_columnWeight="1" android:text="-"/>
+
+        <!-- Row 4: 1 2 3 + -->
+        <Button android:id="@+id/btnC1" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="1"/>
+        <Button android:id="@+id/btnC2" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="2"/>
+        <Button android:id="@+id/btnC3" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="3"/>
+        <Button android:id="@+id/btnCAdd" style="@style/CalcBtnOp" app:layout_columnWeight="1" android:text="+"/>
+
+        <!-- Row 5: 0 . ⌫ = -->
+        <Button android:id="@+id/btnC0" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="0"/>
+        <Button android:id="@+id/btnCDot" style="@style/CalcBtnNum" app:layout_columnWeight="1" android:text="."/>
+        <Button android:id="@+id/btnCBack" style="@style/CalcBtnFunc" app:layout_columnWeight="1" android:text="⌫"/>
+        <Button android:id="@+id/btnCEquals" style="@style/CalcBtnEq" app:layout_columnWeight="1" android:text="="/>
+
+    </androidx.gridlayout.widget.GridLayout>
+
+</LinearLayout>

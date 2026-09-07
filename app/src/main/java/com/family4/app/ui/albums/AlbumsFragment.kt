@@ -2,10 +2,12 @@ package com.family4.app.ui.albums
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.family4.app.R
 import com.family4.app.databinding.FragmentAlbumsBinding
@@ -37,7 +39,12 @@ class AlbumsFragment : Fragment() {
             adapter = albumsAdapter
         }
 
-        albumsAdapter.onAlbumClick  = { album -> viewModel.openAlbum(album) }
+        albumsAdapter.onAlbumClick  = { album ->
+            findNavController().navigate(
+                R.id.action_albums_to_album_detail,
+                bundleOf("albumId" to album.id, "albumName" to album.name)
+            )
+        }
         albumsAdapter.onDeleteClick = { album ->
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Delete Album?")

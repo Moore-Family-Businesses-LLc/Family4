@@ -47,6 +47,8 @@ android {
         buildConfigField("String", "TURN_USERNAME",       "\"openrelayproject\"")
         buildConfigField("String", "TURN_CREDENTIAL",     "\"openrelayproject\"")
         buildConfigField("String", "STUN_SERVER_URL",     "\"stun:stun.l.google.com:19302\"")
+        buildConfigField("String", "BLUELINK_CLIENT_ID",     "\"${localProp("BLUELINK_CLIENT_ID")}\"")
+        buildConfigField("String", "BLUELINK_CLIENT_SECRET", "\"${localProp("BLUELINK_CLIENT_SECRET")}\"")
 
         // Room schema export
         javaCompileOptions {
@@ -56,14 +58,34 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val ksPath   = localProp("KEYSTORE_PATH")
+            val ksPass   = localProp("KEYSTORE_PASSWORD")
+            val keyAlias = localProp("KEY_ALIAS")
+            val keyPass  = localProp("KEY_PASSWORD")
+            if (ksPath.isNotEmpty()) {
+                storeFile     = file(ksPath)
+                storePassword = ksPass
+                this.keyAlias = keyAlias
+                keyPassword   = keyPass
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled   = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Signing applied when KEYSTORE_PATH is set in local.properties or CI.
+            val ksPath = localProp("KEYSTORE_PATH")
+            if (ksPath.isNotEmpty()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         debug {
             isDebuggable = true
@@ -175,6 +197,13 @@ dependencies {
     // Media
     implementation(libs.exoplayer)
     implementation(libs.exoplayer.ui)
+
+    // Android Auto / Car App Library
+    implementation(libs.car.app)
+    implementation(libs.car.app.projected)
+
+    // Health Connect
+    implementation(libs.health.connect)
 
     // Animations
     implementation(libs.lottie)

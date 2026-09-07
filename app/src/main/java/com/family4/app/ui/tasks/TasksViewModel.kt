@@ -22,9 +22,23 @@ class TasksViewModel @Inject constructor(
     val completedTasks: StateFlow<List<TaskEntity>> = taskDao.getCompletedTasks()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    fun addTask(title: String, priority: Int = 1, listName: String = "General") {
+    fun addTask(
+        title: String,
+        description: String = "",
+        priority: Int = 1,
+        listName: String = "General",
+        dueDate: Long? = null
+    ) {
         viewModelScope.launch {
-            taskDao.insertTask(TaskEntity(title = title, priority = priority, listName = listName))
+            taskDao.insertTask(
+                TaskEntity(
+                    title       = title,
+                    description = description,
+                    priority    = priority,
+                    listName    = listName,
+                    dueDate     = dueDate
+                )
+            )
         }
     }
 

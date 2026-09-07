@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- Header -->
+    <com.family4.app.ui.common.SectionHeaderView
+        android:id="@+id/albumDetailHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:headerTitle="Album"
+        app:headerActionIcon="@drawable/ic_add"/>
+
+    <!-- Photo count sub-label -->
+    <TextView
+        android:id="@+id/tvPhotoCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0 photos"
+        android:textSize="12sp"
+        android:textColor="@color/text_muted"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="6dp"
+        android:background="@color/bg_surface"/>
+
+    <!-- Photo grid -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPhotos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="2dp"
+        android:clipToPadding="false"/>
+
+    <!-- Empty state -->
+    <LinearLayout
+        android:id="@+id/photosEmptyState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="40dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_logo_small"
+            android:alpha="0.2"
+            android:layout_marginBottom="18dp"
+            android:importantForAccessibility="no"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No photos yet"
+            android:textAppearance="@style/TextAppearance.Family4.CardTitle"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap + to import from your camera roll"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:textColor="@color/text_muted"/>
+    </LinearLayout>
+
+</LinearLayout>

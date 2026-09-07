@@ -16,55 +16,81 @@
         android:layout_height="wrap_content"
         app:headerTitle="Tasks"/>
 
-        <!-- Active Tasks Header -->
+        <!-- Active Tasks section label -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="16dp">
-            <TextView android:text="Active"
-                android:textSize="16sp" android:textStyle="bold"
-                android:textColor="@color/text_primary"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <TextView android:id="@+id/tvActiveCount"
-                android:textSize="13sp" android:textColor="@color/accent_cyan"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            android:paddingHorizontal="16dp"
+            android:background="@color/bg_surface">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ACTIVE"
+                android:textAppearance="@style/TextAppearance.Family4.Label"/>
+
+            <TextView
+                android:id="@+id/tvActiveCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/accent_cyan"
+                android:textStyle="bold"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvActiveTasks"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:paddingTop="4dp"
             android:paddingBottom="8dp"
             android:clipToPadding="false"/>
 
-        <!-- Completed Tasks Header -->
+        <!-- Completed Tasks section label -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp">
-            <TextView android:text="Completed"
-                android:textSize="14sp" android:textStyle="bold"
-                android:textColor="@color/text_muted"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <TextView android:id="@+id/tvCompletedCount"
-                android:textSize="12sp" android:textColor="@color/text_muted"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            android:background="@color/bg_surface">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="COMPLETED"
+                android:textAppearance="@style/TextAppearance.Family4.Label"/>
+
+            <TextView
+                android:id="@+id/tvCompletedCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/text_muted"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCompletedTasks"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
-            android:paddingBottom="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="80dp"
             android:clipToPadding="false"/>
 
     </LinearLayout>

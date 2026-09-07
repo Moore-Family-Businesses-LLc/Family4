@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Circular progress ring drawable for the SOS hold countdown.
+    Used as the indeterminate/determinate drawable on a ProgressBar
+    that is styled as a ring (360-degree stroke).
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background track: faint red ring -->
+    <item android:id="@android:id/background">
+        <shape android:shape="ring"
+            android:innerRadiusRatio="2.8"
+            android:thicknessRatio="14"
+            android:useLevel="false">
+            <solid android:color="#33FF3D71"/>
+        </shape>
+    </item>
+    <!-- Progress arc: solid error red -->
+    <item android:id="@android:id/progress">
+        <rotate
+            android:fromDegrees="-90"
+            android:toDegrees="-90">
+            <shape android:shape="ring"
+                android:innerRadiusRatio="2.8"
+                android:thicknessRatio="14"
+                android:useLevel="true">
+                <solid android:color="@color/error_red"/>
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

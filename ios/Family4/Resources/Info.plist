@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Family4</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+
+	<!-- Camera -->
+	<key>NSCameraUsageDescription</key>
+	<string>Family4 uses the camera to take family photos and videos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Family4 needs access to your photo library to save and share family photos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Family4 saves captured photos to your library.</string>
+
+	<!-- Microphone / Walkie-Talkie / Voice Activation -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Family4 uses the microphone for Walkie-Talkie and voice activation.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Family4 listens for the wake phrase "Family Four" to activate voice commands.</string>
+
+	<!-- Location -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Family4 uses your location to show the family map and weather.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Family4 uses your location in the background so family members can see your position on the map.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Family4 uses your location in the background for family tracking.</string>
+
+	<!-- Contacts -->
+	<key>NSContactsUsageDescription</key>
+	<string>Family4 can import contacts to help you add family members.</string>
+
+	<!-- Health -->
+	<key>NSHealthShareUsageDescription</key>
+	<string>Family4 reads health data to show your steps, heart rate and sleep summary.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Family4 can log water intake and mood to Apple Health.</string>
+
+	<!-- Notifications -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+		<string>location</string>
+	</array>
+
+	<!-- Orientation -->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<!-- App Transport Security -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>api.open-meteo.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+
+	<!-- Launch Screen -->
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>bgPrimary</string>
+	</dict>
+
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>MinimumOSVersion</key>
+	<string>16.0</string>
+</dict>
+</plist>

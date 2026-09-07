@@ -1,77 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    Add / Edit event dialog — Google Calendar style.
+    Fields: title*, date (pre-filled), start time, end time,
+            description, location, all-day toggle, color picker, reminder.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="wrap_content">
 
-    <!-- Title -->
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Event title *"
-        android:layout_marginBottom="12dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEventTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Description -->
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description"
-        android:layout_marginBottom="12dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEventDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine|textCapSentences"
-            android:maxLines="3"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Location -->
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Location (optional)"
-        android:layout_marginBottom="12dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEventLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- All-day toggle -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="8dp">
-        <TextView android:text="All day"
-            android:textColor="@color/text_primary" android:textSize="14sp"
-            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"/>
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchAllDay"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Title -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Event title *"
+            android:layout_marginBottom="14dp"
+            app:boxStrokeColor="@color/accent_cyan">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEventTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:imeOptions="actionNext"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- All-day toggle -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="14dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="All day"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"/>
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAllDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:trackTint="@color/accent_cyan"/>
+        </LinearLayout>
+
+        <!-- Date row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvEventDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:textSize="13sp"
+                android:textColor="@color/accent_cyan"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@drawable/bg_chip_cyan"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+        <!-- Start / End time row (hidden when all-day) -->
+        <LinearLayout
+            android:id="@+id/layoutTimeRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Time"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvEventStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09:00"
+                android:textSize="13sp"
+                android:textColor="@color/accent_cyan"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@drawable/bg_chip_cyan"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="→"
+                android:textColor="@color/text_muted"
+                android:textSize="14sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/tvEventEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10:00"
+                android:textSize="13sp"
+                android:textColor="@color/accent_cyan"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@drawable/bg_chip_cyan"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+        <!-- Description -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description (optional)"
+            android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/accent_cyan">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEventDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLines="3"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Location -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location (optional)"
+            android:layout_marginBottom="14dp"
+            app:boxStrokeColor="@color/accent_cyan">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEventLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Reminder -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reminder"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipReminder5"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5m"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipReminder15"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15m"
+                    android:checked="true"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipReminder30"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30m"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipReminder60"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1h"
+                    app:chipBackgroundColor="@color/bg_elevated"
+                    app:checkedIconVisible="false"/>
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+
+        <!-- Color label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COLOR"
+            android:textAppearance="@style/TextAppearance.Family4.Label"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Color row -->
+        <LinearLayout
+            android:id="@+id/colorRow"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"/>
+
     </LinearLayout>
-
-    <!-- Color row -->
-    <TextView android:text="Color"
-        android:textColor="@color/text_muted" android:textSize="12sp"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"/>
-    <LinearLayout
-        android:id="@+id/colorRow"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:orientation="horizontal"/>
-
-</LinearLayout>
+</ScrollView>

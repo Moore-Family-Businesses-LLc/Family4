@@ -51,4 +51,7 @@ object SettingsKeys {
     val WALKIE_CHANNEL      = intPreferencesKey("walkie_channel")
     /** Seconds: 30 | 60 | 300 — default 60. */
     val LOCATION_INTERVAL   = intPreferencesKey("location_interval_sec")
+
+    /** true = VoiceCommandService running, wake phrase listening active. */
+    val VOICE_ACTIVATION    = booleanPreferencesKey("voice_activation_enabled")
 }

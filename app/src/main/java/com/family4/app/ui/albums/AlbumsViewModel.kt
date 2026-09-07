@@ -39,6 +39,10 @@ class AlbumsViewModel @Inject constructor(
         _selectedAlbumId.value = album.id
     }
 
+    fun openAlbumById(id: Long) {
+        _selectedAlbumId.value = id
+    }
+
     fun deleteAlbum(album: PhotoAlbumEntity) {
         viewModelScope.launch { albumDao.deleteAlbum(album) }
     }

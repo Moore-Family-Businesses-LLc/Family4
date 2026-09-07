@@ -33,6 +33,13 @@ class MoreFragment : Fragment() {
         binding.cardSettings.setOnClickListener { findNavController().navigate(R.id.nav_settings) }
         binding.cardAi.setOnClickListener { findNavController().navigate(R.id.nav_ai_assistant) }
         binding.cardBoard.setOnClickListener { findNavController().navigate(R.id.nav_family_board) }
+        // ── New features ──
+        binding.cardParentZone.setOnClickListener { findNavController().navigate(R.id.nav_parent_dashboard) }
+        binding.cardChores.setOnClickListener { findNavController().navigate(R.id.nav_chores) }
+        binding.cardPolls.setOnClickListener { findNavController().navigate(R.id.nav_polls) }
+        binding.cardShopping.setOnClickListener { findNavController().navigate(R.id.nav_shopping) }
+        binding.cardBedtime.setOnClickListener { findNavController().navigate(R.id.nav_bedtime) }
+        binding.cardVehicle.setOnClickListener { findNavController().navigate(R.id.nav_vehicle) }
         binding.cardBackup.setOnClickListener {
             com.family4.app.workers.DriveBackupWorker.schedule(requireContext())
             com.google.android.material.snackbar.Snackbar

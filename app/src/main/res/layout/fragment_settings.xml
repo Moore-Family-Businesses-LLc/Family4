@@ -157,6 +157,23 @@
                 android:layout_marginBottom="4dp"
                 app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
 
+            <!-- Voice Activation toggle -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Voice Activation" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Say &quot;Family Four&quot; to activate" android:textColor="@color/text_muted"
+                        android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchVoiceActivation" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:trackTint="@color/accent_cyan"/>
+            </LinearLayout>
+
             <!-- ══ PRIVACY &amp; SECURITY ══ -->
             <TextView android:text="PRIVACY &amp; SECURITY" android:textSize="11sp"
                 android:textColor="@color/accent_cyan" android:letterSpacing="0.12"

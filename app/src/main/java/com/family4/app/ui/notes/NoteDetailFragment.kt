@@ -1,8 +1,14 @@
 package com.family4.app.ui.notes
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.BulletSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,8 +72,73 @@ class NoteDetailFragment : Fragment() {
             binding.tvNoteEdited.text = "Edited ${fmt.format(Date(note.updatedAt))}"
         }
 
+        setupFormatToolbar()
         setupToolbar()
         setupBackPress()
+    }
+
+    // ── Rich-text format toolbar ──────────────────────────────────────────────
+
+    private fun setupFormatToolbar() {
+        // Show/hide format bar when content EditText gains/loses focus
+        binding.etNoteContent.setOnFocusChangeListener { _, hasFocus ->
+            binding.formatToolbarScroll.visibility =
+                if (hasFocus) View.VISIBLE else View.GONE
+        }
+
+        binding.btnFormatBold.setOnClickListener {
+            applySpan(StyleSpan(Typeface.BOLD))
+        }
+        binding.btnFormatItalic.setOnClickListener {
+            applySpan(StyleSpan(Typeface.ITALIC))
+        }
+        binding.btnFormatUnderline.setOnClickListener {
+            applySpan(UnderlineSpan())
+        }
+        binding.btnFormatH1.setOnClickListener {
+            applySpan(RelativeSizeSpan(1.4f))
+        }
+        binding.btnFormatBullet.setOnClickListener {
+            insertBullet()
+        }
+        binding.btnFormatClear.setOnClickListener {
+            clearFormatting()
+        }
+    }
+
+    private fun applySpan(span: Any) {
+        val et = binding.etNoteContent
+        val text = et.text ?: return
+        val start = et.selectionStart.coerceAtLeast(0)
+        val end   = et.selectionEnd.coerceAtLeast(start)
+        if (start == end) return  // no selection — nothing to apply
+        text.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
+    private fun insertBullet() {
+        val et    = binding.etNoteContent
+        val text  = et.text ?: return
+        val start = et.selectionStart.coerceAtLeast(0)
+        // Find line start
+        val lineStart = text.lastIndexOf('\n', start - 1) + 1
+        val lineEnd   = (text.indexOf('\n', start).takeIf { it >= 0 } ?: text.length)
+        text.setSpan(
+            BulletSpan(16, ContextCompat.getColor(requireContext(), R.color.accent_cyan)),
+            lineStart, lineEnd,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+    }
+
+    private fun clearFormatting() {
+        val et    = binding.etNoteContent
+        val text  = et.text ?: return
+        val start = et.selectionStart.coerceAtLeast(0)
+        val end   = et.selectionEnd.coerceAtLeast(start)
+        if (start == end) return
+        // Remove all character-level spans in range
+        for (span in text.getSpans(start, end, Any::class.java)) {
+            text.removeSpan(span)
+        }
     }
 
     // ── Bottom toolbar wiring ─────────────────────────────────────────────────

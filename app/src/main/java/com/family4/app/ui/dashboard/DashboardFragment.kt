@@ -3,6 +3,9 @@ package com.family4.app.ui.dashboard
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -169,13 +172,21 @@ class DashboardFragment : Fragment() {
             binding.llActivityFeed.addView(tv)
             return
         }
+        val cyanColor = requireContext().getColor(R.color.accent_cyan)
         items.take(5).forEach { item ->
+            val raw = "▍ $item"
+            val spannable = SpannableString(raw)
+            // Color the bar char cyan, leave the rest in secondary text color
+            spannable.setSpan(
+                ForegroundColorSpan(cyanColor),
+                0, 1,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             val tv = TextView(requireContext()).apply {
-                text = "· $item"
+                text = spannable
                 textSize = 13f
                 setTextColor(requireContext().getColor(R.color.text_secondary))
                 setPadding(0, 6, 0, 6)
-                setCompoundDrawablePadding(8)
             }
             binding.llActivityFeed.addView(tv)
         }

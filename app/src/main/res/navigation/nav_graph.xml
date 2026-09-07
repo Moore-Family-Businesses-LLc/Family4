@@ -118,7 +118,44 @@
         android:id="@+id/nav_albums"
         android:name="com.family4.app.ui.albums.AlbumsFragment"
         android:label="@string/nav_albums"
-        tools:layout="@layout/fragment_albums"/>
+        tools:layout="@layout/fragment_albums">
+        <action
+            android:id="@+id/action_albums_to_album_detail"
+            app:destination="@id/nav_album_detail"/>
+    </fragment>
+
+    <!-- ── Album Detail (photo grid) ── -->
+    <fragment
+        android:id="@+id/nav_album_detail"
+        android:name="com.family4.app.ui.albums.AlbumDetailFragment"
+        android:label="Album"
+        tools:layout="@layout/fragment_album_detail">
+        <argument
+            android:name="albumId"
+            app:argType="long"/>
+        <argument
+            android:name="albumName"
+            app:argType="string"
+            android:defaultValue="Album"/>
+        <action
+            android:id="@+id/action_album_detail_to_photo_viewer"
+            app:destination="@id/nav_photo_viewer"/>
+    </fragment>
+
+    <!-- ── Photo Viewer (full-screen) ── -->
+    <fragment
+        android:id="@+id/nav_photo_viewer"
+        android:name="com.family4.app.ui.albums.PhotoViewerFragment"
+        android:label="Photo"
+        tools:layout="@layout/fragment_photo_viewer">
+        <argument
+            android:name="albumId"
+            app:argType="long"/>
+        <argument
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
 
     <!-- ── Weather ── -->
     <fragment
@@ -154,5 +191,47 @@
         android:name="com.family4.app.ui.board.FamilyBoardFragment"
         android:label="@string/nav_board"
         tools:layout="@layout/fragment_family_board"/>
+
+    <!-- ── Parent Zone ── -->
+    <fragment
+        android:id="@+id/nav_parent_dashboard"
+        android:name="com.family4.app.ui.parent.ParentDashboardFragment"
+        android:label="Parent Zone"
+        tools:layout="@layout/fragment_parent_dashboard"/>
+
+    <!-- ── Family Chores ── -->
+    <fragment
+        android:id="@+id/nav_chores"
+        android:name="com.family4.app.ui.chores.ChoresFragment"
+        android:label="Chores"
+        tools:layout="@layout/fragment_chores"/>
+
+    <!-- ── Family Polls ── -->
+    <fragment
+        android:id="@+id/nav_polls"
+        android:name="com.family4.app.ui.polls.FamilyPollFragment"
+        android:label="Family Polls"
+        tools:layout="@layout/fragment_family_poll"/>
+
+    <!-- ── Shopping List ── -->
+    <fragment
+        android:id="@+id/nav_shopping"
+        android:name="com.family4.app.ui.shopping.ShoppingFragment"
+        android:label="Shopping List"
+        tools:layout="@layout/fragment_shopping"/>
+
+    <!-- ── Bedtime Alerts ── -->
+    <fragment
+        android:id="@+id/nav_bedtime"
+        android:name="com.family4.app.ui.bedtime.BedtimeFragment"
+        android:label="Bedtime Alerts"
+        tools:layout="@layout/fragment_bedtime"/>
+
+    <!-- ── Vehicle / OBD-II Dashboard ── -->
+    <fragment
+        android:id="@+id/nav_vehicle"
+        android:name="com.family4.app.ui.vehicle.VehicleFragment"
+        android:label="Vehicle"
+        tools:layout="@layout/fragment_vehicle"/>
 
 </navigation>

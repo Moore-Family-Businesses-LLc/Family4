@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Health Connect — required to discover the app -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
+
     <!-- ─── Permissions ─── -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -30,11 +35,18 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+    <uses-permission android:name="android.permission.health.READ_SLEEP" />
+    <uses-permission android:name="android.permission.health.READ_TOTAL_CALORIES_BURNED" />
+    <uses-permission android:name="android.permission.health.WRITE_STEPS" />
+    <uses-permission android:name="android.permission.health.WRITE_HEART_RATE" />
 
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
@@ -100,10 +112,39 @@
             android:exported="false"
             android:foregroundServiceType="microphone" />
 
+        <!-- Voice Command Service — always-listening wake-phrase detection -->
+        <service
+            android:name=".services.VoiceCommandService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
         <!-- Chat Sync Service -->
         <service
             android:name=".services.ChatSyncService"
             android:exported="false" />
+
+        <!-- OBD-II poll service — foreground, connected device type -->
+        <service
+            android:name=".vehicle.obd.ObdPollService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+
+        <!-- Android Auto / Car App entry point -->
+        <service
+            android:name=".auto.Family4CarAppService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="androidx.car.app.CarAppService" />
+                <category android:name="androidx.car.app.category.POI" />
+            </intent-filter>
+            <meta-data
+                android:name="androidx.car.app.minCarApiLevel"
+                android:value="1" />
+            <meta-data
+                android:name="com.google.android.gms.car.application"
+                android:resource="@xml/automotive_app_desc" />
+        </service>
 
         <!-- Firebase Cloud Messaging Service -->
         <service
@@ -114,6 +155,21 @@
             </intent-filter>
         </service>
 
+        <!-- PIN lock screen — shown when app resumes after being backgrounded -->
+        <activity
+            android:name=".ui.pin.PinLockActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Family4.NoActionBar"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <!-- Stealth Calculator Activity (disguise for invisible mode) -->
+        <activity
+            android:name=".ui.stealth.StealthCalculatorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Family4.NoActionBar"
+            android:screenOrientation="portrait"/>
+
         <!-- Boot Receiver -->
         <receiver
             android:name=".receivers.BootReceiver"
@@ -122,6 +178,24 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <!-- Family4 Home-Screen Widget -->
+        <receiver
+            android:name=".widget.Family4Widget"
+            android:exported="true"
+            android:label="Family4">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+
+        <!-- Stealth 14-day pattern rotation reminder -->
+        <receiver
+            android:name=".security.StealthRotationReceiver"
+            android:exported="false"/>
 
         <!-- Maps API Key -->
         <meta-data

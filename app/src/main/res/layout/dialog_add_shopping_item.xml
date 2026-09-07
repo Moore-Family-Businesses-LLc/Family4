@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="16dp">
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:hint="Item name" android:layout_marginBottom="12dp">
+        <com.google.android.material.textfield.TextInputEditText android:id="@+id/etItemName"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginBottom="12dp">
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:hint="Quantity" android:layout_marginEnd="8dp">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etItemQty"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="text" android:text="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <Spinner android:id="@+id/spItemCategory" android:layout_width="0dp"
+            android:layout_height="wrap_content" android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>

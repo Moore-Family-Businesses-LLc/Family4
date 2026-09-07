@@ -135,26 +135,38 @@
             android:paddingBottom="16dp"
             android:clipToPadding="false"/>
 
-        <!-- ── Empty state ── -->
+        <!-- ── Empty state — standard logo watermark pattern ── -->
         <LinearLayout
             android:id="@+id/filesEmptyState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="48dp"
+            android:padding="32dp"
             android:visibility="gone">
-            <TextView android:text="📁"
-                android:textSize="48sp" android:gravity="center"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"/>
-            <TextView android:text="No files yet"
-                android:textSize="18sp" android:textColor="@color/text_muted"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <TextView android:text="Tap ↑ to upload from your device"
-                android:textSize="13sp" android:textColor="@color/text_secondary"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_logo_small"
+                android:alpha="0.2"
+                android:layout_marginBottom="18dp"
+                android:importantForAccessibility="no"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No files yet"
+                android:textAppearance="@style/TextAppearance.Family4.CardTitle"
+                android:layout_marginBottom="6dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap ↑ to upload from your device"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:textColor="@color/text_muted"/>
         </LinearLayout>
 
     </LinearLayout>

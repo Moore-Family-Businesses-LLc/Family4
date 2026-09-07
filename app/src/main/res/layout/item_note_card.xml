@@ -11,8 +11,22 @@
     app:strokeWidth="1dp"
     app:strokeColor="#1AFFFFFF">
 
+    <!-- Root horizontal layout: accent strip on the left + content on the right -->
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Colored left accent strip — tinted by NoteColor in the adapter -->
+        <View
+            android:id="@+id/noteColorStrip"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@color/accent_cyan"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="13dp"
@@ -102,5 +116,7 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    </LinearLayout><!-- end root horizontal -->
 
 </com.google.android.material.card.MaterialCardView>
