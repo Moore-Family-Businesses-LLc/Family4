@@ -6,10 +6,12 @@ import com.family4.app.data.db.dao.AlbumDao
 import com.family4.app.data.db.entity.PhotoAlbumEntity
 import com.family4.app.data.db.entity.PhotoEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class AlbumsViewModel @Inject constructor(
     private val albumDao: AlbumDao

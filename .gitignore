@@ -1,4 +1,4 @@
-﻿# Android Studio / Gradle
+# Android Studio / Gradle
 .gradle/
 .idea/
 *.iml
@@ -19,3 +19,8 @@ Thumbs.db
 google-services.json
 *.env
 secrets.properties
+
+# Session artifacts
+build_log*.txt
+build_output*.txt
+Claude outputs/

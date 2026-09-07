@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- My message bubble (right-aligned) -->
+<!-- Outgoing message: optional date separator + right-aligned bubble with
+     timestamp and delivery state. -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/messageRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="end"
+    android:orientation="vertical"
     android:paddingHorizontal="12dp"
-    android:paddingVertical="4dp">
+    android:paddingVertical="3dp">
+
+    <!-- Date separator — shown only on the first message of a day -->
+    <TextView
+        android:id="@+id/tvDateHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_date_pill"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        android:textSize="11sp"
+        android:textColor="@color/text_muted"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:orientation="vertical"
-        android:maxWidth="280dp"
+        android:maxWidth="290dp"
         android:background="@drawable/bg_bubble_mine"
         android:paddingHorizontal="12dp"
         android:paddingVertical="8dp">
@@ -23,16 +40,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:lineSpacingMultiplier="1.15"
             android:textColor="#1F2328"/>
 
-        <TextView
-            android:id="@+id/tvTime"
+        <!-- Meta row: time + delivery ticks -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textColor="#8892B0"
             android:layout_gravity="end"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="#6B7280"/>
+
+            <ImageView
+                android:id="@+id/ivStatus"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="Delivery status"/>
+        </LinearLayout>
 
     </LinearLayout>
 

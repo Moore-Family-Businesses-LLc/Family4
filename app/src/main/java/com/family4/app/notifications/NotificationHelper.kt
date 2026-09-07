@@ -128,6 +128,8 @@ object NotificationHelper {
         lat: Double,
         lng: Double
     ) {
+        // mapsUri kept for future deep-link action button — suppress unused warning
+        @Suppress("UNUSED_VARIABLE")
         val mapsUri = "geo:$lat,$lng?q=$lat,$lng(${memberName}+SOS)"
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP

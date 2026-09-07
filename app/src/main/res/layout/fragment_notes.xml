@@ -6,25 +6,145 @@
     android:layout_height="match_parent"
     android:background="@color/bg_primary">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvNotes"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="8dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="80dp"
-        android:clipToPadding="false"/>
+        android:orientation="vertical">
 
-    <TextView
+        <!-- ── Search + view toggle header ── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/bg_surface"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_logo_small"
+                android:alpha="0.85"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="10dp"
+                android:importantForAccessibility="no"/>
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardBackgroundColor="@color/bg_primary"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/bg_elevated"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="12dp">
+                    <ImageView android:layout_width="16dp" android:layout_height="16dp"
+                        android:src="@drawable/ic_search" app:tint="@color/text_muted"
+                        android:contentDescription="Search" android:layout_marginEnd="8dp"/>
+                    <EditText android:id="@+id/etNotesSearch"
+                        android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:hint="Search notes…" android:textSize="13sp"
+                        android:textColor="@color/text_primary" android:textColorHint="@color/text_muted"
+                        android:background="@null" android:inputType="text" android:maxLines="1"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Grid/List toggle -->
+            <ImageView android:id="@+id/btnToggleView"
+                android:layout_width="36dp" android:layout_height="36dp"
+                android:src="@drawable/ic_nav_more"
+                app:tint="@color/accent_cyan"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Toggle view"/>
+        </LinearLayout>
+
+        <!-- ── PINNED header ── -->
+        <TextView
+            android:id="@+id/tvPinnedHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PINNED"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:textColor="@color/text_muted"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="4dp"
+            android:visibility="gone"/>
+
+        <!-- ── OTHERS header (only shown when pinned notes also exist) ── -->
+        <TextView
+            android:id="@+id/tvOthersHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OTHERS"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:textColor="@color/text_muted"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:visibility="gone"/>
+
+        <!-- ── Notes RecyclerView ── -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNotes"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="80dp"
+            android:clipToPadding="false"/>
+
+    </LinearLayout>
+
+    <!-- Empty state — standard pattern: watermark, title, hint -->
+    <LinearLayout
         android:id="@+id/emptyState"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/note_empty_state"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
         android:gravity="center"
-        android:textSize="16sp"
-        android:textColor="@color/text_muted"
-        android:visibility="gone"/>
+        android:padding="32dp"
+        android:visibility="gone">
 
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_logo_small"
+            android:alpha="0.2"
+            android:layout_marginBottom="18dp"
+            android:importantForAccessibility="no"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_notes_title"
+            android:textAppearance="@style/TextAppearance.Family4.CardTitle"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_notes_hint"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:textColor="@color/text_muted"/>
+    </LinearLayout>
+
+    <!-- FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddNote"
         android:layout_width="wrap_content"

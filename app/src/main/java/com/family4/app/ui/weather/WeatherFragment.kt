@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.family4.app.databinding.FragmentWeatherBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -27,18 +28,22 @@ class WeatherFragment : Fragment() {
 
         binding.btnRefreshWeather.setOnClickListener { viewModel.refresh() }
 
+        // Re-render whenever the reading OR the unit preference changes, so the
+        // °C/°F toggle in Settings takes effect without a refetch.
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.weather.collectLatest { data ->
-                if (data != null) {
-                    binding.tvCityName.text       = data.cityName
-                    binding.tvTemperature.text    = "${data.tempC.toInt()}°C"
-                    binding.tvFeelsLike.text      = "Feels like ${data.feelsLikeC.toInt()}°"
-                    binding.tvDescription.text    = data.description.replaceFirstChar { it.uppercaseChar() }
-                    binding.tvHumidity.text       = "💧 ${data.humidity}%"
-                    binding.tvWindSpeed.text      = "💨 ${data.windKph} km/h"
-                    binding.tvWeatherIcon.text    = data.emoji
+            combine(viewModel.weather, viewModel.temperatureUnit) { data, unit -> data to unit }
+                .collectLatest { (data, unit) ->
+                    if (data != null) {
+                        binding.tvCityName.text    = data.cityName
+                        binding.tvTemperature.text = viewModel.formatTemperature(data.tempC, unit)
+                        binding.tvFeelsLike.text   =
+                            "Feels like " + viewModel.formatTemperature(data.feelsLikeC, unit, includeUnit = false)
+                        binding.tvDescription.text = data.description.replaceFirstChar { it.uppercaseChar() }
+                        binding.tvHumidity.text    = "💧 ${data.humidity}%"
+                        binding.tvWindSpeed.text   = "💨 " + viewModel.formatWind(data.windKph, unit)
+                        binding.tvWeatherIcon.text = data.emoji
+                    }
                 }
-            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

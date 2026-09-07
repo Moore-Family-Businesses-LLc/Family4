@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- ── Base application theme ─────────────────────────── -->
+    <!-- ── Base application theme — Hero/Corporate ────────── -->
     <style name="Theme.Family4" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/accent_cyan</item>
         <item name="colorPrimaryVariant">@color/accent_purple</item>
@@ -14,11 +14,20 @@
         <item name="colorOnBackground">@color/text_primary</item>
         <item name="colorError">@color/error_red</item>
         <item name="android:windowBackground">@color/bg_primary</item>
-        <item name="android:statusBarColor">@color/bg_primary</item>
-        <item name="android:navigationBarColor">@color/bg_surface</item>
+        <!-- Transparent bars — edge-to-edge handled via WindowInsets in code -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <!-- Typography scale — corporate weight + spacing -->
+        <item name="textAppearanceHeadline4">@style/TextAppearance.Family4.Hero</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Family4.SectionTitle</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Family4.CardTitle</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Family4.Body</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Family4.Caption</item>
         <item name="materialAlertDialogTheme">@style/Theme.Family4.Dialog</item>
+        <!-- Default card style -->
+        <item name="materialCardViewStyle">@style/Widget.Family4.Card</item>
     </style>
 
     <!-- ── No action bar ──────────────────────────────────── -->
@@ -35,33 +44,101 @@
 
     <!-- ── Alert Dialog ───────────────────────────────────── -->
     <style name="Theme.Family4.Dialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorSurface">@color/bg_surface</item>
+        <item name="colorSurface">@color/bg_elevated</item>
+        <item name="colorOnSurface">@color/text_primary</item>
     </style>
 
-    <!-- ── Card ───────────────────────────────────────────── -->
+    <!-- ── Card — elevated with cyan accent border ────────── -->
     <style name="Widget.Family4.Card" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/bg_card</item>
         <item name="cardCornerRadius">16dp</item>
-        <item name="cardElevation">2dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="strokeColor">@color/card_stroke</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- ── Section card (slightly more prominent) ─────────── -->
+    <style name="Widget.Family4.Card.Section" parent="Widget.Family4.Card">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">6dp</item>
     </style>
 
     <!-- ── FAB ────────────────────────────────────────────── -->
     <style name="Widget.Family4.Fab" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="backgroundTint">@color/accent_cyan</item>
         <item name="tint">@color/bg_primary</item>
+        <item name="elevation">8dp</item>
     </style>
 
     <!-- ── Bottom navigation ─────────────────────────────── -->
     <style name="Widget.Family4.BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemIconTint">@color/bottom_nav_selector</item>
         <item name="itemTextColor">@color/bottom_nav_selector</item>
+        <item name="itemIconSize">26dp</item>
+        <item name="android:background">@color/bg_surface</item>
     </style>
 
     <!-- ── PTT Button ────────────────────────────────────── -->
     <style name="Widget.Family4.PTTButton" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/accent_blue</item>
+        <item name="backgroundTint">@color/accent_cyan</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="cornerRadius">90dp</item>
+    </style>
+
+    <!-- ── Typography ────────────────────────────────────── -->
+    <style name="TextAppearance.Family4.Hero" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.03</item>
+    </style>
+    <style name="TextAppearance.Family4.SectionTitle" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+    <style name="TextAppearance.Family4.CardTitle" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Family4.Body" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+    <style name="TextAppearance.Family4.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/text_muted</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
+    <!-- ── Chip ──────────────────────────────────────────── -->
+    <style name="Widget.Family4.Chip.Filter" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="chipBackgroundColor">@color/bg_elevated</item>
+        <item name="chipStrokeColor">@color/card_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="checkedIconTint">@color/accent_cyan</item>
+    </style>
+
+    <!-- ── Section label — for ALL-CAPS group headers ─────── -->
+    <style name="TextAppearance.Family4.Label" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/text_muted</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.10</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ── Glass card — translucent panel over the navy field ── -->
+    <style name="Widget.Family4.Card.Glass" parent="Widget.Family4.Card">
+        <item name="cardBackgroundColor">@color/glass_surface</item>
+        <item name="strokeColor">@color/glass_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">20dp</item>
     </style>
 
 </resources>

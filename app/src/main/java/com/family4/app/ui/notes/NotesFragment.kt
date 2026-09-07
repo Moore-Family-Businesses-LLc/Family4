@@ -2,7 +2,6 @@ package com.family4.app.ui.notes
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.family4.app.R
 import com.family4.app.databinding.FragmentNotesBinding
+import com.family4.app.data.db.entity.NoteEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -25,7 +25,6 @@ class NotesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved: Bundle?): View {
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -33,17 +32,28 @@ class NotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupFab()
+        setupSearch()
         observeNotes()
     }
 
     private fun setupRecyclerView() {
         adapter = NotesAdapter(
             onNoteClick = { note ->
-                val action = NotesFragmentDirections.actionNotesToDetail(note.id)
-                findNavController().navigate(action)
+                findNavController().navigate(
+                    NotesFragmentDirections.actionNotesToDetail(note.id)
+                )
             },
             onNoteLongClick = { note ->
                 viewModel.togglePin(note)
+            },
+            onNotePin = { note ->
+                viewModel.togglePin(note)
+            },
+            onNoteDelete = { note ->
+                viewModel.deleteNote(note)
+            },
+            onNoteArchive = { note ->
+                viewModel.archiveNote(note)
             }
         )
         binding.rvNotes.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
@@ -52,33 +62,52 @@ class NotesFragment : Fragment() {
 
     private fun setupFab() {
         binding.fabAddNote.setOnClickListener {
-            val action = NotesFragmentDirections.actionNotesToDetail(-1L)
-            findNavController().navigate(action)
+            findNavController().navigate(
+                NotesFragmentDirections.actionNotesToDetail(-1L)
+            )
+        }
+    }
+
+    private fun setupSearch() {
+        binding.etNotesSearch.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.search(s?.toString() ?: "")
+            }
+            override fun afterTextChanged(s: android.text.Editable?) {}
+        })
+
+        // Grid / List toggle
+        var isGrid = true
+        binding.btnToggleView.setOnClickListener {
+            isGrid = !isGrid
+            binding.rvNotes.layoutManager = if (isGrid)
+                StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+            else
+                androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+            binding.btnToggleView.setImageResource(
+                if (isGrid) R.drawable.ic_nav_more else R.drawable.ic_grid
+            )
         }
     }
 
     private fun observeNotes() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.notes.collectLatest { notes ->
-                adapter.submitList(notes)
+                val hasPinned = notes.any { it.isPinned }
+                binding.tvPinnedHeader.visibility =
+                    if (hasPinned) android.view.View.VISIBLE else android.view.View.GONE
+                binding.tvOthersHeader.visibility =
+                    if (hasPinned && notes.any { !it.isPinned }) android.view.View.VISIBLE
+                    else android.view.View.GONE
+                // Pinned first, then unpinned — Keep's natural ordering
+                val sorted = notes.sortedWith(compareByDescending<NoteEntity> { it.isPinned }
+                    .thenByDescending { it.updatedAt })
+                adapter.submitList(sorted)
                 binding.emptyState.visibility =
-                    if (notes.isEmpty()) View.VISIBLE else View.GONE
+                    if (notes.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
             }
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_notes, menu)
-        val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?) = false
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.search(newText.orEmpty())
-                return true
-            }
-        })
     }
 
     override fun onDestroyView() {

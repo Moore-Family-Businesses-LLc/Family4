@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="12dp"
-    android:layout_marginVertical="6dp"
-    app:cardElevation="2dp">
+    android:layout_marginVertical="5dp"
+    app:cardElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,15 @@
         android:orientation="vertical"
         android:padding="14dp">
 
-        <!-- Author row -->
+        <!-- ── Post type strip (colored left border via start padding indicator) -->
+        <View
+            android:id="@+id/postTypeStrip"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/accent_blue"/>
+
+        <!-- ── Author row ────────────────────────────────────────────── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,22 +31,62 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="8dp">
 
+            <!-- Avatar circle with initials -->
             <TextView
-                android:id="@+id/tvAuthor"
+                android:id="@+id/tvAvatar"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/bg_avatar_circle"
+                android:layout_marginEnd="10dp"/>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textStyle="bold"
-                android:textColor="@color/accent_cyan"
-                android:textSize="14sp"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="11sp"
-                android:textColor="@color/text_secondary"
-                android:layout_marginEnd="10dp"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvAuthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"/>
+
+                    <!-- Post type badge -->
+                    <TextView
+                        android:id="@+id/tvPostType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="💬 Chat"
+                        android:textSize="10sp"
+                        android:textColor="@color/accent_cyan"
+                        android:background="@drawable/bg_chip_cyan"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_muted"
+                    android:layout_marginTop="1dp"/>
+
+            </LinearLayout>
 
             <!-- Pin icon -->
             <ImageView
@@ -60,6 +108,7 @@
                 android:contentDescription="Delete post"
                 android:alpha="0.5"
                 android:padding="2dp"/>
+
         </LinearLayout>
 
         <!-- Post content -->
@@ -70,44 +119,66 @@
             android:textColor="@color/text_primary"
             android:textSize="15sp"
             android:lineSpacingMultiplier="1.4"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="48dp"/>
 
-        <!-- Reaction bar -->
+        <!-- ── Reaction bar ──────────────────────────────────────────── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layout_marginStart="48dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnHeart"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="32dp"
                 android:text="❤️"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:minWidth="0dp"
-                android:paddingHorizontal="8dp"/>
+                android:paddingHorizontal="6dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnThumb"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="32dp"
                 android:text="👍"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:minWidth="0dp"
-                android:paddingHorizontal="8dp"/>
+                android:paddingHorizontal="6dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLaugh"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="32dp"
                 android:text="😂"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:minWidth="0dp"
-                android:paddingHorizontal="8dp"/>
+                android:paddingHorizontal="6dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFire"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="🔥"
+                android:textSize="16sp"
+                android:minWidth="0dp"
+                android:paddingHorizontal="6dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStar"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="⭐"
+                android:textSize="16sp"
+                android:minWidth="0dp"
+                android:paddingHorizontal="6dp"/>
 
             <TextView
                 android:id="@+id/tvReactions"

@@ -24,17 +24,21 @@
     <color name="text_muted">#FF8892B0</color>
     <color name="text_disabled">#FF4A5580</color>
 
-    <!-- ── Note color palette (Google Keep style) ────────── -->
-    <color name="note_white">#FFFFFFFF</color>
-    <color name="note_red">#FFFAAFA8</color>
-    <color name="note_orange">#FFF39F76</color>
-    <color name="note_yellow">#FFFFF8B8</color>
-    <color name="note_green">#FFE2F6D3</color>
-    <color name="note_teal">#FFB4DDD3</color>
-    <color name="note_blue">#FFAECCDC</color>
-    <color name="note_purple">#FFD3BFDB</color>
-    <color name="note_pink">#FFF28B82</color>
-    <color name="note_gray">#FFE9E9E9</color>
+    <!-- ── Note color palette (Google Keep dark-mode style) ─ -->
+    <color name="note_default">#FF1E2240</color>
+    <color name="note_white">#FF1E2240</color>
+    <color name="note_red">#FF77172E</color>
+    <color name="note_orange">#FF692B17</color>
+    <color name="note_yellow">#FF7C4A03</color>
+    <color name="note_green">#FF264D3B</color>
+    <color name="note_teal">#FF0D3B2E</color>
+    <color name="note_blue">#FF1E3A5F</color>
+    <color name="note_purple">#FF42275E</color>
+    <color name="note_pink">#FF6B1941</color>
+    <color name="note_gray">#FF232427</color>
+
+    <!-- ── Card stroke ───────────────────────────────────── -->
+    <color name="card_stroke">#1A00D4FF</color><!-- 10% cyan -->
 
     <!-- ── Status / Utility ──────────────────────────────── -->
     <color name="online_green">#FF00E096</color>
@@ -50,4 +54,18 @@
     <!-- Launcher icon background -->
     <color name="ic_launcher_background">#FF1A1A2E</color>
 
+    <!-- ── Gradient stops for hero backgrounds ───────────── -->
+    <color name="gradient_start">#FF1A1A2E</color>
+    <color name="gradient_mid">#FF16213E</color>
+    <color name="gradient_end">#FF0F3460</color>
+
+    <!-- ── Glow tints (PTT active, focus rings) ──────────── -->
+    <color name="glow_cyan">#4D00D4FF</color>
+    <color name="glow_purple">#4D7B2FFF</color>
+
+    <!-- ── Surface variants ──────────────────────────────── -->
+    <color name="bg_input">#FF1E2240</color>
+    <color name="bg_modal">#F21A1A2E</color>
+    <color name="glass_surface">#1A2D325A</color>
+    <color name="glass_stroke">#2600D4FF</color>
 </resources>

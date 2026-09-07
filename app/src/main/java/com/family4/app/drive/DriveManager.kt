@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION") // GoogleSignInAccount is deprecated in favour of Credential Manager; migration is a larger refactor
 package com.family4.app.drive
 
 import android.content.Context
@@ -194,6 +195,21 @@ class DriveManager @Inject constructor(
                 true
             } catch (e: Exception) {
                 Log.e(TAG, "Download failed: ${e.message}")
+                false
+            }
+        }
+
+    /**
+     * Renames a file in Drive.
+     */
+    suspend fun renameFile(driveFileId: String, newName: String): Boolean =
+        withContext(Dispatchers.IO) {
+            try {
+                val metadata = File().apply { name = newName }
+                driveService?.files()?.update(driveFileId, metadata)?.execute()
+                true
+            } catch (e: Exception) {
+                Log.e(TAG, "Rename failed: ${e.message}")
                 false
             }
         }

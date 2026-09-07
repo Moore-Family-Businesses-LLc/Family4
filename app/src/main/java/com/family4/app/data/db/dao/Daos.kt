@@ -93,14 +93,23 @@ interface AlbumDao {
     @Query("SELECT * FROM photo_albums ORDER BY createdAt DESC")
     fun getAllAlbums(): Flow<List<PhotoAlbumEntity>>
 
+    @Query("SELECT * FROM photo_albums ORDER BY createdAt DESC")
+    suspend fun getAllAlbumsOnce(): List<PhotoAlbumEntity>
+
     @Query("SELECT * FROM photos WHERE albumId = :albumId ORDER BY takenAt DESC")
     fun getPhotosInAlbum(albumId: Long): Flow<List<PhotoEntity>>
+
+    @Query("SELECT COUNT(*) FROM photos WHERE albumId = :albumId")
+    suspend fun getPhotoCount(albumId: Long): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAlbum(album: PhotoAlbumEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPhoto(photo: PhotoEntity)
+
+    @Query("UPDATE photo_albums SET coverUri = :uri WHERE id = :albumId")
+    suspend fun updateCover(albumId: Long, uri: String)
 
     @Delete
     suspend fun deleteAlbum(album: PhotoAlbumEntity)

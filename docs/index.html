@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Family4 — Private family safety, messaging & location for Android</title>
+<meta name="description" content="Family4 is a private, end-to-end encrypted family app for Android: secure chat, live location, push-to-talk walkie-talkie, shared calendar, notes, albums and emergency SOS — all in one.">
+<meta name="theme-color" content="#1A1A2E">
+<link rel="canonical" href="https://moore-family-businesses-llc.github.io/Family4/">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Family4 — Private family safety for Android">
+<meta property="og:description" content="End-to-end encrypted chat, live location, push-to-talk, shared calendar and emergency SOS. One app, no ads, no data resale.">
+<meta property="og:url" content="https://moore-family-businesses-llc.github.io/Family4/">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Inline SVG favicon: no external asset needed -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231A1A2E'/><path d='M32 12l18 10v20L32 52 14 42V22z' fill='none' stroke='%2300D4FF' stroke-width='4' stroke-linejoin='round'/><circle cx='32' cy='32' r='6' fill='%237B2FFF'/></svg>">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   Family4 — showcase page
+   Single file, zero dependencies, zero external requests.
+   Palette mirrors the Android app (res/values/colors.xml).
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --navy-900:#12131f;
+  --navy-800:#1A1A2E;
+  --navy-700:#1E2240;
+  --navy-600:#242844;
+  --navy-500:#2D325A;
+  --cyan:#00D4FF;
+  --purple:#7B2FFF;
+  --green:#00E096;
+  --amber:#FFAA00;
+  --red:#FF3D71;
+  --text:#FFFFFF;
+  --text-2:#CCD1E4;
+  --muted:#8892B0;
+  --dim:#4A5580;
+  --line:rgba(255,255,255,.09);
+  --radius:20px;
+  --shadow:0 24px 60px -20px rgba(0,0,0,.75);
+  --max:1180px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  font-family:var(--font);
+  background:var(--navy-800);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Ambient gradient wash */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(900px 600px at 12% -8%, rgba(0,212,255,.16), transparent 60%),
+    radial-gradient(800px 520px at 92% 6%, rgba(123,47,255,.18), transparent 62%),
+    radial-gradient(1000px 700px at 50% 108%, rgba(0,224,150,.08), transparent 60%);
+}
+
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+img,svg{max-width:100%}
+h1,h2,h3,h4{line-height:1.15;margin:0 0 .5em;letter-spacing:-.02em}
+p{margin:0 0 1em}
+
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cyan);font-weight:700;margin-bottom:14px;
+}
+.lead{font-size:18px;color:var(--text-2);max-width:62ch}
+.center{text-align:center}
+.center .lead{margin-inline:auto}
+
+/* ── Skip link (a11y) ───────────────────────────────────────────── */
+.skip{position:absolute;left:-9999px;top:0;background:var(--cyan);color:#08121e;padding:10px 16px;border-radius:0 0 10px 0;font-weight:700;z-index:200}
+.skip:focus{left:0}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+header{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(18,19,31,.72);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s ease, background .25s ease;
+}
+header.scrolled{border-bottom-color:var(--line);background:rgba(18,19,31,.9)}
+.nav{display:flex;align-items:center;gap:28px;height:66px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:17px;color:var(--text)}
+.brand:hover{text-decoration:none}
+.brand .mark{width:30px;height:30px;flex:0 0 30px}
+.nav-links{display:flex;gap:26px;margin-left:auto;align-items:center}
+.nav-links a{color:var(--text-2);font-size:14px;font-weight:500}
+.nav-links a:hover{color:var(--text);text-decoration:none}
+
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:12px 22px;border-radius:999px;
+  font-weight:650;font-size:14.5px;line-height:1;
+  border:1px solid transparent;cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  white-space:nowrap;
+}
+.btn:hover{text-decoration:none;transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(120deg,var(--cyan),#4FA8FF 55%,var(--purple));color:#08121e;box-shadow:0 10px 30px -10px rgba(0,212,255,.65)}
+.btn-primary:hover{box-shadow:0 16px 38px -12px rgba(0,212,255,.8)}
+.btn-ghost{border-color:var(--line);color:var(--text);background:rgba(255,255,255,.03)}
+.btn-ghost:hover{border-color:var(--cyan);background:rgba(0,212,255,.08)}
+.btn-sm{padding:9px 16px;font-size:13.5px}
+
+.menu-toggle{display:none;background:none;border:0;color:var(--text);padding:8px;cursor:pointer}
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero{padding:76px 0 90px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(38px,5.6vw,62px);font-weight:820;margin-bottom:20px}
+.hero h1 .grad{
+  background:linear-gradient(100deg,var(--cyan),#8FD3FF 40%,var(--purple));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.lead{font-size:19px;margin-bottom:30px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:26px}
+
+.badge-row{display:flex;flex-wrap:wrap;gap:10px}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 14px;border-radius:999px;
+  background:rgba(255,255,255,.045);border:1px solid var(--line);
+  font-size:12.5px;color:var(--text-2);font-weight:550;
+}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(0,224,150,.18)}
+
+/* ── Phone mockup ───────────────────────────────────────────────── */
+.phone-stage{position:relative;display:flex;justify-content:center;perspective:1400px}
+.phone{
+  position:relative;width:292px;height:600px;
+  border-radius:44px;padding:11px;
+  background:linear-gradient(160deg,#3a3f66,#181a2c 45%,#2a2e4d);
+  box-shadow:var(--shadow), 0 0 0 1px rgba(255,255,255,.07);
+  transform:rotateY(-13deg) rotateX(4deg) rotateZ(1deg);
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+  z-index:1;
+}
+.phone:hover{transform:rotateY(-4deg) rotateX(1deg)}
+.phone::after{ /* side button */
+  content:"";position:absolute;right:-3px;top:150px;width:3px;height:64px;border-radius:3px;background:#4a4f78;
+}
+.screen{
+  position:relative;height:100%;border-radius:34px;overflow:hidden;
+  background:var(--navy-800);
+  display:flex;flex-direction:column;
+}
+.notch{
+  position:absolute;top:9px;left:50%;transform:translateX(-50%);
+  width:78px;height:20px;border-radius:12px;background:#0b0c16;z-index:5;
+}
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px 6px;font-size:10px;color:var(--muted);font-weight:600}
+.app-body{flex:1;overflow:hidden;padding:6px 14px 0}
+.app-greet{font-size:17px;font-weight:750;margin:8px 0 2px}
+.app-sub{font-size:10.5px;color:var(--green);margin-bottom:12px}
+
+.avatars{display:flex;gap:9px;margin-bottom:11px}
+.av{width:38px;text-align:center}
+.av .circle{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:750;color:#fff;position:relative;
+}
+.av .circle.on::after{
+  content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--green);
+  animation:pulse 2.1s ease-in-out infinite;
+}
+.av span{display:block;font-size:9px;color:var(--muted);margin-top:5px}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.95}50%{transform:scale(1.14);opacity:.45}}
+
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{
+  background:linear-gradient(140deg,rgba(45,50,90,.55),rgba(30,34,64,.35));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:15px;padding:10px 10px;text-align:center;
+}
+.tile .ico{font-size:19px;display:block;margin-bottom:5px}
+.tile .lbl{font-size:9.5px;color:var(--text-2);font-weight:600}
+.tile.alarm{background:linear-gradient(140deg,rgba(255,61,113,.22),rgba(255,61,113,.08));border-color:rgba(255,61,113,.35)}
+.tile.alarm .lbl{color:#FF7C9E}
+
+.agenda{margin-top:11px;display:flex;flex-direction:column;gap:7px}
+.agenda-row{
+  display:flex;align-items:center;gap:9px;
+  background:rgba(45,50,90,.4);border:1px solid rgba(255,255,255,.06);
+  border-radius:11px;padding:8px 10px;
+}
+.agenda-row .bar{width:3px;height:22px;border-radius:2px;flex:0 0 3px}
+.agenda-row b{display:block;font-size:10.5px;font-weight:650}
+.agenda-row small{font-size:9px;color:var(--muted)}
+
+.app-nav{
+  display:flex;justify-content:space-around;align-items:center;
+  padding:9px 0 14px;border-top:1px solid var(--line);background:var(--navy-700);
+}
+.app-nav .n{position:relative;font-size:15px;opacity:.5}
+.app-nav .n.active{opacity:1}
+.app-nav .n .badge{
+  position:absolute;top:-5px;right:-9px;min-width:15px;height:15px;
+  border-radius:999px;background:var(--cyan);color:#08121e;
+  font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px;
+}
+
+/* Floating glass cards beside the phone */
+.float{
+  position:absolute;padding:12px 15px;border-radius:15px;
+  background:rgba(36,40,68,.75);border:1px solid var(--line);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 16px 34px -18px rgba(0,0,0,.85);
+  font-size:12px;display:flex;align-items:center;gap:11px;
+  animation:bob 6s ease-in-out infinite;
+  white-space:nowrap;z-index:4;
+}
+.float b{display:block;font-size:12.5px}
+.float small{color:var(--muted);font-size:10.5px}
+.float-1{top:2px;left:-54px;animation-delay:-1s}
+.float-2{bottom:104px;right:-46px;animation-delay:-3.4s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+@media (prefers-reduced-motion:reduce){
+  .float,.av .circle.on::after{animation:none}
+  .phone{transform:none}
+}
+.float .ic{
+  width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 32px;
+}
+
+/* ── Trust strip ────────────────────────────────────────────────── */
+.strip{border-block:1px solid var(--line);background:rgba(255,255,255,.02)}
+.strip-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:26px 0}
+.stat{text-align:center}
+.stat b{display:block;font-size:26px;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+
+/* ── Sections ───────────────────────────────────────────────────── */
+section{padding:88px 0;scroll-margin-top:86px}
+#top{scroll-margin-top:86px}
+.section-head{max-width:720px;margin-bottom:48px}
+.section-head.center{margin-inline:auto}
+h2{font-size:clamp(28px,3.6vw,42px);font-weight:800}
+
+/* Feature cards */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:18px}
+.card{
+  position:relative;padding:26px 24px;border-radius:var(--radius);
+  background:linear-gradient(150deg,rgba(45,50,90,.42),rgba(30,34,64,.28));
+  border:1px solid var(--line);
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+  overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;inset:0 0 auto 0;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  opacity:0;transition:opacity .25s ease;
+}
+.card:hover{transform:translateY(-5px);border-color:rgba(0,212,255,.35);box-shadow:0 22px 44px -26px rgba(0,212,255,.5)}
+.card:hover::before{opacity:1}
+.card .ic{
+  width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-size:21px;margin-bottom:15px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
+}
+.card h3{font-size:17px;margin-bottom:8px}
+.card p{font-size:14px;color:var(--muted);margin:0}
+.card .tag{
+  position:absolute;top:18px;right:18px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:750;padding:4px 9px;border-radius:999px;
+}
+.tag-live{background:rgba(0,224,150,.14);color:var(--green);border:1px solid rgba(0,224,150,.3)}
+.tag-soon{background:rgba(255,170,0,.12);color:var(--amber);border:1px solid rgba(255,170,0,.28)}
+
+/* Alternating deep-dive rows */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-bottom:96px}
+.split:last-child{margin-bottom:0}
+.split.rev .visual{order:-1}
+.split h3{font-size:clamp(22px,2.6vw,30px)}
+.checks{list-style:none;padding:0;margin:22px 0 0}
+.checks li{display:flex;gap:12px;align-items:flex-start;margin-bottom:13px;font-size:14.5px;color:var(--text-2)}
+.checks svg{flex:0 0 19px;margin-top:3px}
+
+.panel{
+  border-radius:var(--radius);border:1px solid var(--line);
+  background:linear-gradient(150deg,rgba(45,50,90,.5),rgba(26,26,46,.6));
+  padding:22px;box-shadow:var(--shadow);
+}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.panel-title{font-size:13px;font-weight:700;letter-spacing:.04em}
+.chip{font-size:10px;padding:4px 10px;border-radius:999px;background:rgba(0,212,255,.12);color:var(--cyan);border:1px solid rgba(0,212,255,.25);font-weight:700}
+
+/* Chat mock */
+.bubble{max-width:78%;padding:10px 13px;border-radius:15px;font-size:13px;margin-bottom:9px;line-height:1.45}
+.bubble.them{background:var(--navy-500);border-bottom-left-radius:5px}
+.bubble.me{background:linear-gradient(120deg,#D9F3FF,#EAF6FF);color:#16213E;margin-left:auto;border-bottom-right-radius:5px}
+.bubble .meta{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:9.5px;color:#5b6478;margin-top:4px}
+.bubble.them .meta{color:#A9B2CC;justify-content:flex-start}
+.daypill{display:block;width:fit-content;margin:0 auto 12px;font-size:10px;color:var(--muted);background:rgba(45,50,90,.5);padding:4px 12px;border-radius:999px}
+
+/* PTT mock */
+.ptt-wrap{text-align:center;padding:8px 0 4px}
+.ptt{
+  width:112px;height:112px;border-radius:50%;margin:14px auto 12px;
+  background:radial-gradient(circle at 32% 28%, #6FE3FF, #0F84C4 60%, #0B4E77);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#04202f;letter-spacing:.06em;
+  box-shadow:0 0 0 10px rgba(0,212,255,.09), 0 0 44px rgba(0,212,255,.4);
+}
+.wave{display:flex;align-items:flex-end;justify-content:center;gap:3px;height:34px;margin-bottom:8px}
+.wave i{width:3px;background:linear-gradient(180deg,var(--cyan),var(--purple));border-radius:2px;animation:eq 1.1s ease-in-out infinite}
+@keyframes eq{0%,100%{height:22%}50%{height:100%}}
+@media (prefers-reduced-motion:reduce){.wave i{animation:none;height:55%}}
+.meters{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:8px}
+
+/* Map mock */
+.mapmock{position:relative;height:224px;border-radius:14px;overflow:hidden;background:#101a33;border:1px solid var(--line)}
+.mapmock .road{position:absolute;background:rgba(255,255,255,.06)}
+.marker{position:absolute;transform:translate(-50%,-50%);text-align:center}
+.marker .p{width:30px;height:30px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,0,0,.5)}
+.marker .p b{transform:rotate(45deg);font-size:11px;color:#fff;font-weight:800}
+.marker small{display:block;margin-top:7px;font-size:9.5px;color:var(--text-2);background:rgba(18,19,31,.8);padding:2px 7px;border-radius:6px}
+
+/* Security */
+.sec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.sec{padding:24px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+.sec h3{font-size:15px;margin-bottom:7px;display:flex;align-items:center;gap:9px}
+.sec p{font-size:13.5px;color:var(--muted);margin:0}
+.sec code{font-family:var(--mono);font-size:12px;color:var(--cyan);background:rgba(0,212,255,.08);padding:1px 6px;border-radius:5px}
+
+/* Stack */
+.stack{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.stack span{
+  font-family:var(--mono);font-size:12.5px;padding:9px 15px;border-radius:10px;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text-2);
+  transition:border-color .2s ease,color .2s ease;
+}
+.stack span:hover{border-color:rgba(0,212,255,.4);color:var(--cyan)}
+
+/* Roadmap */
+.road-list{position:relative;padding-left:34px;margin-top:36px}
+.road-list::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--cyan),var(--purple),transparent)}
+.milestone{position:relative;margin-bottom:30px}
+.milestone::before{
+  content:"";position:absolute;left:-30px;top:5px;width:12px;height:12px;border-radius:50%;
+  background:var(--navy-800);border:2px solid var(--cyan);
+}
+.milestone.done::before{background:var(--green);border-color:var(--green)}
+.milestone.next::before{background:var(--amber);border-color:var(--amber)}
+.milestone h3{font-size:16px;margin-bottom:5px}
+.milestone p{font-size:14px;color:var(--muted);margin:0}
+.milestone .when{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:3px}
+
+/* FAQ */
+details{
+  border:1px solid var(--line);border-radius:14px;padding:0 20px;margin-bottom:12px;
+  background:rgba(255,255,255,.025);transition:border-color .2s ease;
+}
+details[open]{border-color:rgba(0,212,255,.3)}
+summary{
+  cursor:pointer;padding:18px 0;font-weight:650;font-size:15.5px;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:22px;color:var(--cyan);font-weight:400;line-height:1}
+details[open] summary::after{content:"−"}
+details p{font-size:14.5px;color:var(--muted);padding-bottom:18px;margin:0}
+
+/* CTA */
+.cta{
+  border-radius:26px;padding:60px 40px;text-align:center;
+  background:linear-gradient(140deg,rgba(0,212,255,.12),rgba(123,47,255,.14));
+  border:1px solid rgba(0,212,255,.24);
+}
+.cta h2{margin-bottom:14px}
+.cta .btn{margin:6px}
+
+/* Footer */
+footer{border-top:1px solid var(--line);padding:44px 0 34px;color:var(--muted);font-size:13.5px}
+.foot-grid{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+.foot-links{display:flex;flex-wrap:wrap;gap:22px}
+.foot-links a{color:var(--muted)}
+.foot-links a:hover{color:var(--cyan)}
+
+/* Reveal on scroll */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+
+/* ── Accessibility: visible keyboard focus everywhere ─────────────── */
+:where(a,button,summary,details,[tabindex]):focus-visible{
+  outline:3px solid var(--cyan);
+  outline-offset:3px;
+  border-radius:8px;
+}
+/* Comfortable hit areas — WCAG 2.2 target size (minimum) is 24px; we use 44px. */
+.btn,.tab,.copy-btn,.to-top,.menu-toggle{min-height:44px}
+.nav-links a{display:inline-flex;align-items:center;min-height:44px}
+.foot-links a{display:inline-flex;align-items:center;min-height:44px}
+summary{min-height:52px}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+/* ── Section CTA row ──────────────────────────────────────────────── */
+.section-cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:44px}
+.section-cta.start{justify-content:flex-start}
+
+/* ── Screen tour: capability groups ───────────────────────────────── */
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.group{
+  border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+  background:linear-gradient(150deg,rgba(45,50,90,.34),rgba(30,34,64,.22));
+}
+.group h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+.group ul{list-style:none;padding:0;margin:0}
+.group li{
+  display:flex;align-items:flex-start;gap:12px;padding:10px 0;
+  border-top:1px solid rgba(255,255,255,.05);font-size:14px;
+}
+.group li:first-child{border-top:0}
+.group li .g-ic{flex:0 0 24px;font-size:16px;line-height:1.4}
+.group li b{display:block;font-weight:650;font-size:14.5px}
+.group li small{color:var(--muted);font-size:12.5px;line-height:1.5;display:block}
+
+/* ── Steps ────────────────────────────────────────────────────────── */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;counter-reset:step}
+.step{
+  position:relative;padding:28px 24px 24px;border-radius:var(--radius);
+  border:1px solid var(--line);background:rgba(255,255,255,.025);
+}
+.step::before{
+  counter-increment:step;content:counter(step);
+  position:absolute;top:-17px;left:24px;
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:15px;color:#08121e;
+  background:linear-gradient(120deg,var(--cyan),var(--purple));
+}
+.step h3{font-size:16.5px;margin:8px 0 8px}
+.step p{font-size:14px;color:var(--muted);margin:0}
+
+/* ── Data tables (permissions, requirements, comparison) ──────────── */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.02)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+caption{text-align:left;padding:16px 20px 0;color:var(--muted);font-size:13px}
+th,td{padding:14px 20px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cyan);font-weight:750;background:rgba(0,212,255,.05);
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+td b{font-weight:650}
+td small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
+.yes{color:var(--green);font-weight:750}
+.no{color:#FF7C9E;font-weight:750}  /* lighter than --red: clears 4.5:1 on table rows */
+.req{display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;font-weight:700}
+.req-need{background:rgba(255,170,0,.14);color:var(--amber);border:1px solid rgba(255,170,0,.3)}
+.req-opt{background:rgba(0,224,150,.12);color:var(--green);border:1px solid rgba(0,224,150,.28)}
+
+/* ── Code blocks with copy buttons ────────────────────────────────── */
+.code{
+  position:relative;font-family:var(--mono);font-size:13px;
+  background:#0d0e18;border:1px solid var(--line);border-radius:14px;
+  padding:16px 58px 16px 18px;margin:12px 0 0;color:#C7F5FF;
+  overflow-x:auto;white-space:pre;line-height:1.6;
+}
+.copy-btn{
+  position:absolute;top:9px;right:9px;min-width:44px;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.28);
+  color:var(--cyan);border-radius:9px;padding:0 12px;font-size:12px;font-weight:650;
+  cursor:pointer;transition:background .18s ease;font-family:var(--font);
+}
+.copy-btn:hover{background:rgba(0,212,255,.2)}
+.copy-btn.done{background:rgba(0,224,150,.18);border-color:rgba(0,224,150,.4);color:var(--green)}
+
+/* ── Support cards ────────────────────────────────────────────────── */
+.support{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.support-card{
+  display:flex;flex-direction:column;gap:10px;padding:26px 24px;border-radius:var(--radius);
+  border:1px solid var(--line);background:rgba(255,255,255,.025);
+  transition:border-color .22s ease,transform .22s ease;
+}
+.support-card:hover{border-color:rgba(0,212,255,.35);transform:translateY(-4px);text-decoration:none}
+.support-card .ic{font-size:23px}
+.support-card b{font-size:15.5px;color:var(--text)}
+.support-card span{font-size:13.5px;color:var(--muted)}
+.support-card .go{font-size:13px;color:var(--cyan);font-weight:650;margin-top:auto}
+
+/* ── Back to top ──────────────────────────────────────────────────── */
+.to-top{
+  position:fixed;right:22px;bottom:22px;z-index:90;
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(36,40,68,.92);border:1px solid var(--line);color:var(--text);
+  cursor:pointer;opacity:0;pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease,border-color .2s ease;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.to-top.show{opacity:1;pointer-events:auto}
+.to-top:hover{border-color:var(--cyan);transform:translateY(-3px)}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width:1180px) and (min-width:941px){
+  /* Between the desktop and stacked layouts the hero column is narrow —
+     pull the floating cards inside it so the page never scrolls sideways. */
+  .float-1{left:-6px}
+  .float-2{right:-6px}
+  .float{font-size:11.5px}
+}
+@media (max-width:940px){
+  .hero-grid,.split{grid-template-columns:1fr;gap:44px}
+  .split.rev .visual{order:0}
+  .strip-inner{grid-template-columns:repeat(2,1fr);gap:26px}
+  .nav-links{display:none}
+  .nav-links.open{
+    display:flex;position:absolute;top:66px;left:0;right:0;
+    flex-direction:column;align-items:flex-start;gap:0;
+    background:rgba(18,19,31,.98);border-bottom:1px solid var(--line);padding:10px 24px 20px;
+  }
+  .nav-links.open a{padding:13px 0;width:100%;border-bottom:1px solid var(--line)}
+  .nav-links.open .btn{margin-top:14px}
+  .menu-toggle{display:block;margin-left:auto}
+  .float-1{left:-2px;top:26px}
+  .float-2{right:-2px}
+}
+@media (max-width:520px){
+  section{padding:64px 0}
+  .group,.step,.support-card{padding:22px 18px}
+  .code{font-size:12px;padding:14px 52px 14px 14px}
+  .to-top{right:14px;bottom:14px}
+  .hero{padding:52px 0 66px}
+  .cta{padding:44px 22px}
+  .float{display:none}
+  .phone{width:262px;height:544px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header id="siteHeader">
+  <div class="wrap nav">
+    <a class="brand" href="#top" tabindex="0">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#1A1A2E"/>
+        <path d="M32 12l18 10v20L32 52 14 42V22z" fill="none" stroke="#00D4FF" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="32" cy="32" r="6" fill="#7B2FFF"/>
+      </svg>
+      Family4
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+    </button>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#screens">Screens</a>
+      <a href="#security">Security</a>
+      <a href="#install">Install</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-primary btn-sm" href="https://github.com/Moore-Family-Businesses-LLc/Family4">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Android&nbsp;13+ &middot; Private by design</div>
+      <h1>Everything your family needs.<br><span class="grad">Nothing anyone else can read.</span></h1>
+      <p class="lead">
+        Family4 puts encrypted messaging, live location, push-to-talk radio, a shared
+        calendar and emergency SOS into one app — built for families who would rather
+        not hand their whereabouts to an ad network.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://github.com/Moore-Family-Businesses-LLc/Family4/releases">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 12l5 5 5-5M5 21h14"/></svg>
+          Download the APK
+        </a>
+        <a class="btn btn-ghost" href="#features">Take the tour</a>
+      </div>
+      <div class="badge-row">
+        <span class="pill"><span class="dot"></span>AES-256-GCM end-to-end</span>
+        <span class="pill">No ads &middot; no trackers</span>
+        <span class="pill">Local-first storage</span>
+      </div>
+    </div>
+
+    <!-- Phone mockup: pure HTML/CSS, no image assets -->
+    <div class="phone-stage">
+      <div class="float float-1">
+        <span class="ic" style="background:rgba(0,224,150,.16);color:#00E096">&#128205;</span>
+        <span><b>Emma arrived</b><small>Lincoln Elementary &middot; 3:04 PM</small></span>
+      </div>
+      <div class="float float-2">
+        <span class="ic" style="background:rgba(123,47,255,.18);color:#B98CFF">&#128251;</span>
+        <span><b>Channel 7 open</b><small>3 radios connected</small></span>
+      </div>
+
+      <div class="phone" role="img" aria-label="Family4 dashboard showing family members, quick actions and the bottom navigation bar">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="status-bar"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679; &nbsp;&#9646;</span></div>
+          <div class="app-body">
+            <div class="app-greet">Good morning, Moores &#128075;</div>
+            <div class="app-sub">4 online &middot; 2 events today</div>
+
+            <div class="avatars">
+              <div class="av"><div class="circle on" style="background:#00738C">PM</div><span>Paul</span></div>
+              <div class="av"><div class="circle on" style="background:#5B32B8">SM</div><span>Sara</span></div>
+              <div class="av"><div class="circle on" style="background:#A32C63">EM</div><span>Emma</span></div>
+              <div class="av"><div class="circle" style="background:#16705A">JM</div><span>Jake</span></div>
+            </div>
+
+            <div class="tiles">
+              <div class="tile"><span class="ico">&#128172;</span><span class="lbl">Chat</span></div>
+              <div class="tile"><span class="ico">&#128506;&#65039;</span><span class="lbl">Map</span></div>
+              <div class="tile"><span class="ico">&#128251;</span><span class="lbl">Walkie</span></div>
+              <div class="tile"><span class="ico">&#128197;</span><span class="lbl">Calendar</span></div>
+              <div class="tile"><span class="ico">&#128221;</span><span class="lbl">Notes</span></div>
+              <div class="tile alarm"><span class="ico">&#128680;</span><span class="lbl">SOS</span></div>
+            </div>
+
+            <div class="agenda">
+              <div class="agenda-row"><span class="bar" style="background:#00D4FF"></span>
+                <span><b>Soccer practice</b><small>5:00 PM &middot; Field 3</small></span></div>
+            </div>
+          </div>
+          <div class="app-nav">
+            <span class="n active">&#127968;</span>
+            <span class="n">&#128172;<span class="badge">3</span></span>
+            <span class="n">&#128247;</span>
+            <span class="n">&#128506;&#65039;</span>
+            <span class="n">&#9776;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TRUST STRIP ═══════════ -->
+<div class="strip">
+  <div class="wrap strip-inner">
+    <div class="stat"><b>19</b><span>Screens</span></div>
+    <div class="stat"><b>256</b><span>Bit encryption</span></div>
+    <div class="stat"><b>0</b><span>Ads or trackers</span></div>
+    <div class="stat"><b>100%</b><span>On-device data</span></div>
+  </div>
+</div>
+
+<!-- ═══════════ FEATURES ═══════════ -->
+<section id="features">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">One app, not seven</div>
+      <h2>Built for the way families actually coordinate</h2>
+      <p class="lead">Every feature runs against the same local database, so the map, the calendar and the chat all agree with each other — online or off.</p>
+    </div>
+
+    <div class="features">
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#128274;</div><h3>Encrypted chat</h3>
+        <p>Messages are sealed with AES-256-GCM using a key held in the Android Keystore. Delivery ticks, day separators and message grouping included.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#128506;&#65039;</div><h3>Family map</h3>
+        <p>A custom dark map style with member pins, presence colours, search, satellite and terrain modes — not a generic Google embed.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#128251;</div><h3>Push-to-talk radio</h3>
+        <p>Real walkie-talkie over UDP with a TURN relay, AES-encrypted packets, noise suppression, squelch, signal bars and 99 channels.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#128680;</div><h3>Emergency SOS</h3>
+        <p>Hold three seconds to broadcast your location to everyone, with an optional automatic call to your emergency contact.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#128197;</div><h3>Shared calendar</h3>
+        <p>Full-month grid with colour-coded events, all-day toggle, locations and a Today jump — the whole household on one page.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#128204;</div><h3>Family board</h3>
+        <p>A bulletin board with five post types, reactions, pinning and author avatars — for the things that don't belong in a chat thread.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#128247;</div><h3>Camera &amp; albums</h3>
+        <p>CameraX capture with HDR and night mode, plus shared albums that keep family photos out of a public cloud roll.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#128221;</div><h3>Notes &amp; tasks</h3>
+        <p>Keep-style colour-coded notes with pinning and search, and a task list with priorities that surfaces on the home screen.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#129302;</div><h3>FamilyBot AI</h3>
+        <p>An in-app assistant that can create events, add tasks and jump you to the right screen instead of just answering questions.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-live">Live</span>
+        <div class="ic">&#10084;&#65039;</div><h3>Health &amp; wellness</h3>
+        <p>Steps, heart rate, sleep, hydration and mood per family member, ready to bind to Health Connect.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-soon">Next</span>
+        <div class="ic">&#9729;&#65039;</div><h3>Drive backup</h3>
+        <p>A six-hour background worker that archives your family data to your own Google Drive folder — your account, your copy.</p>
+      </article>
+      <article class="card reveal"><span class="tag tag-soon">Next</span>
+        <div class="ic">&#8986;</div><h3>Wear OS companion</h3>
+        <p>SOS, push-to-talk and arrival alerts from the wrist, for the family members who don't carry a phone in hand.</p>
+      </article>
+    </div>
+
+    <div class="section-cta reveal">
+      <a class="btn btn-ghost" href="#screens">Browse all 19 screens</a>
+      <a class="btn btn-ghost" href="#compare">How it compares</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SCREEN INVENTORY ═══════════ -->
+<section id="screens">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">The whole app</div>
+      <h2>Nineteen screens, five jobs</h2>
+      <p class="lead">Family4 replaces a group chat, a location app, a shared calendar and a task list — so nobody has to remember which app the answer was in.</p>
+    </div>
+
+    <div class="groups">
+      <div class="group reveal">
+        <h3>Everyday coordination</h3>
+        <ul>
+          <li><span class="g-ic" aria-hidden="true">&#127968;</span><span><b>Dashboard</b><small>Live member count, today's events, open tasks and quick-action tiles.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128204;</span><span><b>Family board</b><small>Five post types, reactions, pinning, author avatars and relative timestamps.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128197;</span><span><b>Calendar</b><small>Month grid, colour-coded events, all-day toggle, locations, Today jump.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#9989;</span><span><b>Tasks</b><small>Active and completed lists with priorities and one-tap completion.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128221;</span><span><b>Notes + note editor</b><small>Staggered grid, pinning, inline search, grid/list toggle, ten note colours.</small></span></li>
+        </ul>
+      </div>
+
+      <div class="group reveal">
+        <h3>Communication</h3>
+        <ul>
+          <li><span class="g-ic" aria-hidden="true">&#128172;</span><span><b>Chat list</b><small>Every family member with presence rings and encrypted-thread indicators.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128274;</span><span><b>Conversation</b><small>AES-256-GCM messages, delivery ticks, day separators, sender grouping.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128251;</span><span><b>Walkie-talkie</b><small>99 channels, channel lock, squelch, noise suppression, signal bars, TX timer.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#129302;</span><span><b>FamilyBot AI</b><small>An assistant that creates events and tasks and navigates the app for you.</small></span></li>
+        </ul>
+      </div>
+
+      <div class="group reveal">
+        <h3>Safety &amp; location</h3>
+        <ul>
+          <li><span class="g-ic" aria-hidden="true">&#128506;&#65039;</span><span><b>Family map</b><small>Custom dark styling, member chips, address search, four map types.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128680;</span><span><b>Emergency SOS</b><small>Three-second hold, location broadcast, optional auto-call.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#10084;&#65039;</span><span><b>Health</b><small>Steps, heart rate, calories, sleep, hydration and mood per member.</small></span></li>
+        </ul>
+      </div>
+
+      <div class="group reveal">
+        <h3>Capture &amp; storage</h3>
+        <ul>
+          <li><span class="g-ic" aria-hidden="true">&#128247;</span><span><b>Camera</b><small>CameraX with HDR, night mode, pinch zoom, flash modes, photo and video.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128444;&#65039;</span><span><b>Albums</b><small>Two-column shared grid with photo counts and delete confirmation.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128193;</span><span><b>Files</b><small>Drive-backed storage with a usage bar and live category filters.</small></span></li>
+        </ul>
+      </div>
+
+      <div class="group reveal">
+        <h3>Setup &amp; system</h3>
+        <ul>
+          <li><span class="g-ic" aria-hidden="true">&#9881;&#65039;</span><span><b>Settings</b><small>Theme, font size, °C/°F, PIN, biometrics, retention, channel, intervals.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#127780;&#65039;</span><span><b>Weather</b><small>Local conditions in your unit, with wind and humidity.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#9776;</span><span><b>More</b><small>A thirteen-tile launcher for everything outside the bottom bar.</small></span></li>
+          <li><span class="g-ic" aria-hidden="true">&#128075;</span><span><b>Splash &amp; onboarding</b><small>Animated brand entry, then sign-in and family setup.</small></span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-cta reveal">
+      <a class="btn btn-primary" href="#install">Install it now</a>
+      <a class="btn btn-ghost" href="#closer">See how the big ones work</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DEEP DIVES ═══════════ -->
+<section id="closer">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Closer look</div>
+      <h2>The three features families actually open daily</h2>
+    </div>
+
+    <div class="split reveal">
+      <div>
+        <div class="eyebrow">Messaging</div>
+        <h3>Conversations that stay in the family</h3>
+        <p class="lead">Every message is encrypted before it touches storage. Ciphertext and initialisation vector are what live in the database — the plaintext exists only on screen.</p>
+        <ul class="checks">
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>AES-256-GCM with keys generated in the hardware-backed Android Keystore</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Sent / delivered / read ticks and day separators, grouped by sender</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Retention you choose: 7, 30 or 90 days — or keep everything</span></li>
+        </ul>
+      </div>
+      <div class="visual">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Sara &middot; Family</span><span class="chip">&#128274; Encrypted</span></div>
+          <span class="daypill">Today</span>
+          <div class="bubble them">Practice got moved to 5. Can you grab Emma?<div class="meta">4:12 PM</div></div>
+          <div class="bubble me">On it — leaving the shop now.<div class="meta">4:13 PM &#10003;&#10003;</div></div>
+          <div class="bubble me">Radio me if the field changes.<div class="meta">4:13 PM &#10003;&#10003;</div></div>
+          <div class="bubble them">Will do &#128077;<div class="meta">4:15 PM</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="split rev reveal">
+      <div>
+        <div class="eyebrow">Push-to-talk</div>
+        <h3>A real radio, not a voice note</h3>
+        <p class="lead">Hold the button and talk. Audio streams as encrypted UDP packets over your network or a TURN relay — no recording, no upload, nothing left behind on a server.</p>
+        <ul class="checks">
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>99 channels with a channel lock so nobody drifts mid-transmission</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Hardware noise suppression plus an adjustable squelch gate</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Live signal bars, peer count and a transmission timer</span></li>
+        </ul>
+      </div>
+      <div class="visual">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Channel 7 &middot; LOCKED</span><span class="chip">3 peers</span></div>
+          <div class="ptt-wrap">
+            <div class="wave" aria-hidden="true">
+              <i style="animation-delay:0s"></i><i style="animation-delay:.09s"></i><i style="animation-delay:.18s"></i>
+              <i style="animation-delay:.27s"></i><i style="animation-delay:.36s"></i><i style="animation-delay:.45s"></i>
+              <i style="animation-delay:.54s"></i><i style="animation-delay:.63s"></i><i style="animation-delay:.72s"></i>
+              <i style="animation-delay:.81s"></i><i style="animation-delay:.9s"></i><i style="animation-delay:.99s"></i>
+              <i style="animation-delay:1.08s"></i><i style="animation-delay:1.17s"></i><i style="animation-delay:1.26s"></i>
+            </div>
+            <div class="ptt">HOLD<br>TO TALK</div>
+            <div class="meters"><span>Signal &#9646;&#9646;&#9646;&#9646;</span><span>TX 0:07</span><span>Squelch 4</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="split reveal">
+      <div>
+        <div class="eyebrow">Location</div>
+        <h3>Know everyone got there safely</h3>
+        <p class="lead">A purpose-built dark map with member pins, presence colours and an update interval you control — 30 seconds when it matters, five minutes when it doesn't.</p>
+        <ul class="checks">
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Normal, satellite, hybrid and terrain views with address search</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Location sharing is a switch — off means off, per device</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00E096" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Snapshots stay on the device and age out automatically</span></li>
+        </ul>
+      </div>
+      <div class="visual">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Family map</span><span class="chip">4 sharing</span></div>
+          <div class="mapmock" role="img" aria-label="Stylised dark map with four family member pins">
+            <div class="road" style="left:0;right:0;top:38%;height:9px"></div>
+            <div class="road" style="left:0;right:0;top:71%;height:5px"></div>
+            <div class="road" style="top:0;bottom:0;left:29%;width:7px"></div>
+            <div class="road" style="top:0;bottom:0;left:68%;width:5px"></div>
+            <div class="marker" style="left:29%;top:38%"><div class="p" style="background:#00738C"><b>PM</b></div><small>Shop</small></div>
+            <div class="marker" style="left:68%;top:24%"><div class="p" style="background:#5B32B8"><b>SM</b></div><small>Office</small></div>
+            <div class="marker" style="left:47%;top:71%"><div class="p" style="background:#A32C63"><b>EM</b></div><small>School</small></div>
+            <div class="marker" style="left:82%;top:60%"><div class="p" style="background:#16705A"><b>JM</b></div><small>Home</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ SECURITY ═══════════ -->
+<section id="security">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Security posture</div>
+      <h2>Private because of how it is built</h2>
+      <p class="lead">Not a marketing promise — these are the mechanisms in the codebase.</p>
+    </div>
+    <div class="sec-grid">
+      <div class="sec reveal"><h3>&#128273; Hardware-backed keys</h3><p>Message keys are generated and held in the Android Keystore, so they never appear in app memory as raw material you could dump.</p></div>
+      <div class="sec reveal"><h3>&#128274; Encrypted at rest</h3><p>Chat rows store ciphertext and an IV. A stolen database file yields <code>[encrypted]</code>, not conversations.</p></div>
+      <div class="sec reveal"><h3>&#128225; Encrypted in transit</h3><p>Push-to-talk audio packets are encrypted before they hit the socket, whether they travel over your LAN or a TURN relay.</p></div>
+      <div class="sec reveal"><h3>&#35;&#65039;&#8419; Hashed app PIN</h3><p>The unlock PIN is stored as a <code>PBKDF2-HMAC-SHA256</code> digest with a per-PIN salt and 120,000 iterations — never in plaintext.</p></div>
+      <div class="sec reveal"><h3>&#128465;&#65039; Retention you control</h3><p>Pick 7, 30 or 90 days and older messages are swept from the database. "Clear history" actually deletes rows.</p></div>
+      <div class="sec reveal"><h3>&#128683; No third-party analytics</h3><p>No ad SDKs, no behavioural tracking, no data brokerage. The backup destination is your own Drive folder.</p></div>
+    </div>
+
+    <div class="section-cta reveal">
+      <a class="btn btn-ghost" href="#permissions">See every permission and why</a>
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4">Audit the source</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ COMPARISON ═══════════ -->
+<section id="compare">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Why build it at all</div>
+      <h2>What you give up with the usual family app</h2>
+      <p class="lead">Most family-locator apps are free because your family's movements are the product, and the useful half is behind a subscription.</p>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <caption>Family4 compared with typical subscription family-locator apps.</caption>
+        <thead>
+          <tr><th scope="col">Capability</th><th scope="col">Family4</th><th scope="col">Typical family-locator app</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Monthly subscription</th><td><span class="yes">None</span><small>Install and run it</small></td><td>Premium tier for history, alerts and extra members</td></tr>
+          <tr><th scope="row">Ads and data resale</th><td><span class="yes">None</span><small>No ad SDK is linked into the build</small></td><td>Common — location data has resale value</td></tr>
+          <tr><th scope="row">Message encryption</th><td><span class="yes">AES-256-GCM</span><small>Keys in the Android Keystore</small></td><td>Usually server-side only, readable by the vendor</td></tr>
+          <tr><th scope="row">Where data lives</th><td><span class="yes">Your devices</span><small>Optional backup to your own Drive</small></td><td>The vendor's cloud, under their retention policy</td></tr>
+          <tr><th scope="row">Push-to-talk radio</th><td><span class="yes">Included</span><small>Encrypted UDP, 99 channels</small></td><td><span class="no">Rare</span>, or a paid add-on</td></tr>
+          <tr><th scope="row">Shared calendar, notes, tasks</th><td><span class="yes">Included</span></td><td><span class="no">Separate apps</span></td></tr>
+          <tr><th scope="row">Works without a signal</th><td><span class="yes">Local-first</span><small>Everything reads from the on-device database</small></td><td>Mostly cloud-dependent</td></tr>
+          <tr><th scope="row">Source you can read</th><td><span class="yes">On GitHub</span></td><td><span class="no">Closed</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-cta reveal">
+      <a class="btn btn-primary" href="#install">Get the build</a>
+      <a class="btn btn-ghost" href="#faq">Read the FAQ</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TECH ═══════════ -->
+<section id="tech">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Under the hood</div>
+      <h2>Modern, boring, maintainable Android</h2>
+      <p class="lead">Kotlin, MVVM and a single-activity navigation graph. Nothing exotic — which is the point when the app has to work at 2&nbsp;AM.</p>
+    </div>
+    <div class="stack reveal">
+      <span>Kotlin 1.9</span><span>MVVM</span><span>Hilt DI</span><span>Room</span><span>StateFlow</span>
+      <span>Navigation Component</span><span>CameraX</span><span>Maps SDK</span><span>DataStore</span>
+      <span>WorkManager</span><span>Coroutines</span><span>Material Components</span>
+      <span>Gradle 8.7</span><span>AGP 8.5.2</span><span>minSdk 33</span><span>targetSdk 35</span>
+    </div>
+
+    <h3 style="text-align:center;margin:56px 0 20px;font-size:19px">Requirements at a glance</h3>
+    <div class="table-wrap reveal">
+      <table>
+        <caption>What each device needs to run the current build.</caption>
+        <thead><tr><th scope="col">Requirement</th><th scope="col">Detail</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Operating system</th><td>Android 13 (API 33) or newer<small>Built against the Android 15 SDK</small></td></tr>
+          <tr><th scope="row">Install size</th><td>Roughly 50 MB<small>Debug build — a release build strips further</small></td></tr>
+          <tr><th scope="row">Hardware</th><td>Camera and microphone required; GPS optional<small>Location features degrade gracefully without GPS</small></td></tr>
+          <tr><th scope="row">Network</th><td>Wi-Fi or mobile data for chat, radio and map<small>Notes, calendar, tasks and albums work fully offline</small></td></tr>
+          <tr><th scope="row">Accounts</th><td>A Google account only if you want Drive backup<small>The app runs without signing in to anything</small></td></tr>
+          <tr><th scope="row">Tested on</th><td>Google Pixel 10 Pro XL<small>Other Android 13+ devices should work; report anything that doesn't</small></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-cta reveal">
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4">Read the code</a>
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4/issues/new">Report a device issue</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ INSTALL ═══════════ -->
+<section id="install">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Setup</div>
+      <h2>Running in about five minutes</h2>
+      <p class="lead">No account, no onboarding funnel. Install the APK, add your people, pick a radio channel.</p>
+    </div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <h3>Download the build</h3>
+        <p>Grab the latest <code style="font-family:var(--mono);font-size:12.5px;color:var(--cyan)">app-debug.apk</code> from the Releases page on any Android 13+ phone.</p>
+      </div>
+      <div class="step">
+        <h3>Allow the install</h3>
+        <p>Android will ask permission to install from your browser or file manager. Approve it once — this is standard for apps outside the Play Store.</p>
+      </div>
+      <div class="step">
+        <h3>Add your family</h3>
+        <p>Open Chat, tap the add button, and enter each member. Everyone installs the same APK on their own phone.</p>
+      </div>
+      <div class="step">
+        <h3>Pick a channel</h3>
+        <p>In Settings choose a walkie-talkie channel between 1 and 99 and share it with the household. That is the whole setup.</p>
+      </div>
+    </div>
+
+    <h3 style="margin:56px 0 6px;font-size:19px">Installing over ADB</h3>
+    <p style="color:var(--muted);font-size:14.5px;max-width:66ch">If you would rather push the build from a computer with USB debugging enabled:</p>
+
+    <div class="code" id="code-install">adb install -r app-debug.apk<button class="copy-btn" type="button" data-copy="code-install">Copy<span class="sr-only"> the ADB install command</span></button></div>
+
+    <div class="code" id="code-launch">adb shell am start -n com.family4.app.debug/com.family4.app.ui.splash.SplashActivity<button class="copy-btn" type="button" data-copy="code-launch">Copy<span class="sr-only"> the launch command</span></button></div>
+
+    <h3 style="margin:48px 0 6px;font-size:19px">Building it yourself</h3>
+    <p style="color:var(--muted);font-size:14.5px;max-width:66ch">Clone the repository, add your own API keys to <code style="font-family:var(--mono);font-size:12.5px;color:var(--cyan)">local.properties</code>, then:</p>
+
+    <div class="code" id="code-build">git clone https://github.com/Moore-Family-Businesses-LLc/Family4.git
+cd Family4
+./gradlew assembleDebug<button class="copy-btn" type="button" data-copy="code-build">Copy<span class="sr-only"> the build commands</span></button></div>
+
+    <div class="section-cta reveal">
+      <a class="btn btn-primary" href="https://github.com/Moore-Family-Businesses-LLc/Family4/releases">Go to Releases</a>
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4">Clone the repository</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PERMISSIONS ═══════════ -->
+<section id="permissions">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Nothing hidden</div>
+      <h2>Every permission, and what it is for</h2>
+      <p class="lead">If a feature is off, its permission is never used. Decline any of the optional ones and the rest of the app still works.</p>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <caption>Permissions requested by the app and the feature each one serves.</caption>
+        <thead><tr><th scope="col">Permission</th><th scope="col">Used for</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Location</th><td>Placing members on the family map and attaching your position to an SOS broadcast<small>Interval is yours: 30 seconds, 1 minute or 5 minutes</small></td><td><span class="req req-opt">Optional</span></td></tr>
+          <tr><th scope="row">Microphone</th><td>Push-to-talk transmission and video recording<small>Audio is never recorded to storage</small></td><td><span class="req req-need">Required for radio</span></td></tr>
+          <tr><th scope="row">Camera</th><td>Photos and video in the camera screen and shared albums</td><td><span class="req req-need">Required for camera</span></td></tr>
+          <tr><th scope="row">Notifications</th><td>Message alerts, SOS alerts and arrival notices</td><td><span class="req req-opt">Optional</span></td></tr>
+          <tr><th scope="row">Media and files</th><td>Attaching images to chat and uploading to your Drive folder</td><td><span class="req req-opt">Optional</span></td></tr>
+          <tr><th scope="row">Biometrics</th><td>Unlocking the app with a fingerprint instead of the PIN</td><td><span class="req req-opt">Optional</span></td></tr>
+          <tr><th scope="row">Body sensors and activity</th><td>Step count and heart rate on the health screen</td><td><span class="req req-opt">Optional</span></td></tr>
+          <tr><th scope="row">Foreground service</th><td>Keeping location sharing and the radio alive while the screen is off<small>Android shows a persistent notice whenever these run</small></td><td><span class="req req-need">Required when active</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-cta reveal">
+      <a class="btn btn-ghost" href="#security">Back to the security posture</a>
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4/blob/main/app/src/main/AndroidManifest.xml">See the manifest</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ROADMAP ═══════════ -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Where it's going</div>
+      <h2>Roadmap</h2>
+      <p class="lead">Built in public by Moore Family Businesses LLC.</p>
+    </div>
+    <div class="road-list">
+      <div class="milestone done reveal"><div class="when">Shipped</div><h3>Core app &amp; encrypted chat</h3><p>Nineteen screens, eleven data entities, CameraX capture, the family map and end-to-end encrypted messaging.</p></div>
+      <div class="milestone done reveal"><div class="when">Shipped</div><h3>Radio, board &amp; polish</h3><p>Encrypted push-to-talk with squelch and signal metering, the family bulletin board, and an animated splash, badges and avatar system.</p></div>
+      <div class="milestone next reveal"><div class="when">In progress</div><h3>Live sync &amp; sign-in</h3><p>Firebase messaging for real-time delivery, Credential Manager sign-in, and Drive backup wired end to end.</p></div>
+      <div class="milestone reveal"><div class="when">Next</div><h3>Health Connect &amp; signed release</h3><p>Real health data instead of samples, a signed release build, and a Play Store listing.</p></div>
+      <div class="milestone reveal"><div class="when">Later</div><h3>Wear OS &amp; iOS</h3><p>A watch companion for SOS and push-to-talk, then a cross-platform port so mixed-device families are covered.</p></div>
+    </div>
+
+    <div class="section-cta start reveal">
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4/commits/main">Follow the commits</a>
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4/issues/new">Request a feature</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section id="faq">
+  <div class="wrap" style="max-width:800px">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Questions</div>
+      <h2>Frequently asked</h2>
+    </div>
+    <div class="reveal">
+      <details><summary>Is Family4 available on the Play Store?</summary><p>Not yet. The current build is a debug APK you can install directly. A signed release and a Play Store listing are on the roadmap.</p></details>
+      <details><summary>Which Android versions are supported?</summary><p>Android 13 (API 33) and newer, built against the Android 15 SDK. It is developed and tested on a Pixel 10 Pro XL.</p></details>
+      <details><summary>Where is my family's data stored?</summary><p>On your devices, in a local encrypted database. Optional backup goes to a folder in your own Google Drive account. There is no Family4 server holding your messages.</p></details>
+      <details><summary>Does the walkie-talkie use my minutes?</summary><p>No. It uses your data connection or local network — the audio streams as UDP packets, relayed through a TURN server when devices can't reach each other directly.</p></details>
+      <details><summary>Can I use it with only part of my family?</summary><p>Yes. Members are added individually, and location sharing is per device — anyone can turn theirs off without affecting the rest.</p></details>
+      <details><summary>Is the source code available?</summary><p>The repository is on GitHub. It is a family project, so expect a fast-moving main branch rather than a polished release cadence.</p></details>
+    </div>
+
+    <div class="section-cta reveal">
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4/issues/new">Ask a question</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SUPPORT ═══════════ -->
+<section id="support">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Help &amp; contributions</div>
+      <h2>Where to go next</h2>
+    </div>
+
+    <div class="support">
+      <a class="support-card reveal" href="https://github.com/Moore-Family-Businesses-LLc/Family4/releases">
+        <span class="ic" aria-hidden="true">&#128230;</span>
+        <b>Releases</b><span>Every build, with notes on what changed.</span>
+        <span class="go">Download &rarr;</span>
+      </a>
+      <a class="support-card reveal" href="https://github.com/Moore-Family-Businesses-LLc/Family4/issues">
+        <span class="ic" aria-hidden="true">&#128027;</span>
+        <b>Report a bug</b><span>Tell us the device, the screen and what happened.</span>
+        <span class="go">Open an issue &rarr;</span>
+      </a>
+      <a class="support-card reveal" href="https://github.com/Moore-Family-Businesses-LLc/Family4/issues/new">
+        <span class="ic" aria-hidden="true">&#128161;</span>
+        <b>Request a feature</b><span>The roadmap moves based on what families ask for.</span>
+        <span class="go">Suggest it &rarr;</span>
+      </a>
+      <a class="support-card reveal" href="https://github.com/Moore-Family-Businesses-LLc/Family4">
+        <span class="ic" aria-hidden="true">&#128187;</span>
+        <b>Contribute</b><span>Kotlin, MVVM and a readable codebase. Pull requests welcome.</span>
+        <span class="go">View the source &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="cta reveal">
+      <h2>Get the family on one channel</h2>
+      <p class="lead center" style="margin-bottom:26px">Install the latest build, add your members, and you're running in about five minutes.</p>
+      <a class="btn btn-primary" href="https://github.com/Moore-Family-Businesses-LLc/Family4/releases">Download the APK</a>
+      <a class="btn btn-ghost" href="#install">Read the setup steps</a>
+      <a class="btn btn-ghost" href="https://github.com/Moore-Family-Businesses-LLc/Family4">View the source</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:7px">
+        <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1A1A2E"/><path d="M32 12l18 10v20L32 52 14 42V22z" fill="none" stroke="#00D4FF" stroke-width="4" stroke-linejoin="round"/><circle cx="32" cy="32" r="6" fill="#7B2FFF"/></svg>
+        <strong style="color:var(--text)">Family4</strong>
+      </div>
+      <span>&copy; <span id="year">2026</span> Moore Family Businesses LLC &middot; St. Louis, MO</span>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#features">Features</a>
+      <a href="#screens">Screens</a>
+      <a href="#security">Security</a>
+      <a href="#install">Install</a>
+      <a href="#permissions">Permissions</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="https://github.com/Moore-Family-Businesses-LLc/Family4">GitHub</a>
+      <a href="https://github.com/Moore-Family-Businesses-LLc/Family4/issues">Report an issue</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* ── Header shadow on scroll ─────────────────────────────────────── */
+var header = document.getElementById('siteHeader');
+var onScroll = function () {
+  header.classList.toggle('scrolled', window.scrollY > 8);
+};
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+/* ── Mobile menu ─────────────────────────────────────────────────── */
+var toggle = document.getElementById('menuToggle');
+var links  = document.getElementById('navLinks');
+toggle.addEventListener('click', function () {
+  var open = links.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', String(open));
+});
+links.addEventListener('click', function (e) {
+  if (e.target.tagName === 'A') {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+/* ── Reveal on scroll (skipped when the user prefers reduced motion) ── */
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var items = document.querySelectorAll('.reveal');
+if (reduced || !('IntersectionObserver' in window)) {
+  items.forEach(function (el) { el.classList.add('in'); });
+} else {
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  items.forEach(function (el) { io.observe(el); });
+}
+
+/* ── Copy-to-clipboard on code blocks ────────────────────────────── */
+document.querySelectorAll('.copy-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var block = document.getElementById(btn.getAttribute('data-copy'));
+    if (!block) return;
+    // Clone so the button's own label is not copied along with the command.
+    var clone = block.cloneNode(true);
+    var stripped = clone.querySelector('.copy-btn');
+    if (stripped) stripped.remove();
+    var text = clone.textContent.trim();
+
+    var setLabel = function (text, cls) {
+      var label = btn.firstChild;
+      if (cls) btn.classList.add(cls);
+      if (label) label.nodeValue = text;
+      window.setTimeout(function () {
+        btn.classList.remove('done');
+        if (label) label.nodeValue = 'Copy';
+      }, 1800);
+    };
+    // Announced to screen readers via the button's own live region.
+    var done   = function () { btn.setAttribute('aria-live', 'polite'); setLabel('Copied', 'done'); };
+    var failed = function () { btn.setAttribute('aria-live', 'polite'); setLabel('Press Ctrl+C'); };
+
+    // Fallback path: also used when the async clipboard API rejects, which it
+    // does in non-secure contexts and when the permission is denied.
+    var legacyCopy = function () {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'absolute';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      if (ok) { done(); } else { failed(); }
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, legacyCopy);
+    } else {
+      legacyCopy();
+    }
+  });
+});
+
+/* ── Back to top ─────────────────────────────────────────────────── */
+var toTop = document.getElementById('toTop');
+var toggleTopBtn = function () {
+  toTop.classList.toggle('show', window.scrollY > 700);
+};
+window.addEventListener('scroll', toggleTopBtn, { passive: true });
+toggleTopBtn();
+toTop.addEventListener('click', function () {
+  window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+  document.querySelector('.brand').focus({ preventScroll: true });
+});
+
+/* ── Scroll spy: mark the section currently in view ──────────────── */
+var navAnchors = Array.prototype.slice.call(
+  document.querySelectorAll('.nav-links a[href^="#"]')
+);
+var watched = navAnchors
+  .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+  .filter(Boolean);
+
+if ('IntersectionObserver' in window && watched.length) {
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      navAnchors.forEach(function (a) {
+        var match = a.getAttribute('href') === '#' + entry.target.id;
+        if (match) { a.setAttribute('aria-current', 'true'); a.style.color = 'var(--cyan)'; }
+        else { a.removeAttribute('aria-current'); a.style.color = ''; }
+      });
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  watched.forEach(function (el) { spy.observe(el); });
+}
+
+/* ── Footer year ─────────────────────────────────────────────────── */
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

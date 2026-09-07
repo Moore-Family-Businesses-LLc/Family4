@@ -1,9 +1,9 @@
 # CLAUDE_HANDOFF.md — Family4 Android App
 ## Complete Engineering Reference for Continuing Development
 
-> **Last updated by:** Bob (IBM Bob AI)  
-> **Session date:** June 2025  
-> **Current APK version:** 1.1.0 debug — BUILD SUCCESSFUL (48.6 MB)  
+> **Last updated by:** Bob (IBM Bob AI)
+> **Session date:** June 2025
+> **Current APK version:** 1.5.0 debug — BUILD SUCCESSFUL — APK on Desktop (49 MB; device not connected at build time — connect & run adb install)
 > **Device:** Google Pixel 10 Pro XL (`57021FDCQ005FU`, model: `mustang`)  
 > **GitHub:** https://github.com/Moore-Family-Businesses-LLc/Family4  
 > **Branch:** `main`  
@@ -91,18 +91,18 @@ WEATHER_API_KEY=                    # ← BLANK — get free key at openweatherm
 | **Chat List** | `ChatListFragment` | Seeded demo members, FAB to add member via dialog, empty state |
 | Chat Detail | `ChatDetailFragment` | E2E encrypted (AES-256-GCM), message list, send input |
 | **Map** | `MapFragment` | Rich dark style (20-rule JSON), search/geocode, map type cycle (Normal/Satellite/Hybrid/Terrain), zoom FABs, member chips, member info card |
-| Notes | `NotesFragment` | Google Keep style, staggered grid, pin, search, FAB |
-| Note Detail | `NoteDetailFragment` | Title + content edit, color coding |
-| Calendar | `CalendarFragment` | Month grid, event list, FAB to add event dialog |
-| Files | `FilesFragment` | Google Drive file browser (requires auth) |
-| Walkie-Talkie | `WalkieTalkieFragment` | PTT over UDP, TURN relay, waveform view, channel setting |
+| **Notes** | `NotesFragment` | Google Keep style, staggered grid, pin, **inline search bar**, **grid/list toggle**, FAB navigates to NoteDetailFragment |
+| Note Detail | `NoteDetailFragment` | Title + content edit, color strip |
+| **Calendar** | `CalendarFragment` | Full-screen Google Calendar style — fixed 270dp grid, **Today button**, color dot indicators per event, **color picker in add dialog**, all-day toggle, location field, **CoordinatorLayout FAB**, `selectedDayLabel` header, `goToToday()` |
+| **Files** | `FilesFragment` | Styled header, **Drive storage progress bar**, **category filter chips** (All/Images/Videos/Docs), empty state with icon, Upload FAB |
+| **Walkie-Talkie** | `WalkieTalkieFragment` | PTT over UDP, TURN relay, waveform, **AES-256 packet encryption**, **NoiseSuppressor**, **squelch slider (0–10)**, **signal strength bars (0–4)**, **TX timer**, **channel lock**, **peer count badge** |
 | Emergency SOS | `EmergencySOSFragment` | Hold-3s activation, location share, auto-call toggle |
 | Health | `HealthFragment` | Steps, heart rate, calories, sleep, water, mood |
-| Albums | `AlbumsFragment` | Photo albums, Drive-backed |
+| **Albums** | `AlbumsFragment` | **Styled 2-col grid**, photo count badge, styled header with sort, **empty state**, FAB to add — delete confirm dialog |
 | Weather | `WeatherFragment` | OpenWeatherMap API (needs key), °C/°F from settings |
 | Tasks | `TasksFragment` | Active + completed lists, FAB to add, check/uncheck, delete — **CoordinatorLayout fixed** |
 | **Settings** | `SettingsFragment` | Theme (Dark/Light/Auto), Font size (S/M/L), **°C/°F toggle**, Notifications, Biometric, **App PIN**, SOS auto-call, Location sharing + interval (30s/1m/5m), Drive backup, **Walkie channel 1–99**, Chat retention (7/30/90/∞), About section, Clear history confirm, Sign out confirm |
-| Family Board | `FamilyBoardFragment` | Shared bulletin board, posts, ❤️👍😂 reactions, pin, delete |
+| **Family Board** | `FamilyBoardFragment` | Shared bulletin board — **5 post types** (Chat/Announcement/Event/Photo/Task), **colored type badge + top strip**, **author avatar with initials**, **relative timestamps**, **5 reactions** (❤️👍😂🔥⭐), pin, delete, **welcome auto-seed**, **online count chip**, **post type chip selector** |
 | AI Assistant | `AIAssistantFragment` | Gemini-powered FamilyBot, 14 action types, autonomous agent |
 | More | `MoreFragment` | 13-tile feature grid including Board + Backup tiles |
 
@@ -205,20 +205,132 @@ Defined in `themes.xml` — dark surface, cyan stroke, 12dp corner radius.
 
 ---
 
+## 7b. Session 6 Completion Summary (June 2025)
+
+### ✅ Completed This Session
+
+| Feature | Files Changed | Description |
+|---------|--------------|-------------|
+| **Map FAB fix** | `fragment_map.xml` | Added `android:layout_marginBottom="72dp"` to `fabRow` — zoom buttons no longer hidden under bottom nav |
+| **Walkie-Talkie — AES-256 encryption** | `WalkieTalkieService.kt`, `WalkieTalkieFragment.kt`, `fragment_walkie_talkie.xml` | Full AES-256-CBC packet encrypt/decrypt, encryption badge in UI |
+| **Walkie-Talkie — Noise Suppressor** | `WalkieTalkieService.kt`, `WalkieTalkieFragment.kt` | Android `NoiseSuppressor` AudioEffect attached to `AudioRecord` session, toggle switch in UI |
+| **Walkie-Talkie — Squelch gate** | `WalkieTalkieService.kt` | RMS amplitude computed per packet, configurable squelch 0–10 suppresses low-level noise; slider in UI |
+| **Walkie-Talkie — Signal bars** | `WalkieTalkieService.kt`, `WalkieTalkieFragment.kt` | Packet loss heuristic drives 0–4 bar indicator |
+| **Walkie-Talkie — TX timer** | `WalkieTalkieService.kt`, `WalkieTalkieFragment.kt` | Elapsed transmission time `StateFlow<Long>`, formatted as M:SS |
+| **Walkie-Talkie — Channel lock** | `WalkieTalkieService.kt`, `WalkieTalkieFragment.kt` | Switch prevents accidental channel changes while transmitting |
+| **Walkie-Talkie — Peer count badge** | `WalkieTalkieFragment.kt` | Chip shows `N peers` from `connectedPeers StateFlow` |
+| **Walkie-Talkie — UI rebuild** | `fragment_walkie_talkie.xml` | CoordinatorLayout, ScrollView, channel card with encryption badge + lock, signal row, squelch card, floating PTT button |
+| **Family Board — 5 post types** | All board files | `postType` field added to `BoardPostEntity` (DB v3), types: chat/announcement/event/photo/task |
+| **Family Board — Post type chip selector** | `fragment_family_board.xml`, `FamilyBoardFragment.kt` | ChipGroup with 5 types, hint text updates, Post button shows type emoji |
+| **Family Board — Color type badge + strip** | `item_board_post.xml`, `BoardPostsAdapter.kt` | Colored top strip + badge per post type |
+| **Family Board — Author avatar** | `item_board_post.xml`, `BoardPostsAdapter.kt`, `FamilyBoardViewModel.kt` | Colored initials circle, deterministic color per authorId |
+| **Family Board — Relative timestamps** | `FamilyBoardViewModel.kt` | "just now" / "5 min ago" / "Yesterday" / "Mar 5" |
+| **Family Board — 5 reactions** | `item_board_post.xml`, `BoardPostsAdapter.kt` | Added 🔥 and ⭐ to existing ❤️ 👍 😂 |
+| **Family Board — Welcome auto-seed** | `FamilyBoardViewModel.kt`, `FamilyBoardFragment.kt` | Pinned welcome post inserted on first launch if board empty |
+| **Family Board — Online count chip** | `fragment_family_board.xml` | Post count chip in header |
+| **Room DB version** | `Family4Database.kt` | Bumped v2 → v3 (fallbackToDestructiveMigration handles it) |
+| **bg_chip_cyan drawable** | `res/drawable/bg_chip_cyan.xml` | Translucent cyan chip background for badges |
+| **bg_avatar_circle drawable** | `res/drawable/bg_avatar_circle.xml` | Oval shape for author avatar, tinted per user |
+| **BoardDao** | `BoardDao.kt` | Added `getPostCount(): Int` query for seed detection |
+| **APK** | — | Built & installed to Pixel 10 Pro XL (`57021FDCQ005FU`), BUILD SUCCESSFUL |
+
+---
+
+## 7c. Session 7 Completion Summary (Sept 2026) — Styling sprint + hardening
+
+### ✅ Completed This Session
+
+| Feature | Files Changed | Description |
+|---------|--------------|-------------|
+| **Animated splash** | `SplashActivity.kt`, `res/layout/activity_splash.xml`, `bg_splash_glow.xml`, `strings.xml` | Radial halo fade + infinite breathe, logo overshoot pop, staggered wordmark/tagline rise, progress + footer fade, cross-fade hand-off to Main/Onboarding. All animators cancelled in `onDestroy()`. |
+| **Bottom-nav badges** | `MainViewModel.kt` (new), `MainActivity.kt`, `ChatDao.kt` | `getUnreadCount(me)` + `getActiveTasks().size` → `BadgeDrawable` on `nav_chat` (cyan) and `nav_more` (purple), collected under `repeatOnLifecycle(STARTED)`. Bottom nav now fades in/out instead of snapping to GONE. |
+| **Avatar system** | `ui/common/AvatarStyler.kt` (new), `ChatListAdapter.kt`, `DashboardMembersAdapter.kt`, `item_chat_member.xml`, `item_dashboard_member.xml`, `bg_avatar_ring.xml` | Deterministic 8-colour palette keyed off `member.id` (survives renames), 1–2 letter initials, presence ring — animated on the dashboard strip, static in the chat list. `onViewRecycled` cancels pulses. |
+| **Chat bubble polish** | `ChatMessagesAdapter.kt`, `ChatDetailViewModel.kt`, `item_message_mine.xml`, `item_message_theirs.xml`, `ic_tick_single.xml`, `ic_tick_double.xml`, `bg_date_pill.xml` | Day separators (Today / Yesterday / full date), 5-minute sender grouping via dynamic top padding, sent/delivered/read ticks driven by `isDelivered` / `isRead`. |
+| **Notes colour picker** | `NoteDetailFragment.kt`, `NoteDetailViewModel.kt`, `fragment_note_detail.xml`, `NotesAdapter.kt` | 10 swatches built programmatically, cyan selection ring, accent bar reflects choice, colour persisted; white note cards get a hairline border on the grid. |
+| **Files filter chips (live)** | `FilesViewModel.kt`, `FilesFragment.kt` | `FileFilter` enum owns the mime matching; `visibleFiles` = `combine(files, filter)`. Chips now filter for real — no refetch. |
+| **PIN hashing** | `security/PinHasher.kt` (new), `SettingsViewModel.kt` | PBKDF2-HMAC-SHA256 / 120k iterations / 16-byte salt, stored as `pbkdf2$iters$salt$hash`. `verifyAppPin()` is constant-time and silently upgrades legacy plaintext PINs. |
+| **Shared DataStore** | `data/prefs/SettingsDataStore.kt` (new), `SettingsViewModel.kt`, `WeatherViewModel.kt` | Single `preferencesDataStore` delegate for the process (a second delegate on the same file name crashes at runtime). Keys centralised in `SettingsKeys`; `SettingsViewModel.KEY_*` kept as aliases. |
+| **Weather °C/°F** | `WeatherViewModel.kt`, `WeatherFragment.kt` | API stays metric; `formatTemperature()` / `formatWind()` convert at render time. Fragment combines reading × unit so the Settings toggle applies instantly (mph for °F users). |
+| **Chat retention (real)** | `ChatDao.kt`, `SettingsViewModel.kt` | `deleteAllMessages()` + `deleteMessagesOlderThan(before)`. "Clear history" and the 7/30/90-day retention setting now actually delete rows — both were stubs. |
+| **Showcase site** | `docs/index.html` (new), `docs/.nojekyll` (new) | Single-file, zero-dependency landing page. Sections: hero (CSS phone mockup), 12-feature grid, **all-19-screens inventory**, three deep dives (chat/PTT/map mockups), security posture, **comparison table**, tech stack + **requirements table**, **install guide with copy-to-clipboard commands**, **permissions table**, roadmap, FAQ, **support cards**, closing CTA. Every section carries its own CTA pair; sticky nav with scroll-spy `aria-current`; back-to-top control. |
+| **Site accessibility pass** | `docs/index.html` | **axe-core (WCAG 2.0/2.1/2.2 A+AA + best-practice): 0 violations.** 44px minimum hit areas on every control, 3px `:focus-visible` ring on all focusables, unique landmark labels, corrected heading order, contrast fixes (incoming-bubble meta, "No" cells, roadmap labels). Verified 0px horizontal overflow at 360/414/540/768/820/1024/1280/1440. Clipboard copy falls back to `execCommand` and reports failure rather than dying silently. |
+| **Avatar palette → WCAG AA** | `ui/common/AvatarStyler.kt` | The original 8-colour palette failed contrast with white initials (teal 2.89:1, emerald 4.26:1). Replaced with 8 darker tones measured 5.48–8.10:1. Ratios are documented inline — do not lighten without re-checking. |
+
+### ⚠️ Open items from this session
+- **APK not rebuilt** — the session's shell has no Android SDK. Run `.\gradlew assembleDebug --no-daemon` on the workstation to compile these changes.
+- **GitHub Pages was 404** because the repo contained no HTML at all. `docs/index.html` fixes the content; Pages still has to be pointed at it (Settings → Pages → Deploy from a branch → `main` → `/docs`), and `docs/` must be committed and pushed to `main` (the working branch is currently `fresh-main`).
+- **Credential exposure** — `.git/config` stores a GitHub PAT inline in the `origin` URL. Revoke it and re-add the remote without the token.
+
+---
+
+## 7d. Session 8 Completion Summary (Sept 2026) — Style handoff execution
+
+Worked from `CLAUDE_STYLE_HANDOFF.md` (Bob). **Three of its claims were stale and were
+verified against the repo before acting:** `res/color/bottom_nav_selector.xml` already
+existed; `fragment_albums.xml` and `fragment_files.xml` already had header bars; all FABs
+were already `accent_cyan` (map FABs stay `bg_surface` — they are map overlay controls,
+not primary actions).
+
+### ✅ Task A — PTT button (was covering the UI)
+
+| Change | Files |
+|--------|-------|
+| 170dp `ExtendedFloatingActionButton` floating over the Last-Heard log and squelch/codec cards → **72dp `FloatingActionButton` inside the ScrollView flow**, in a 96dp ring container above `tvPttStatus` | `fragment_walkie_talkie.xml`, `bg_ptt_ring.xml` (new) |
+| Transmit state: button flips cyan → purple, ring breathes 1.0→1.15, long-press haptic on key-down, `performClick()` on key-up for accessibility | `WalkieTalkieFragment.kt` |
+| Animator cancelled in `onDestroyView()` | `WalkieTalkieFragment.kt` |
+
+### ✅ Task B — Logo system
+
+| Change | Detail |
+|--------|--------|
+| **`ic_logo.xml` (new, 96dp)** | Navy field, centred cyan halo, cyan + purple figures under a connection arc, "4" in a navy badge bottom-right |
+| **`ic_logo_small.xml` (redesigned, 28dp)** | Deliberately *not* a scaled ic_logo — the badge composition turns to mush below ~32dp, so the numeral sits beside the figures. Verified legible by rendering at 96/48/32/24/20dp |
+| Placement | Splash (`ic_logo` @120dp), Settings About brand block (48dp + name + tagline), Dashboard hero watermark, Files header, Notes search header, and every `SectionHeaderView` |
+
+### ✅ Task C — Style, theme & UX
+
+| Change | Files |
+|--------|-------|
+| **`SectionHeaderView`** — reusable branded header component with `headerTitle` / `headerActionIcon` / `headerShowLogo` attributes, replacing a copy-pasted 20-line block | `ui/common/SectionHeaderView.kt`, `view_section_header.xml`, `attrs.xml`, `dimens.xml` (all new) |
+| Header added to the screens that lacked one | `fragment_health.xml` (root rewrapped), `fragment_weather.xml` (body re-centred), `fragment_tasks.xml`, `fragment_settings.xml`, `fragment_chat_list.xml` |
+| **Chat list restructured** — header, banner and list were loose `CoordinatorLayout` children overlapping each other, held apart by a hardcoded 36dp margin; now a proper vertical stack | `fragment_chat_list.xml` |
+| `TextAppearance.Family4.Label`, `Widget.Family4.Card.Glass`, Hero tracking −0.02 → −0.03, bottom-nav `itemIconSize` 26dp, PTT style → cyan | `themes.xml` |
+| Gradient stops, glow tints, `bg_input` / `bg_modal` / glass tokens | `colors.xml` |
+| **Bottom nav**: 1dp divider above the bar, both wrapped in `navContainer`; MainActivity now pads *and* animates the container (insets and the show/hide animation would otherwise skip the divider) | `activity_main.xml`, `MainActivity.kt` |
+| **Dashboard**: hero → glass style with logo watermark, section labels → `Label` appearance, 3dp accent strips on Notes (green) / Calendar (cyan) / Tasks (purple) | `fragment_dashboard.xml` |
+| **Empty states** standardised (80dp logo watermark @20% + title + hint): chat list, notes, and tasks — which previously had **no** empty state at all, now wired via `combine(activeTasks, completedTasks)` so it only shows when both are empty | `fragment_chat_list.xml`, `fragment_notes.xml`, `fragment_tasks.xml`, `TasksFragment.kt` |
+| New strings for empty states + About tagline | `strings.xml` |
+
+### 🔍 Verification run (no Android SDK in the session shell — this is static verification)
+- 121 resource XML files parsed; **every project `@color/@string/@dimen/@style/@drawable/@layout/@menu` reference resolves** (remaining checker hits are Material library styles, not project resources)
+- **All 32 view-binding files: every `binding.*` reference maps to a real layout id** — including the changed `btnPtt`, `pttRing`, `navContainer`, `tasksEmptyState`, `tvEmptyChats`
+- `app:header*` attributes are declared in `attrs.xml`; `com.family4.app.ui.common.SectionHeaderView` exists as a class
+- Brace/paren balance clean on all touched Kotlin
+
+### ⏳ Not done — needs the workstation
+`.\gradlew assembleDebug --no-daemon`, install, and launch. Bob's Definition of Done items are all
+implemented **except** the build/install steps, which this session cannot run.
+
+### ⚠️ Note on `tvEmptyChats`
+It changed from `TextView` to `LinearLayout` (to carry the watermark). `ChatListFragment`
+only sets `.visibility` on it, so this compiles — but do not add text-setting calls to it.
+
+---
+
 ## 8. Next Priority Work Items
 
 ### 🎨 Styling & Polish (High Priority)
-- [ ] **Custom animated splash screen** — Lottie animation with Family4 logo, cyan pulse
-- [ ] **Bottom nav badge counters** — unread messages, pending tasks
-- [ ] **Chat bubble improvements** — delivery status ticks (✓ ✓), timestamps, reactions
+- [x] **Custom animated splash screen** — ✅ S7: `activity_splash.xml` + ObjectAnimator/AnimatorSet choreography (halo pulse, logo overshoot, staggered wordmark)
+- [x] **Bottom nav badge counters** — ✅ S7: `MainViewModel` + `BadgeDrawable` on `nav_chat` (unread) and `nav_more` (open tasks)
+- [x] **Chat bubble improvements** — ✅ S7: delivery ticks, day separators, sender grouping. Reactions still open.
 - [ ] **Dashboard redesign** — glassmorphism cards, live clock widget, weather mini card
-- [ ] **Member avatar system** — initials-based colored circles (no images needed), online pulse ring
+- [x] **Member avatar system** — ✅ S7: `ui/common/AvatarStyler.kt` — deterministic colour per memberId, initials, animated presence ring
 - [ ] **Transition animations** — shared element transitions between screens
 - [ ] **Empty state illustrations** — SVG art for notes, tasks, calendar, chat empty states
 - [ ] **Camera UI polish** — rule-of-thirds grid overlay, exposure slider, pro mode
 
 ### 🔌 Integrations (High Priority)
-- [ ] **OpenWeatherMap API** — add `WEATHER_API_KEY`, wire °C/°F from `SettingsViewModel.temperatureUnit`
+- [x] **Weather °C/°F wiring** — ✅ S7: `WeatherViewModel.formatTemperature()/formatWind()` + Fragment combines reading × unit. ⚠️ Still needs `WEATHER_API_KEY` in `local.properties`.
 - [ ] **Firebase project** — create real project at console.firebase.google.com, download `google-services.json` → `app/`
 - [ ] **FCM push notifications** — NotificationHelper channels already set up, needs real Firebase
 - [ ] **Google Sign-In → Credential Manager** — migrate deprecated `GoogleSignIn` to `CredentialManager` (Android 14+)
@@ -227,16 +339,20 @@ Defined in `themes.xml` — dark surface, cyan stroke, 12dp corner radius.
 - [ ] **Live location** — wire `LocationTrackingService` → `FamilyMemberDao.updateLocation()` → map markers update in real-time
 
 ### 🔒 Security (Medium Priority)
-- [ ] **PIN hash** — `SettingsViewModel.setAppPin()` stores plain text — replace with BCrypt/SHA-256
+- [x] **PIN hash** — ✅ S7: `security/PinHasher.kt` — PBKDF2-HMAC-SHA256, 120k iterations, per-PIN salt, constant-time verify, auto-migrates legacy plaintext
 - [ ] **PIN enforcement** — `SplashActivity` check PIN on resume if `appPinEnabled = true`
 - [ ] **Chat key exchange** — `FamilyMemberEntity.publicKey` is stored but never used — implement RSA-2048 key exchange
 - [ ] **Biometric integration** — wire `BiometricPrompt` to `switchBiometric`
 
 ### 🗂 Feature Completion (Medium Priority)
-- [ ] **Calendar event detail** — tap event to edit/delete, time picker, color picker
+- [ ] **Calendar event detail** — tap existing event → edit title/time/color/location, delete; need EventDetailFragment
+- [ ] **Calendar time picker** — currently sets event to midnight of selected day; add TimePickerDialog in `CalendarFragment.showAddEventDialog()`
 - [ ] **Tasks — subtasks** — nested task items with progress
-- [ ] **Notes — rich text** — bold/italic/bullet formatting, color backgrounds (Google Keep style)
-- [ ] **Albums — camera roll import** — pick from MediaStore
+- [ ] **Notes — rich text** — bold/italic/bullet formatting; NoteDetailFragment has color strip wired but needs `NotesAdapter` color background applied
+- [x] **Notes color strip** — ✅ S7: 10 swatches built in `onViewCreated`, selection ring, accent bar, colour persisted via `saveNote(title, content, color)`
+- [ ] **Albums — camera roll import** — pick from MediaStore; `AlbumsViewModel.openAlbum()` is a stub
+- [ ] **Albums — photo grid** — inside an album, show `PhotoEntity` items (no screen yet)
+- [x] **Files — filter chips live** — ✅ S7: `FileFilter` enum + `FilesViewModel.visibleFiles` (combine of listing × active chip)
 - [ ] **Chat — file attachments** — send images from camera/gallery
 - [ ] **SOS — countdown UI** — 3-second hold with animated ring, cancel gesture
 - [ ] **Walkie-talkie — peer discovery** — LAN UDP broadcast to find family devices automatically
@@ -256,6 +372,8 @@ Defined in `themes.xml` — dark surface, cyan stroke, 12dp corner radius.
 
 ```
 familycamera/
+├── docs/index.html                   ← GitHub Pages showcase site (single file, no deps)
+├── docs/.nojekyll                    ← stops Jekyll from processing the site
 ├── app/build.gradle.kts              ← compileSdk=35, all deps, BuildConfig fields
 ├── gradle/libs.versions.toml         ← version catalog
 ├── local.properties                  ← API keys (gitignored)
@@ -288,11 +406,15 @@ familycamera/
     │   └── ui/
     │       ├── main/MainActivity.kt         ← NavHost, bottom nav, AI wiring
     │       ├── board/                       ← FamilyBoardFragment + VM + Adapter
+    │       ├── calendar/CalendarFragment.kt ← full-screen Google-Calendar-style, color events, Today btn
+    │       ├── notes/NotesFragment.kt       ← inline search bar, grid/list toggle, FAB
+    │       ├── albums/AlbumsFragment.kt     ← styled 2-col grid, empty state, FAB, delete confirm
+    │       ├── files/FilesFragment.kt       ← header, storage bar, filter chips, empty state, Upload FAB
     │       ├── settings/SettingsFragment.kt ← full settings with all new options
     │       └── [all other feature modules]
     └── res/
-        ├── drawable/                 ← 50 vector drawables (no SVGs)
-        ├── layout/                   ← 37 layouts
+        ├── drawable/                 ← 52 vector drawables + bg_calendar_today/selected
+        ├── layout/                   ← 42 layouts
         ├── navigation/nav_graph.xml  ← 19 destinations
         └── values/
             ├── colors.xml

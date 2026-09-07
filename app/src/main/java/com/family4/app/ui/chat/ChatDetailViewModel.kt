@@ -38,7 +38,9 @@ class ChatDetailViewModel @Inject constructor(
                         isMine = entity.isSentByMe,
                         timestamp = entity.timestamp,
                         messageType = entity.messageType,
-                        mediaUri = entity.mediaUri
+                        mediaUri = entity.mediaUri,
+                        isDelivered = entity.isDelivered,
+                        isRead = entity.isRead
                     )
                 }
             }
@@ -71,11 +73,16 @@ class ChatDetailViewModel @Inject constructor(
     }
 }
 
+/** Decrypted, presentation-ready view of a [ChatMessageEntity]. */
 data class ChatMessageUi(
     val id: String,
     val text: String,
     val isMine: Boolean,
     val timestamp: Long,
     val messageType: String = "TEXT",
-    val mediaUri: String? = null
+    val mediaUri: String? = null,
+    /** Reached the recipient's device — renders a second tick. */
+    val isDelivered: Boolean = false,
+    /** Opened by the recipient — renders cyan ticks. */
+    val isRead: Boolean = false
 )

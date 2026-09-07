@@ -7,13 +7,18 @@ import android.location.Geocoder
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.family4.app.data.prefs.SettingsKeys
+import com.family4.app.data.prefs.settingsDataStore
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -46,6 +51,15 @@ class WeatherViewModel @Inject constructor(
     private val _error      = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
+    /**
+     * Display unit chosen in Settings ("C" or "F"). The API is always queried
+     * in metric; conversion happens at render time so flipping the toggle does
+     * not require a network round trip.
+     */
+    val temperatureUnit: StateFlow<String> = app.settingsDataStore.data
+        .map { it[SettingsKeys.TEMP_UNIT] ?: DEFAULT_UNIT }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, DEFAULT_UNIT)
+
     fun refresh() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -73,8 +87,11 @@ class WeatherViewModel @Inject constructor(
                 }
 
                 // Reverse geocode on IO thread
+                // getFromLocation(lat, lon, maxResults) is deprecated on API 33+ in favour of the
+                // listener-based overload, but the blocking form is simpler for coroutine IO.
                 val cityName = withContext(Dispatchers.IO) {
                     try {
+                        @Suppress("DEPRECATION")
                         Geocoder(app, Locale.getDefault())
                             .getFromLocation(lat, lon, 1)
                             ?.firstOrNull()
@@ -128,6 +145,26 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Formats a Celsius reading in the user's unit, e.g. `72°F` / `22°C`.
+     *
+     * @param includeUnit false renders just the degree symbol (used for the
+     *        "feels like" line, where the unit is already established).
+     */
+    fun formatTemperature(celsius: Double, unit: String = temperatureUnit.value, includeUnit: Boolean = true): String {
+        val value = if (unit == "C") celsius else celsius * 9.0 / 5.0 + 32.0
+        val rounded = Math.round(value).toInt()
+        return if (includeUnit) "$rounded°$unit" else "$rounded°"
+    }
+
+    /** Wind is fetched in m/s and converted to km/h; imperial users see mph. */
+    fun formatWind(windKph: Double, unit: String = temperatureUnit.value): String =
+        if (unit == "C") {
+            "${Math.round(windKph)} km/h"
+        } else {
+            "${Math.round(windKph * 0.621371)} mph"
+        }
+
     private fun iconToEmoji(icon: String): String = when {
         icon.startsWith("01") -> "☀️"
         icon.startsWith("02") -> "⛅"
@@ -137,5 +174,10 @@ class WeatherViewModel @Inject constructor(
         icon.startsWith("13") -> "🌨️"
         icon.startsWith("50") -> "🌫️"
         else -> "🌤️"
+    }
+
+    private companion object {
+        /** Matches SettingsViewModel's default. */
+        const val DEFAULT_UNIT = "F"
     }
 }

@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION") // GoogleSignIn is deprecated in favour of Credential Manager; migration is a larger refactor
 package com.family4.app.ui.onboarding
 
 import android.Manifest

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Radial cyan halo used behind the splash logo. Scaled/pulsed at runtime. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <gradient
+        android:type="radial"
+        android:gradientRadius="90dp"
+        android:startColor="#5900D4FF"
+        android:centerColor="#1F7B2FFF"
+        android:endColor="#0016213E"/>
+</shape>

@@ -23,7 +23,7 @@ class FamilyBoardFragment : Fragment() {
             onReact = { post, emoji -> viewModel.react(post, emoji) },
             onPin = { post -> viewModel.togglePin(post) },
             onDelete = { post -> viewModel.deletePost(post) },
-            formatReactions = { json -> viewModel.formatReactions(json) }
+            viewModel = viewModel
         )
     }
 
@@ -40,12 +40,49 @@ class FamilyBoardFragment : Fragment() {
             adapter = this@FamilyBoardFragment.adapter
         }
 
+        setupPostTypeChips()
         observePosts()
+        observePostType()
 
         binding.btnPost.setOnClickListener {
             val text = binding.etPostInput.text?.toString() ?: return@setOnClickListener
             viewModel.addPost(text)
             binding.etPostInput.text?.clear()
+        }
+
+        // Seed welcome post on first launch
+        viewModel.seedWelcomePostIfEmpty()
+    }
+
+    private fun setupPostTypeChips() {
+        binding.chipGroupPostType.setOnCheckedStateChangeListener { _, checkedIds ->
+            val type = when {
+                checkedIds.contains(binding.chipTypeAnnouncement.id) -> "announcement"
+                checkedIds.contains(binding.chipTypeEvent.id) -> "event"
+                checkedIds.contains(binding.chipTypePhoto.id) -> "photo"
+                checkedIds.contains(binding.chipTypeTask.id) -> "task"
+                else -> "chat"
+            }
+            viewModel.setPostType(type)
+
+            // Update hint text for the input
+            val hint = when (type) {
+                "announcement" -> "📢 Write an announcement…"
+                "event"        -> "🎉 Describe the event…"
+                "photo"        -> "📸 Add a caption…"
+                "task"         -> "✅ Describe the task…"
+                else           -> "💬 Share with your family…"
+            }
+            binding.etPostInput.hint = hint
+        }
+    }
+
+    private fun observePostType() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.selectedPostType.collectLatest { type ->
+                val (emoji, _) = viewModel.postTypeLabel(type)
+                binding.btnPost.text = "$emoji Post"
+            }
         }
     }
 
@@ -53,8 +90,12 @@ class FamilyBoardFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.posts.collectLatest { posts ->
                 adapter.submitList(posts)
-                binding.tvEmptyState.visibility =
-                    if (posts.isEmpty()) View.VISIBLE else View.GONE
+
+                val isEmpty = posts.isEmpty()
+                binding.tvEmptyState.visibility = if (isEmpty) android.view.View.VISIBLE else android.view.View.GONE
+
+                // Update online count badge
+                binding.chipOnlineCount.text = "● ${posts.size} post${if (posts.size != 1) "s" else ""}"
             }
         }
     }

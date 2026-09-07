@@ -12,6 +12,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -57,6 +58,16 @@ class TasksFragment : Fragment() {
             viewModel.completedTasks.collectLatest { tasks ->
                 completedAdapter.submitList(tasks)
                 binding.tvCompletedCount.text = "${tasks.size} completed"
+            }
+        }
+
+        // Empty state shows only when there is nothing at all to display —
+        // an empty "active" list with completed items below is not empty.
+        viewLifecycleOwner.lifecycleScope.launch {
+            combine(viewModel.activeTasks, viewModel.completedTasks) { active, done ->
+                active.isEmpty() && done.isEmpty()
+            }.collectLatest { isEmpty ->
+                binding.tasksEmptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
             }
         }
     }

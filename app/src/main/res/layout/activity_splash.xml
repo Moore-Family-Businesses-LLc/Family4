@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Splash screen — animated brand moment.
+    All views start invisible/scaled-down; SplashActivity drives the entrance
+    animation so the timing lives in one place.
+-->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Logo + pulsing halo -->
+        <FrameLayout
+            android:layout_width="200dp"
+            android:layout_height="200dp">
+
+            <View
+                android:id="@+id/splashGlow"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_splash_glow"
+                android:alpha="0"/>
+
+            <ImageView
+                android:id="@+id/splashLogo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_logo"
+                android:alpha="0"
+                android:contentDescription="@string/app_name"/>
+        </FrameLayout>
+
+        <!-- Wordmark -->
+        <TextView
+            android:id="@+id/splashTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/app_name"
+            android:textColor="@color/text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.14"
+            android:alpha="0"/>
+
+        <!-- Tagline -->
+        <TextView
+            android:id="@+id/splashTagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/splash_tagline"
+            android:textColor="@color/accent_cyan"
+            android:textSize="12sp"
+            android:letterSpacing="0.22"
+            android:alpha="0"/>
+
+    </LinearLayout>
+
+    <!-- Bottom loading hint -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="56dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/splashProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="120dp"
+            android:layout_height="3dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/accent_cyan"
+            android:alpha="0"/>
+
+        <TextView
+            android:id="@+id/splashFooter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/splash_footer"
+            android:textColor="@color/text_disabled"
+            android:textSize="10sp"
+            android:letterSpacing="0.1"
+            android:alpha="0"/>
+    </LinearLayout>
+
+</FrameLayout>
