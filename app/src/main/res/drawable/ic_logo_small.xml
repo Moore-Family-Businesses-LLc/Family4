@@ -1,15 +1,19 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="28dp" android:height="28dp" android:viewportWidth="32" android:viewportHeight="32">
+    android:width="28dp" android:height="28dp"
+    android:viewportWidth="32" android:viewportHeight="32">
+    <!-- Background rounded square -->
     <path android:fillColor="#1A1A2E"
         android:pathData="M0,6A6,6 0,0 1,6 0H26A6,6 0,0 1,32 6V26A6,6 0,0 1,26 32H6A6,6 0,0 1,0 26V6z"/>
+    <!-- Left person (cyan) -->
     <path android:fillColor="#00D4FF"
         android:pathData="M10,9a3,3 0,1 0,6 0,3 3,0 0,0 -6,0zM10,13Q7,13 7,16v3h9v-3Q16,13 13,13z"/>
+    <!-- Right person (purple) -->
     <path android:fillColor="#7B2FFF"
         android:pathData="M18,9a3,3 0,1 0,6 0,3 3,0 0,0 -6,0zM18,13Q15,13 15,16v3h9v-3Q24,13 21,13z"/>
+    <!-- Heart -->
     <path android:fillColor="#FF3D71"
         android:pathData="M16,10.5 C16,10.5 14,8.5 12.5,10 C11,11.5 12,14 16,16 C20,14 21,11.5 19.5,10 C18,8.5 16,10.5 16,10.5Z"/>
-    <text android:x="23" android:y="30"
-        android:fontFamily="sans-serif-black"
-        android:textSize="9"
-        android:fillColor="#00D4FF">4</text>
+    <!-- "4" numeral as path -->
+    <path android:fillColor="#00D4FF"
+        android:pathData="M21,24v-6.5l-3.5,4.5H21zM21,24h2v-1.5H21zM21,24v2h1.5v-2z"/>
 </vector>

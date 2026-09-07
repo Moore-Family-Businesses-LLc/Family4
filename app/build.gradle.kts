@@ -29,6 +29,7 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
 
         // API keys loaded from local.properties (gitignored)
         val mapsKey    = localProp("MAPS_API_KEY")
@@ -45,6 +46,7 @@ android {
         buildConfigField("String", "TURN_SERVER_URL",     "\"turn:openrelay.metered.ca:80\"")
         buildConfigField("String", "TURN_USERNAME",       "\"openrelayproject\"")
         buildConfigField("String", "TURN_CREDENTIAL",     "\"openrelayproject\"")
+        buildConfigField("String", "STUN_SERVER_URL",     "\"stun:stun.l.google.com:19302\"")
 
         // Room schema export
         javaCompileOptions {
@@ -56,8 +58,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -103,6 +105,10 @@ dependencies {
     implementation(libs.androidx.viewpager2)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.gridlayout)
+
+    // MultiDex
+    implementation("androidx.multidex:multidex:2.0.1")
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -137,6 +143,7 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     // Network
     implementation(libs.retrofit)

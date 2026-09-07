@@ -47,4 +47,7 @@
     <color name="bottom_nav_active">#FF00D4FF</color>
     <color name="bottom_nav_inactive">#FF8892B0</color>
 
+    <!-- Launcher icon background -->
+    <color name="ic_launcher_background">#FF1A1A2E</color>
+
 </resources>

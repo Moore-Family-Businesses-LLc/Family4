@@ -66,10 +66,10 @@
 
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <com.google.android.material.chip.Chip android:id="@+id/chipSummarize" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📝 Summarize notes" android:layout_marginEnd="8dp" style="@style/Widget.Material3.Chip.Suggestion"/>
-            <com.google.android.material.chip.Chip android:id="@+id/chipHealth"    android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="❤️ Health tips" android:layout_marginEnd="8dp" style="@style/Widget.Material3.Chip.Suggestion"/>
-            <com.google.android.material.chip.Chip android:id="@+id/chipEmergency" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🆘 Emergency help" android:layout_marginEnd="8dp" style="@style/Widget.Material3.Chip.Suggestion"/>
-            <com.google.android.material.chip.Chip android:id="@+id/chipTrip"      android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🗺️ Day trip ideas" style="@style/Widget.Material3.Chip.Suggestion"/>
+            <com.google.android.material.chip.Chip android:id="@+id/chipSummarize" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📝 Summarize notes" android:layout_marginEnd="8dp" style="@style/Widget.MaterialComponents.Chip.Choice"/>
+            <com.google.android.material.chip.Chip android:id="@+id/chipHealth"    android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="❤️ Health tips" android:layout_marginEnd="8dp" style="@style/Widget.MaterialComponents.Chip.Choice"/>
+            <com.google.android.material.chip.Chip android:id="@+id/chipEmergency" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🆘 Emergency help" android:layout_marginEnd="8dp" style="@style/Widget.MaterialComponents.Chip.Choice"/>
+            <com.google.android.material.chip.Chip android:id="@+id/chipTrip"      android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🗺️ Day trip ideas" style="@style/Widget.MaterialComponents.Chip.Choice"/>
         </LinearLayout>
     </HorizontalScrollView>
 

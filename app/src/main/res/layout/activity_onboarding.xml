@@ -52,7 +52,7 @@
         <ImageView
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:src="@drawable/ic_logo_family4"
+            android:src="@drawable/ic_logo_small"
             android:contentDescription="Family4 Logo"/>
 
         <TextView
@@ -149,7 +149,7 @@
             android:layout_marginTop="12dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etInviteCode" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:inputType="textAllCaps" android:textColor="@color/text_primary"
+                android:inputType="text" android:textAllCaps="true" android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_muted"/>
         </com.google.android.material.textfield.TextInputLayout>
 

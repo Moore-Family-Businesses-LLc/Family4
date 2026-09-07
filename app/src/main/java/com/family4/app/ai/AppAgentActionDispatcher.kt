@@ -123,7 +123,7 @@ class AppAgentActionDispatcher @Inject constructor(
         val destId = when (screen) {
             "home", "dashboard" -> R.id.nav_dashboard
             "notes"             -> R.id.nav_notes
-            "chat"              -> R.id.nav_chat_list
+            "chat"              -> R.id.nav_chat
             "camera"            -> R.id.nav_camera
             "map"               -> R.id.nav_map
             "walkie"            -> R.id.nav_walkie_talkie

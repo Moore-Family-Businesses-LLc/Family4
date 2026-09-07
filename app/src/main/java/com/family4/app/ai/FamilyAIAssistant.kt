@@ -381,14 +381,8 @@ Return JSON: {"level":"low|medium|high|critical","summary":"...","immediateActio
     }
 
     private fun extractSources(response: com.google.ai.client.generativeai.type.GenerateContentResponse): List<String> {
-        // Extract grounding sources if available
-        return try {
-            response.candidates.firstOrNull()
-                ?.groundingMetadata
-                ?.groundingChunks
-                ?.mapNotNull { it.web?.uri }
-                ?: emptyList()
-        } catch (_: Exception) { emptyList() }
+        // Grounding metadata is not yet available in Gemini SDK 0.9.0 — return empty
+        return emptyList()
     }
 
     // ── Data Classes ──────────────────────────────────────────────────────────

@@ -34,9 +34,9 @@ class FilesAdapter : ListAdapter<DriveFile, FilesAdapter.VH>(DIFF) {
         }
 
         private fun iconForMime(mime: String): Int = when {
-            mime.startsWith("image/") -> R.drawable.ic_nav_albums
+            mime.startsWith("image/") -> R.drawable.ic_attach
             mime.startsWith("video/") -> R.drawable.ic_nav_camera
-            mime.contains("pdf")      -> R.drawable.ic_nav_notes
+            mime.contains("pdf")      -> R.drawable.ic_save
             else                      -> R.drawable.ic_upload
         }
     }

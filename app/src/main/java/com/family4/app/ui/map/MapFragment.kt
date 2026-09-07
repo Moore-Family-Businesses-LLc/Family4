@@ -54,11 +54,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setupMapStyle() {
+        // Dark map style applied via JSON string to avoid R.raw dependency
         try {
-            googleMap?.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style_dark)
-            )
-        } catch (_: Exception) { /* Use default style */ }
+            val styleJson = """[{"elementType":"geometry","stylers":[{"color":"#1a1a2e"}]},
+                {"elementType":"labels.text.fill","stylers":[{"color":"#00d4ff"}]},
+                {"featureType":"road","elementType":"geometry","stylers":[{"color":"#0f3460"}]},
+                {"featureType":"water","elementType":"geometry","stylers":[{"color":"#0f3460"}]}]"""
+            googleMap?.setMapStyle(MapStyleOptions(styleJson))
+        } catch (_: Exception) { /* Use default style if parsing fails */ }
     }
 
     private fun observeMembers() {

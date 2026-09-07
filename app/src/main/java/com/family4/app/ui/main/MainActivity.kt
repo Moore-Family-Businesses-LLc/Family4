@@ -14,14 +14,18 @@ import com.family4.app.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
-    /** Injected dispatcher — wires AI action commands into the nav graph */
+    /** Injected dispatcher — routes AI actions into nav + Room */
     @Inject lateinit var agentDispatcher: AppAgentActionDispatcher
+
+    /** Injected AI assistant — receives the dispatcher reference at runtime */
+    @Inject lateinit var aiAssistant: FamilyAIAssistant
 
     // Top-level destinations — these hide the back arrow
     private val topLevelDestinations = setOf(
@@ -43,8 +47,9 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        // Give the AI dispatcher a live NavController reference
-        agentDispatcher.navController = navController
+        // Wire AI dispatcher: give it NavController + register it with the assistant
+        agentDispatcher.navController    = navController
+        aiAssistant.actionDispatcher     = agentDispatcher
 
         val appBarConfig = AppBarConfiguration(topLevelDestinations)
         setupActionBarWithNavController(navController, appBarConfig)

@@ -1,21 +1,26 @@
 package com.family4.app.ui.weather
 
+import android.Manifest
 import android.app.Application
+import android.content.pm.PackageManager
 import android.location.Geocoder
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
 import java.util.Locale
 import javax.inject.Inject
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 data class WeatherData(
     val cityName: String,
@@ -46,58 +51,77 @@ class WeatherViewModel @Inject constructor(
             _isLoading.value = true
             _error.value = null
             try {
-                // Get current location
-                val fusedClient = LocationServices.getFusedLocationProviderClient(app)
-                val cts = CancellationTokenSource()
-                val loc = fusedClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, cts.token).await()
+                // Check location permission
+                val hasPerm = ContextCompat.checkSelfPermission(
+                    app, Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
 
-                val lat = loc?.latitude ?: 37.3861
-                val lon = loc?.longitude ?: -122.0839
-
-                // Reverse geocode for city name
-                val cityName = try {
-                    @Suppress("DEPRECATION")
-                    Geocoder(app, Locale.getDefault())
-                        .getFromLocation(lat, lon, 1)
-                        ?.firstOrNull()
-                        ?.locality ?: "Your Location"
-                } catch (_: Exception) { "Your Location" }
-
-                // Fetch weather from OpenWeatherMap
-                val apiKey = com.family4.app.BuildConfig.WEATHER_API_KEY
-                if (apiKey.isBlank() || apiKey == "YOUR_OPENWEATHER_KEY") {
-                    // Fallback: use Gemini AI for weather
-                    _weather.value = WeatherData(
-                        cityName    = cityName,
-                        tempC       = 22.0,
-                        feelsLikeC  = 21.0,
-                        description = "Weather service not configured",
-                        humidity    = 55,
-                        windKph     = 12.0,
-                        emoji       = "🌤️"
-                    )
+                val lat: Double
+                val lon: Double
+                if (hasPerm) {
+                    val fusedClient = LocationServices.getFusedLocationProviderClient(app)
+                    val cts = CancellationTokenSource()
+                    val loc = fusedClient
+                        .getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, cts.token)
+                        .await()
+                    lat = loc?.latitude  ?: 37.3861
+                    lon = loc?.longitude ?: -122.0839
                 } else {
-                    val url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric"
-                    val json = JSONObject(URL(url).readText())
-                    val main    = json.getJSONObject("main")
-                    val wind    = json.getJSONObject("wind")
-                    val weather = json.getJSONArray("weather").getJSONObject(0)
-                    val desc    = weather.getString("description")
-                    val icon    = weather.getString("icon")
-                    _weather.value = WeatherData(
-                        cityName    = json.optString("name", cityName),
-                        tempC       = main.getDouble("temp"),
-                        feelsLikeC  = main.getDouble("feels_like"),
-                        description = desc,
-                        humidity    = main.getInt("humidity"),
-                        windKph     = wind.getDouble("speed") * 3.6,
-                        emoji       = iconToEmoji(icon)
-                    )
+                    // Default: Mountain View, CA (Google HQ — placeholder)
+                    lat = 37.3861
+                    lon = -122.0839
                 }
+
+                // Reverse geocode on IO thread
+                val cityName = withContext(Dispatchers.IO) {
+                    try {
+                        Geocoder(app, Locale.getDefault())
+                            .getFromLocation(lat, lon, 1)
+                            ?.firstOrNull()
+                            ?.locality ?: "Your Location"
+                    } catch (_: Exception) { "Your Location" }
+                }
+
+                // Fetch weather on IO thread
+                val weatherResult = withContext(Dispatchers.IO) {
+                    val apiKey = try {
+                        com.family4.app.BuildConfig.WEATHER_API_KEY
+                    } catch (_: Exception) { "" }
+
+                    if (apiKey.isBlank()) {
+                        // No API key — return placeholder data
+                        WeatherData(
+                            cityName    = cityName,
+                            tempC       = 22.0,
+                            feelsLikeC  = 21.0,
+                            description = "Add OpenWeatherMap key to local.properties",
+                            humidity    = 55,
+                            windKph     = 12.0,
+                            emoji       = "🌤️"
+                        )
+                    } else {
+                        val url = "https://api.openweathermap.org/data/2.5/weather" +
+                                  "?lat=$lat&lon=$lon&appid=$apiKey&units=metric"
+                        val json = JSONObject(URL(url).readText())
+                        val main    = json.getJSONObject("main")
+                        val wind    = json.getJSONObject("wind")
+                        val weather = json.getJSONArray("weather").getJSONObject(0)
+                        WeatherData(
+                            cityName    = json.optString("name", cityName),
+                            tempC       = main.getDouble("temp"),
+                            feelsLikeC  = main.getDouble("feels_like"),
+                            description = weather.getString("description"),
+                            humidity    = main.getInt("humidity"),
+                            windKph     = wind.getDouble("speed") * 3.6,
+                            emoji       = iconToEmoji(weather.getString("icon"))
+                        )
+                    }
+                }
+                _weather.value = weatherResult
             } catch (e: SecurityException) {
                 _error.value = "Location permission required"
             } catch (e: Exception) {
-                _error.value = "Weather unavailable: ${e.message?.take(60)}"
+                _error.value = "Weather unavailable: ${e.message?.take(80)}"
             } finally {
                 _isLoading.value = false
             }
