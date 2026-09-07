@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Standard branded header bar (SectionHeaderView) -->
-    <dimen name="section_header_height">56dp</dimen>
-    <dimen name="section_header_padding">16dp</dimen>
 
-    <!-- Shared spacing scale — use these instead of ad-hoc values -->
-    <dimen name="space_xs">4dp</dimen>
-    <dimen name="space_sm">8dp</dimen>
-    <dimen name="space_md">16dp</dimen>
-    <dimen name="space_lg">24dp</dimen>
+    <!-- ── SectionHeaderView ─────────────────────────────────────────────── -->
+    <!-- Height of the standard branded header bar on each screen. -->
+    <dimen name="section_header_height">56dp</dimen>
+    <!-- Horizontal padding inside the header bar. -->
+    <dimen name="section_header_padding">20dp</dimen>
+
+    <!-- ── General spacing ───────────────────────────────────────────────── -->
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_radius">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
 </resources>

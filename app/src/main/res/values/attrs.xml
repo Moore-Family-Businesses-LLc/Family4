@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Attributes for com.family4.app.ui.common.SectionHeaderView -->
+
+    <!-- ── SectionHeaderView custom attributes ─────────────────────────────
+         Declared here so the XML namespace resolver finds them at compile time.
+         Used in res/layout/view_section_header.xml and every layout that
+         includes <com.family4.app.ui.common.SectionHeaderView>. -->
     <declare-styleable name="SectionHeaderView">
-        <!-- Screen title shown next to the logo mark. -->
+        <!-- The title text displayed in the header bar. -->
         <attr name="headerTitle" format="string"/>
-        <!-- Optional trailing action icon; hidden when absent. -->
+        <!-- Optional trailing action icon (e.g. ic_more_vert). -->
         <attr name="headerActionIcon" format="reference"/>
-        <!-- Content description for that action icon. -->
+        <!-- Content-description for the action icon (accessibility). -->
         <attr name="headerActionDescription" format="string"/>
-        <!-- Set false to drop the logo mark on screens that already brand themselves. -->
+        <!-- Whether the small logo mark is shown on the left (default true). -->
         <attr name="headerShowLogo" format="boolean"/>
     </declare-styleable>
+
 </resources>
