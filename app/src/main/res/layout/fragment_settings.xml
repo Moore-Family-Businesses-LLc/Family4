@@ -6,15 +6,6 @@
     android:orientation="vertical"
     android:background="@color/bg_primary">
 
-    <!-- Header -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/bg_surface"
-        app:title="Settings"
-        app:titleTextColor="@color/text_primary"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -24,115 +15,400 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingBottom="32dp">
 
-            <!-- Notifications -->
-            <TextView android:text="Notifications" android:textSize="11sp"
-                android:textColor="@color/accent_cyan" android:textAllCaps="true"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp" android:layout_marginTop="8dp"/>
+            <!-- ══ APPEARANCE ══ -->
+            <TextView android:text="APPEARANCE" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:letterSpacing="0.12"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp" android:paddingTop="20dp" android:paddingBottom="6dp"/>
+
+            <!-- Theme -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Theme" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:id="@+id/tvThemeValue" android:text="Dark"
+                        android:textColor="@color/text_muted" android:textSize="12sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnThemeDark"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="Dark" android:textSize="12sp"
+                    android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnThemeLight"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="Light" android:textSize="12sp"
+                    android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnThemeSystem"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="Auto" android:textSize="12sp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
+            </LinearLayout>
+
+            <!-- Font size -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Font Size" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:id="@+id/tvFontSizeValue" android:text="Medium"
+                        android:textColor="@color/text_muted" android:textSize="12sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFontSmall"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="S" android:textSize="12sp" android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFontMedium"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="M" android:textSize="12sp" android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFontLarge"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="L" android:textSize="12sp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
+            </LinearLayout>
+
+            <!-- ══ WEATHER ══ -->
+            <TextView android:text="WEATHER" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:letterSpacing="0.12"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp" android:paddingTop="20dp" android:paddingBottom="6dp"/>
+
+            <!-- Temperature unit -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Temperature Unit" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:id="@+id/tvTempUnitValue" android:text="Fahrenheit (°F)"
+                        android:textColor="@color/text_muted" android:textSize="12sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTempF"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="56dp" android:layout_height="40dp"
+                    android:text="°F" android:textSize="14sp" android:textStyle="bold"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/accent_cyan"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTempC"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="56dp" android:layout_height="40dp"
+                    android:text="°C" android:textSize="14sp" android:textStyle="bold"
+                    app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
+            </LinearLayout>
+
+            <!-- ══ NOTIFICATIONS ══ -->
+            <TextView android:text="NOTIFICATIONS" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:letterSpacing="0.12"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp" android:paddingTop="20dp" android:paddingBottom="6dp"/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="center_vertical"
-                android:background="@color/bg_surface" android:padding="12dp"
-                android:layout_marginBottom="4dp">
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
                 <TextView android:text="Push Notifications" android:textColor="@color/text_primary"
-                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                    android:textSize="15sp" android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchNotifications"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:trackTint="@color/accent_cyan"/>
+                    android:id="@+id/switchNotifications" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:trackTint="@color/accent_cyan"/>
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNotificationSettings"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="Notification Settings"
-                android:layout_marginBottom="16dp"
-                app:strokeColor="@color/accent_cyan"
-                android:textColor="@color/accent_cyan"/>
+                android:text="System Notification Settings →"
+                android:layout_marginHorizontal="16dp" android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
 
-            <!-- Privacy & Security -->
-            <TextView android:text="Privacy &amp; Security" android:textSize="11sp"
-                android:textColor="@color/accent_cyan" android:textAllCaps="true"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp" android:layout_marginTop="8dp"/>
+            <!-- ══ PRIVACY &amp; SECURITY ══ -->
+            <TextView android:text="PRIVACY &amp; SECURITY" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:letterSpacing="0.12"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp" android:paddingTop="20dp" android:paddingBottom="6dp"/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="center_vertical"
-                android:background="@color/bg_surface" android:padding="12dp"
-                android:layout_marginBottom="4dp">
-                <TextView android:text="Biometric Lock" android:textColor="@color/text_primary"
-                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Biometric Lock" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Fingerprint / Face unlock" android:textColor="@color/text_muted"
+                        android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchBiometric"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:trackTint="@color/accent_cyan"/>
+                    android:id="@+id/switchBiometric" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:trackTint="@color/accent_cyan"/>
             </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="center_vertical"
-                android:background="@color/bg_surface" android:padding="12dp"
-                android:layout_marginBottom="16dp">
-                <TextView android:text="SOS Auto-Call 911" android:textColor="@color/text_primary"
-                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="App PIN Lock" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="4–6 digit PIN on app open" android:textColor="@color/text_muted"
+                        android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchSosAutoCall"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:trackTint="@color/error_red"/>
+                    android:id="@+id/switchAppPin" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:trackTint="@color/accent_cyan"/>
             </LinearLayout>
 
-            <!-- Family Sharing -->
-            <TextView android:text="Family Sharing" android:textSize="11sp"
-                android:textColor="@color/accent_cyan" android:textAllCaps="true"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp" android:layout_marginTop="8dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSetPin"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Change PIN"
+                android:layout_marginHorizontal="16dp" android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                app:strokeColor="@color/text_muted" android:textColor="@color/text_secondary"/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="center_vertical"
-                android:background="@color/bg_surface" android:padding="12dp"
-                android:layout_marginBottom="4dp">
-                <TextView android:text="Share Location with Family" android:textColor="@color/text_primary"
-                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="SOS Auto-Call 911" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Automatically call emergency services"
+                        android:textColor="@color/text_muted" android:textSize="12sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchLocationSharing"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:trackTint="@color/accent_cyan"/>
+                    android:id="@+id/switchSosAutoCall" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:trackTint="@color/error_red"/>
+            </LinearLayout>
+
+            <!-- ══ FAMILY SHARING ══ -->
+            <TextView android:text="FAMILY SHARING" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:letterSpacing="0.12"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp" android:paddingTop="20dp" android:paddingBottom="6dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Share Location with Family" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:id="@+id/tvLocationIntervalValue" android:text="Every 60 sec"
+                        android:textColor="@color/text_muted" android:textSize="12sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchLocationSharing" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:trackTint="@color/accent_cyan"/>
+            </LinearLayout>
+
+            <!-- Location update interval -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <TextView android:text="Location Update Rate" android:textColor="@color/text_primary"
+                    android:textSize="15sp" android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn30s" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="30s" android:textSize="11sp" android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn60s" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="1m" android:textSize="11sp" android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn5m" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="5m" android:textSize="11sp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
             </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="center_vertical"
-                android:background="@color/bg_surface" android:padding="12dp"
-                android:layout_marginBottom="16dp">
-                <TextView android:text="Google Drive Backup" android:textColor="@color/text_primary"
-                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Google Drive Backup" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Auto-backup every 6 hours" android:textColor="@color/text_muted"
+                        android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchDriveBackup"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:trackTint="@color/accent_cyan"/>
+                    android:id="@+id/switchDriveBackup" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:trackTint="@color/accent_cyan"/>
             </LinearLayout>
 
-            <!-- Data -->
-            <TextView android:text="Data &amp; Account" android:textSize="11sp"
-                android:textColor="@color/accent_cyan" android:textAllCaps="true"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp" android:layout_marginTop="8dp"/>
+            <!-- Walkie-Talkie channel -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Walkie-Talkie Channel" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:id="@+id/tvWalkieChannel" android:text="Channel 1"
+                        android:textColor="@color/text_muted" android:textSize="12sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <ImageView android:id="@+id/btnWalkieDown"
+                    android:layout_width="36dp" android:layout_height="36dp"
+                    android:src="@drawable/ic_chevron_left"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Decrease channel"
+                    app:tint="@color/accent_cyan"/>
+                <TextView android:id="@+id/tvWalkieChNum"
+                    android:layout_width="32dp" android:layout_height="wrap_content"
+                    android:text="1" android:textSize="18sp" android:textStyle="bold"
+                    android:textColor="@color/accent_cyan" android:gravity="center"/>
+                <ImageView android:id="@+id/btnWalkieUp"
+                    android:layout_width="36dp" android:layout_height="36dp"
+                    android:src="@drawable/ic_chevron_right"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Increase channel"
+                    app:tint="@color/accent_cyan"/>
+            </LinearLayout>
+
+            <!-- ══ DATA &amp; ACCOUNT ══ -->
+            <TextView android:text="DATA &amp; ACCOUNT" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:letterSpacing="0.12"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp" android:paddingTop="20dp" android:paddingBottom="6dp"/>
+
+            <!-- Chat message retention -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@color/bg_surface" android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp" android:layout_marginBottom="1dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:text="Chat History Retention" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:id="@+id/tvRetentionValue" android:text="30 days"
+                        android:textColor="@color/text_muted" android:textSize="12sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn7days" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="7d" android:textSize="11sp" android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn30days" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="30d" android:textSize="11sp" android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/accent_cyan" android:textColor="@color/accent_cyan"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn90days" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="90d" android:textSize="11sp" android:layout_marginEnd="4dp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnForever" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="∞" android:textSize="11sp"
+                    app:strokeColor="@color/text_muted" android:textColor="@color/text_muted"/>
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnClearHistory"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="Clear Chat History"
-                android:layout_marginBottom="8dp"
-                app:strokeColor="@color/text_muted"
-                android:textColor="@color/text_secondary"/>
+                android:layout_marginHorizontal="16dp" android:layout_marginTop="8dp"
+                app:strokeColor="@color/text_muted" android:textColor="@color/text_secondary"/>
 
+            <!-- ══ ABOUT ══ -->
+            <TextView android:text="ABOUT" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:letterSpacing="0.12"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp" android:paddingTop="20dp" android:paddingBottom="6dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:background="@color/bg_surface"
+                android:paddingHorizontal="16dp" android:paddingVertical="16dp"
+                android:layout_marginBottom="1dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="10dp">
+                    <TextView android:text="App Version" android:textColor="@color/text_muted"
+                        android:textSize="13sp" android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView android:id="@+id/tvAppVersion" android:text="1.1.0 (debug)"
+                        android:textColor="@color/text_primary" android:textSize="13sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="10dp">
+                    <TextView android:text="Package" android:textColor="@color/text_muted"
+                        android:textSize="13sp" android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView android:text="com.family4.app"
+                        android:textColor="@color/text_primary" android:textSize="13sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView android:text="Target Device" android:textColor="@color/text_muted"
+                        android:textSize="13sp" android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView android:text="Google Pixel 10 Pro XL"
+                        android:textColor="@color/text_primary" android:textSize="13sp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Sign Out -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignOut"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="Sign Out"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/error_red"/>
 
         </LinearLayout>

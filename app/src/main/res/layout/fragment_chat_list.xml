@@ -6,23 +6,56 @@
     android:layout_height="match_parent"
     android:background="@color/bg_primary">
 
+    <!-- Encryption badge at top -->
+    <LinearLayout
+        android:id="@+id/encryptedBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/bg_surface"
+        android:paddingVertical="6dp"
+        android:paddingHorizontal="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/encrypted_badge"
+            android:textSize="11sp"
+            android:textColor="@color/accent_green"/>
+    </LinearLayout>
+
+    <!-- Chat list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="36dp"
         android:paddingBottom="80dp"
         android:clipToPadding="false"/>
 
+    <!-- Empty state -->
     <TextView
-        android:id="@+id/tvEncryptedBadge"
+        android:id="@+id/tvEmptyChats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/encrypted_badge"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="11sp"
-        android:textColor="@color/accent_green"
-        android:paddingVertical="6dp"
-        android:background="@color/bg_surface"
-        android:layout_gravity="bottom"/>
+        android:text="No family members yet.\nTap + to add someone."
+        android:textSize="16sp"
+        android:textColor="@color/text_muted"
+        android:padding="32dp"
+        android:visibility="gone"/>
+
+    <!-- FAB: Add family member -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddMember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
+        app:backgroundTint="@color/accent_cyan"
+        android:src="@drawable/ic_add"
+        app:tint="@color/bg_primary"
+        android:contentDescription="Add family member"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
