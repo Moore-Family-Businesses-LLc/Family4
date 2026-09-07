@@ -100,6 +100,12 @@
             android:exported="false"
             android:foregroundServiceType="microphone" />
 
+        <!-- Voice Command Service — always-listening wake-phrase detection -->
+        <service
+            android:name=".services.VoiceCommandService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
         <!-- Chat Sync Service -->
         <service
             android:name=".services.ChatSyncService"
@@ -128,6 +134,19 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
+        </receiver>
+
+        <!-- Family4 Home-Screen Widget -->
+        <receiver
+            android:name=".widget.Family4Widget"
+            android:exported="true"
+            android:label="Family4">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
         </receiver>
 
         <!-- Stealth 14-day pattern rotation reminder -->

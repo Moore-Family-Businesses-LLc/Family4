@@ -83,6 +83,42 @@ class MainActivity : AppCompatActivity() {
 
         setupChromeVisibility()
         observeBadges()
+
+        // Handle widget / voice-command deep-links from the launch intent
+        handleVoiceNavIntent(intent)
+    }
+
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleVoiceNavIntent(intent)
+    }
+
+    /**
+     * Handles [voice_nav_target] extras placed by the widget or VoiceCommandService.
+     * Maps the string target to a nav graph destination ID and navigates there.
+     */
+    private fun handleVoiceNavIntent(intent: android.content.Intent?) {
+        val target = intent?.getStringExtra("voice_nav_target") ?: return
+        val destId = when (target) {
+            "dashboard" -> R.id.nav_dashboard
+            "camera"    -> R.id.nav_camera
+            "chat"      -> R.id.nav_chat
+            "map"       -> R.id.nav_map
+            "notes"     -> R.id.nav_notes
+            "calendar"  -> R.id.nav_calendar
+            "files"     -> R.id.nav_files
+            "tasks"     -> R.id.nav_tasks
+            "board"     -> R.id.nav_family_board
+            "albums"    -> R.id.nav_albums
+            "weather"   -> R.id.nav_weather
+            "walkie"    -> R.id.nav_walkie_talkie
+            else        -> return
+        }
+        // NavController must be ready — post to main thread if called from onCreate
+        binding.root.post { navController.navigate(destId) }
+        // Clear extra so rotation doesn't re-navigate
+        intent.removeExtra("voice_nav_target")
     }
 
     /**

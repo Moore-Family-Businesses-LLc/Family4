@@ -53,6 +53,11 @@ class NotesAdapter(
                 else binding.root.context.getColor(R.color.note_default)
             binding.cardNote.setCardBackgroundColor(noteColor)
 
+            // Accent strip — use note color if set, otherwise default cyan
+            val stripColor = if (note.color != 0) note.color
+                else binding.root.context.getColor(R.color.accent_cyan)
+            binding.noteColorStrip.setBackgroundColor(stripColor)
+
             // Pin icon
             binding.ivPin.visibility = if (note.isPinned) View.VISIBLE else View.GONE
 

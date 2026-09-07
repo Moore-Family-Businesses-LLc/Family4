@@ -46,6 +46,7 @@ class CalendarFragment : Fragment() {
         0xFFFF8800.toInt(), 0xFF7B2FFF.toInt(), 0xFFFF69B4.toInt(),
         0xFF00D4FF.toInt()
     )
+    // selectedEventColor is used only as a local var inside showAddEventDialog — do not use this field directly
     private var selectedEventColor = eventColors[0]
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved: Bundle?): View {
@@ -155,7 +156,8 @@ class CalendarFragment : Fragment() {
 
     // ── Add event dialog ──────────────────────────────────────────────────────
     private fun showAddEventDialog(forDate: Calendar = Calendar.getInstance()) {
-        selectedEventColor = eventColors[0]
+        // Use a local array-boxed var so the positive-button lambda always reads the most-recent value
+        val pickedColor = intArrayOf(eventColors[0])
         dialogDate = forDate.clone() as Calendar
         dialogStartHour   = 9;  dialogStartMinute   = 0
         dialogEndHour     = 10; dialogEndMinute     = 0
@@ -216,7 +218,8 @@ class CalendarFragment : Fragment() {
             }, dialogEndHour, dialogEndMinute, true).show()
         }
 
-        // Color swatches
+        // Color swatches — pickedColor[0] is an array so the positive-button lambda
+        // always captures the live value regardless of Kotlin's closure rules
         eventColors.forEach { color ->
             val swatch = android.view.View(requireContext()).apply {
                 layoutParams = LinearLayout.LayoutParams(
@@ -227,11 +230,11 @@ class CalendarFragment : Fragment() {
                 circle.shape = android.graphics.drawable.GradientDrawable.OVAL
                 circle.setColor(color)
                 background = circle
-                if (color == selectedEventColor) {
+                if (color == pickedColor[0]) {
                     scaleX = 1.25f; scaleY = 1.25f
                 }
                 setOnClickListener {
-                    selectedEventColor = color
+                    pickedColor[0] = color
                     colorRow.children.forEach { v -> v.scaleX = 1f; v.scaleY = 1f }
                     scaleX = 1.25f; scaleY = 1.25f
                 }
@@ -259,7 +262,7 @@ class CalendarFragment : Fragment() {
                     description = desc,
                     location    = location,
                     allDay      = allDay,
-                    color       = selectedEventColor,
+                    color       = pickedColor[0],
                     date        = dialogDate,
                     startHour   = if (allDay) 0 else dialogStartHour,
                     startMinute = if (allDay) 0 else dialogStartMinute,

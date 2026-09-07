@@ -99,6 +99,10 @@ class SettingsViewModel @Inject constructor(
         .map { it[KEY_LOCATION_INTERVAL] ?: 60 }
         .stateIn(viewModelScope, SharingStarted.Eagerly, 60)
 
+    val voiceActivationEnabled: StateFlow<Boolean> = ds.data
+        .map { it[SettingsKeys.VOICE_ACTIVATION] ?: false }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
     // ── Setters ──────────────────────────────────────────────────────────────
 
     fun setNotifications(enabled: Boolean)    = setPref(KEY_NOTIFICATIONS, enabled)
@@ -107,6 +111,7 @@ class SettingsViewModel @Inject constructor(
     fun setDriveBackup(enabled: Boolean)      = setPref(KEY_DRIVE_BACKUP, enabled)
     fun setSosAutoCall(enabled: Boolean)      = setPref(KEY_SOS_AUTO_CALL, enabled)
     fun setAppPinEnabled(enabled: Boolean)    = setPref(KEY_APP_PIN_ENABLED, enabled)
+    fun setVoiceActivation(enabled: Boolean)  = setPref(SettingsKeys.VOICE_ACTIVATION, enabled)
 
     fun setTemperatureUnit(unit: String) = viewModelScope.launch {
         ds.edit { it[KEY_TEMP_UNIT] = if (unit == "C") "C" else "F" }

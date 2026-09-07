@@ -2,6 +2,7 @@ package com.family4.app.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Build
 import android.provider.Settings
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.family4.app.BuildConfig
 import com.family4.app.databinding.FragmentSettingsBinding
+import com.family4.app.services.VoiceCommandService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -106,6 +108,11 @@ class SettingsFragment : Fragment() {
                 binding.tvWalkieChNum.text = ch.toString()
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.voiceActivationEnabled.collectLatest { on ->
+                binding.switchVoiceActivation.isChecked = on
+            }
+        }
     }
 
     // ── Switches ──────────────────────────────────────────────────────────────
@@ -118,6 +125,21 @@ class SettingsFragment : Fragment() {
         binding.switchAppPin.setOnCheckedChangeListener { _, on ->
             viewModel.setAppPinEnabled(on)
             if (on) showSetPinDialog()
+        }
+        binding.switchVoiceActivation.setOnCheckedChangeListener { _, on ->
+            viewModel.setVoiceActivation(on)
+            val intent = Intent(requireContext(), VoiceCommandService::class.java).apply {
+                action = if (on) VoiceCommandService.ACTION_START else VoiceCommandService.ACTION_STOP
+            }
+            if (on) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    requireContext().startForegroundService(intent)
+                } else {
+                    requireContext().startService(intent)
+                }
+            } else {
+                requireContext().startService(intent)
+            }
         }
     }
 
