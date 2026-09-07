@@ -118,7 +118,44 @@
         android:id="@+id/nav_albums"
         android:name="com.family4.app.ui.albums.AlbumsFragment"
         android:label="@string/nav_albums"
-        tools:layout="@layout/fragment_albums"/>
+        tools:layout="@layout/fragment_albums">
+        <action
+            android:id="@+id/action_albums_to_album_detail"
+            app:destination="@id/nav_album_detail"/>
+    </fragment>
+
+    <!-- ── Album Detail (photo grid) ── -->
+    <fragment
+        android:id="@+id/nav_album_detail"
+        android:name="com.family4.app.ui.albums.AlbumDetailFragment"
+        android:label="Album"
+        tools:layout="@layout/fragment_album_detail">
+        <argument
+            android:name="albumId"
+            app:argType="long"/>
+        <argument
+            android:name="albumName"
+            app:argType="string"
+            android:defaultValue="Album"/>
+        <action
+            android:id="@+id/action_album_detail_to_photo_viewer"
+            app:destination="@id/nav_photo_viewer"/>
+    </fragment>
+
+    <!-- ── Photo Viewer (full-screen) ── -->
+    <fragment
+        android:id="@+id/nav_photo_viewer"
+        android:name="com.family4.app.ui.albums.PhotoViewerFragment"
+        android:label="Photo"
+        tools:layout="@layout/fragment_photo_viewer">
+        <argument
+            android:name="albumId"
+            app:argType="long"/>
+        <argument
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
 
     <!-- ── Weather ── -->
     <fragment

@@ -78,7 +78,8 @@ class MainActivity : AppCompatActivity() {
         R.id.nav_camera,
         R.id.nav_chat_detail,
         R.id.nav_note_detail,
-        R.id.nav_walkie_talkie
+        R.id.nav_walkie_talkie,
+        R.id.nav_photo_viewer
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

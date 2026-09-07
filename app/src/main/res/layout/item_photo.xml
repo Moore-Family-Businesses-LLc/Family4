@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Single photo cell in the album grid -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_elevated">
+
+    <ImageView
+        android:id="@+id/ivPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="Photo"/>
+
+    <!-- Selected overlay -->
+    <View
+        android:id="@+id/selectionOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#667B2FFF"
+        android:visibility="gone"/>
+
+    <!-- Selection check badge -->
+    <ImageView
+        android:id="@+id/ivCheck"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="6dp"
+        android:src="@drawable/ic_tick_double"
+        app:tint="@android:color/white"
+        android:visibility="gone"
+        xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+</FrameLayout>

@@ -1,0 +1,100 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "fresh-main", "main" ]
+  pull_request:
+    branches: [ "fresh-main", "main" ]
+
+jobs:
+  build:
+    name: Build & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Checkout ────────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Java ────────────────────────────────────────────────────────────────
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+          cache: gradle
+
+      # ── Gradle wrapper permission (Linux) ───────────────────────────────────
+      - name: Grant Gradle execute permission
+        run: chmod +x gradlew
+
+      # ── Stub secrets so the build config fields compile ─────────────────────
+      # Real keys must be added as repository secrets for a release build.
+      - name: Write local.properties stubs
+        run: |
+          cat > local.properties <<'EOF'
+          sdk.dir=/usr/local/lib/android/sdk
+          MAPS_API_KEY=stub
+          GEMINI_API_KEY=stub
+          WEATHER_API_KEY=stub
+          EOF
+
+      # ── Stub google-services.json ───────────────────────────────────────────
+      # The plugin requires the file to exist at configuration time.
+      # Replace this step with a secret-based download once a real Firebase
+      # project is set up.
+      - name: Write stub google-services.json
+        run: |
+          cat > app/google-services.json <<'EOF'
+          {
+            "project_info": {
+              "project_number": "000000000000",
+              "project_id":     "family4-stub",
+              "storage_bucket": "family4-stub.appspot.com"
+            },
+            "client": [{
+              "client_info": {
+                "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+                "android_client_info": { "package_name": "com.family4.app" }
+              },
+              "oauth_client":      [],
+              "api_key":           [{ "current_key": "stub" }],
+              "services": {
+                "appinvite_service": { "other_platform_oauth_client": [] }
+              }
+            }],
+            "configuration_version": "1"
+          }
+          EOF
+
+      # ── Lint ────────────────────────────────────────────────────────────────
+      - name: Run Android Lint
+        run: ./gradlew lintDebug --no-daemon --stacktrace
+        continue-on-error: true   # lint findings are reported but don't fail the build
+
+      # ── Upload lint report ───────────────────────────────────────────────────
+      - name: Upload lint report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-results
+          path: app/build/reports/lint-results-debug.html
+          retention-days: 14
+
+      # ── Debug APK ───────────────────────────────────────────────────────────
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      # ── Upload APK artifact ─────────────────────────────────────────────────
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: family4-debug-${{ github.run_number }}
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      # ── Build summary ────────────────────────────────────────────────────────
+      - name: Print APK size
+        run: |
+          SIZE=$(stat -c%s app/build/outputs/apk/debug/app-debug.apk 2>/dev/null || stat -f%z app/build/outputs/apk/debug/app-debug.apk)
+          echo "### ✅ Debug APK — $(( SIZE / 1024 / 1024 )) MB" >> $GITHUB_STEP_SUMMARY

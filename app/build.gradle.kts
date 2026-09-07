@@ -56,14 +56,34 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val ksPath   = localProp("KEYSTORE_PATH")
+            val ksPass   = localProp("KEYSTORE_PASSWORD")
+            val keyAlias = localProp("KEY_ALIAS")
+            val keyPass  = localProp("KEY_PASSWORD")
+            if (ksPath.isNotEmpty()) {
+                storeFile     = file(ksPath)
+                storePassword = ksPass
+                this.keyAlias = keyAlias
+                keyPassword   = keyPass
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled   = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Signing applied when KEYSTORE_PATH is set in local.properties or CI.
+            val ksPath = localProp("KEYSTORE_PATH")
+            if (ksPath.isNotEmpty()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         debug {
             isDebuggable = true

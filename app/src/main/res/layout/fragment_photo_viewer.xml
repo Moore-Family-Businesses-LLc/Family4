@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Full-screen photo viewer — black background, photo centred -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF000000">
+
+    <!-- The photo itself — pan/zoom handled in code via Matrix -->
+    <ImageView
+        android:id="@+id/ivFullPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:contentDescription="Full-screen photo"/>
+
+    <!-- Top toolbar: back + delete -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
+        android:background="#AA000000">
+
+        <ImageButton
+            android:id="@+id/btnPhotoBack"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/ic_chevron_left"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:tint="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/tvPhotoTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <ImageButton
+            android:id="@+id/btnPhotoDelete"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/ic_delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Delete photo"
+            android:tint="@color/error_red"/>
+
+    </LinearLayout>
+
+    <!-- Bottom: photo position indicator -->
+    <TextView
+        android:id="@+id/tvPhotoIndex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:text="1 / 1"
+        android:textColor="#AAFFFFFF"
+        android:textSize="12sp"
+        android:background="#55000000"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"/>
+
+</FrameLayout>
