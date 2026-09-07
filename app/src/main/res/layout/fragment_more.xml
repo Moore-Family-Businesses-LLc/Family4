@@ -114,6 +114,77 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Parent Zone — full-width prominent card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardParentZone"
+                style="@style/Widget.Family4.Card"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:layout_columnSpan="2"
+                app:cardBackgroundColor="#1A7B2FFF"
+                android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <TextView android:text="🛡️" android:textSize="28sp" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginEnd="12dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:text="Parent Zone" android:textSize="16sp"
+                            android:textStyle="bold" android:textColor="@color/text_primary"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                        <TextView android:text="Kids metrics · screen time · stealth mode"
+                            android:textSize="11sp" android:textColor="@color/accent_purple"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <TextView android:text="→" android:textSize="20sp" android:textColor="@color/accent_purple"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Chores -->
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardChores"
+                style="@style/Widget.Family4.Card" android:layout_width="0dp"
+                android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="🧹" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Chores" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Polls -->
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardPolls"
+                style="@style/Widget.Family4.Card" android:layout_width="0dp"
+                android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="📊" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Polls" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Shopping -->
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardShopping"
+                style="@style/Widget.Family4.Card" android:layout_width="0dp"
+                android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="🛒" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Shopping" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Bedtime -->
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardBedtime"
+                style="@style/Widget.Family4.Card" android:layout_width="0dp"
+                android:layout_height="100dp" app:layout_columnWeight="1" android:layout_margin="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center" android:padding="12dp">
+                    <TextView android:text="🌙" android:textSize="28sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Bedtime" android:textSize="13sp" android:textColor="@color/text_primary" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <!-- AI Assistant — full-width highlight card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAi"

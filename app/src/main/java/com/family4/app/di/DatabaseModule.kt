@@ -31,4 +31,12 @@ object DatabaseModule {
     @Provides fun provideHealthDao(db: Family4Database): HealthDao = db.healthDao()
     @Provides fun provideAlbumDao(db: Family4Database): AlbumDao = db.albumDao()
     @Provides fun provideBoardDao(db: Family4Database): BoardDao = db.boardDao()
+    // ── v4 DAOs ──
+    @Provides fun provideScreenTimeDao(db: Family4Database): ScreenTimeDao = db.screenTimeDao()
+    @Provides fun provideKidEventDao(db: Family4Database): KidEventDao = db.kidEventDao()
+    @Provides fun provideSafeZoneDao(db: Family4Database): SafeZoneDao = db.safeZoneDao()
+    @Provides fun provideChoreDao(db: Family4Database): ChoreDao = db.choreDao()
+    @Provides fun providePollDao(db: Family4Database): PollDao = db.pollDao()
+    @Provides fun provideShoppingDao(db: Family4Database): ShoppingDao = db.shoppingDao()
+    @Provides fun provideBedtimeDao(db: Family4Database): BedtimeDao = db.bedtimeDao()
 }

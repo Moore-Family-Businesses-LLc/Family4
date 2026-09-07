@@ -155,4 +155,39 @@
         android:label="@string/nav_board"
         tools:layout="@layout/fragment_family_board"/>
 
+    <!-- ── Parent Zone ── -->
+    <fragment
+        android:id="@+id/nav_parent_dashboard"
+        android:name="com.family4.app.ui.parent.ParentDashboardFragment"
+        android:label="Parent Zone"
+        tools:layout="@layout/fragment_parent_dashboard"/>
+
+    <!-- ── Family Chores ── -->
+    <fragment
+        android:id="@+id/nav_chores"
+        android:name="com.family4.app.ui.chores.ChoresFragment"
+        android:label="Chores"
+        tools:layout="@layout/fragment_chores"/>
+
+    <!-- ── Family Polls ── -->
+    <fragment
+        android:id="@+id/nav_polls"
+        android:name="com.family4.app.ui.polls.FamilyPollFragment"
+        android:label="Family Polls"
+        tools:layout="@layout/fragment_family_poll"/>
+
+    <!-- ── Shopping List ── -->
+    <fragment
+        android:id="@+id/nav_shopping"
+        android:name="com.family4.app.ui.shopping.ShoppingFragment"
+        android:label="Shopping List"
+        tools:layout="@layout/fragment_shopping"/>
+
+    <!-- ── Bedtime Alerts ── -->
+    <fragment
+        android:id="@+id/nav_bedtime"
+        android:name="com.family4.app.ui.bedtime.BedtimeFragment"
+        android:label="Bedtime Alerts"
+        tools:layout="@layout/fragment_bedtime"/>
+
 </navigation>

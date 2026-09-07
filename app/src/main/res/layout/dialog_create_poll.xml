@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="16dp">
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:hint="Question" android:layout_marginBottom="12dp">
+        <com.google.android.material.textfield.TextInputEditText android:id="@+id/etPollQuestion"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView android:text="Options (add at least 2):" android:textSize="13sp"
+        android:textColor="@color/text_muted" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginBottom="8dp"/>
+    <com.google.android.material.chip.ChipGroup android:id="@+id/cgPollOptions"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:hint="Add option" android:layout_marginEnd="8dp">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etPollOption"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnAddOption"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="+" android:textSize="18sp"
+            app:backgroundTint="@color/accent_cyan"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+    </LinearLayout>
+</LinearLayout>

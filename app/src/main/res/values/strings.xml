@@ -82,4 +82,30 @@
 
     <!-- About -->
     <string name="about_tagline">Stay close. Stay safe.</string>
+
+    <!-- Parent Zone / Stealth -->
+    <string name="parent_zone">Parent Zone</string>
+    <string name="stealth_mode">Stealth Mode</string>
+    <string name="stealth_hint">Hides the app behind a calculator. Reveal with your secret tap pattern.</string>
+    <string name="pattern_expired">⚠️ Pattern has expired — please update it for security</string>
+    <string name="set_pattern">Set Unlock Pattern</string>
+
+    <!-- Chores -->
+    <string name="nav_chores">Family Chores</string>
+    <string name="empty_chores">No chores yet — tap + to add one</string>
+
+    <!-- Polls -->
+    <string name="nav_polls">Family Polls</string>
+    <string name="empty_polls">No polls yet — tap + to create one</string>
+
+    <!-- Shopping -->
+    <string name="nav_shopping">Shopping List</string>
+    <string name="empty_shopping">List is empty — tap + to add items</string>
+
+    <!-- Bedtime -->
+    <string name="nav_bedtime">Bedtime Alerts</string>
+
+    <!-- Map -->
+    <string name="map_safe_zone_added">Safe zone added</string>
+    <string name="map_no_zones">No safe zones yet. Long-press the map to add one.</string>
 </resources>

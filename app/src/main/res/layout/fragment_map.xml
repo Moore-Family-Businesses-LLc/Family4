@@ -25,59 +25,73 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnMapType">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:paddingHorizontal="14dp">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_search"
-                app:tint="@color/text_muted"
-                android:contentDescription="Search"
-                android:layout_marginEnd="8dp"/>
-
-            <EditText
-                android:id="@+id/etMapSearch"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="Search address…"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_muted"
-                android:textSize="14sp"
-                android:background="@null"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLines="1"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                android:src="@drawable/ic_search" app:tint="@color/text_muted"
+                android:contentDescription="Search" android:layout_marginEnd="8dp"/>
+            <EditText android:id="@+id/etMapSearch"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1" android:hint="Search address…"
+                android:textColor="@color/text_primary" android:textColorHint="@color/text_muted"
+                android:textSize="14sp" android:background="@null"
+                android:imeOptions="actionSearch" android:inputType="text" android:maxLines="1"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Map type toggle button -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/btnMapType"
-        app:cardBackgroundColor="@color/bg_surface"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="24dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+    <!-- Map type toggle -->
+    <com.google.android.material.card.MaterialCardView android:id="@+id/btnMapType"
+        app:cardBackgroundColor="@color/bg_surface" app:cardElevation="8dp"
+        app:cardCornerRadius="24dp" android:layout_width="48dp" android:layout_height="48dp"
         android:layout_margin="12dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent">
+        <ImageView android:id="@+id/ivMapType" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:src="@drawable/ic_location"
+            android:padding="12dp" app:tint="@color/accent_cyan" android:contentDescription="Map type"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Action toolbar row: trails, follow, zones -->
+    <LinearLayout
+        android:id="@+id/mapToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/searchCard"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/ivMapType"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_location"
-            android:padding="12dp"
-            app:tint="@color/accent_cyan"
-            android:contentDescription="Map type"/>
-    </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnToggleTrails"
+            app:cardBackgroundColor="@color/bg_surface" app:cardCornerRadius="20dp"
+            android:layout_width="40dp" android:layout_height="40dp" android:layout_marginEnd="6dp">
+            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                android:text="〰" android:textSize="18sp" android:gravity="center"
+                android:textColor="@color/accent_cyan" android:contentDescription="Toggle trails"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnToggleFollow"
+            app:cardBackgroundColor="@color/bg_surface" app:cardCornerRadius="20dp"
+            android:layout_width="40dp" android:layout_height="40dp" android:layout_marginEnd="6dp">
+            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                android:text="🎯" android:textSize="18sp" android:gravity="center"
+                android:contentDescription="Follow mode"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnManageZones"
+            app:cardBackgroundColor="@color/bg_surface" app:cardCornerRadius="20dp"
+            android:layout_width="40dp" android:layout_height="40dp">
+            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                android:text="🛡" android:textSize="18sp" android:gravity="center"
+                android:contentDescription="Safe zones"/>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
     <!-- Family members strip -->
     <HorizontalScrollView
@@ -86,7 +100,7 @@
         android:layout_height="wrap_content"
         android:scrollbars="none"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/searchCard">
+        app:layout_constraintTop_toBottomOf="@id/mapToolbar">
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupMembers"
             android:layout_width="wrap_content"
@@ -96,63 +110,40 @@
             app:singleLine="true"/>
     </HorizontalScrollView>
 
-    <!-- Member info card (shown when a member chip is tapped) -->
+    <!-- Member info card -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/memberInfoCard"
-        app:cardBackgroundColor="@color/bg_surface"
-        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/bg_surface" app:cardElevation="12dp"
         app:cardCornerRadius="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:visibility="gone"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_margin="12dp" android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/fabRow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tvMemberName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/accent_cyan"/>
-
-            <TextView
-                android:id="@+id/tvMemberStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textColor="@color/text_secondary"
-                android:layout_marginTop="2dp"/>
-
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
+            <TextView android:id="@+id/tvMemberName"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="16sp" android:textStyle="bold" android:textColor="@color/accent_cyan"/>
+            <TextView android:id="@+id/tvMemberStatus"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="13sp" android:textColor="@color/text_secondary" android:layout_marginTop="2dp"/>
+            <TextView android:id="@+id/tvMemberSpeed"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="12sp" android:textColor="@color/accent_cyan"
+                android:layout_marginTop="2dp" android:visibility="gone"/>
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
                 android:layout_marginTop="8dp">
-
-                <TextView
-                    android:id="@+id/tvMemberLastSeen"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                <TextView android:id="@+id/tvMemberLastSeen"
+                    android:layout_width="0dp" android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:textColor="@color/text_muted"/>
-
-                <TextView
-                    android:id="@+id/tvMemberBattery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:textColor="@color/text_muted"/>
+                    android:textSize="11sp" android:textColor="@color/text_muted"/>
+                <TextView android:id="@+id/tvMemberBattery"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textSize="11sp" android:textColor="@color/text_muted"/>
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -160,47 +151,32 @@
     <!-- FAB row: zoom controls + my location -->
     <LinearLayout
         android:id="@+id/fabRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="72dp"
+        android:layout_margin="16dp" android:layout_marginBottom="72dp"
         android:spacing="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Zoom In -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabZoomIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:fabSize="mini"
-            app:backgroundTint="@color/bg_surface"
-            android:src="@drawable/ic_add"
-            app:tint="@color/text_primary"
+            android:id="@+id/fabZoomIn" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginBottom="8dp"
+            app:fabSize="mini" app:backgroundTint="@color/bg_surface"
+            android:src="@drawable/ic_add" app:tint="@color/text_primary"
             android:contentDescription="Zoom in"/>
 
-        <!-- Zoom Out -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabZoomOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:fabSize="mini"
-            app:backgroundTint="@color/bg_surface"
-            android:src="@drawable/ic_stop"
-            app:tint="@color/text_primary"
+            android:id="@+id/fabZoomOut" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginBottom="8dp"
+            app:fabSize="mini" app:backgroundTint="@color/bg_surface"
+            android:src="@drawable/ic_stop" app:tint="@color/text_primary"
             android:contentDescription="Zoom out"/>
 
-        <!-- My Location -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabMyLocation"
-            android:layout_width="wrap_content"
+            android:id="@+id/fabMyLocation" android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/accent_cyan"
-            android:src="@drawable/ic_my_location"
-            app:tint="@color/bg_primary"
+            android:src="@drawable/ic_my_location" app:tint="@color/bg_primary"
             android:contentDescription="My Location"/>
     </LinearLayout>
 

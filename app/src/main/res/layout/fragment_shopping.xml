@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/bg_primary">
+    <com.family4.app.ui.common.SectionHeaderView
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:headerTitle="Shopping List"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:padding="8dp" android:gravity="center_vertical">
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnClearChecked"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Clear checked" android:textSize="12sp"
+            app:backgroundTint="@color/bg_elevated" android:enabled="false"/>
+    </LinearLayout>
+    <TextView android:id="@+id/tvEmptyShopping" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="List is empty — tap + to add items"
+        android:textSize="13sp" android:textColor="@color/text_muted"
+        android:gravity="center" android:padding="32dp" android:visibility="gone"/>
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvShopping"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:padding="8dp" android:clipToPadding="false"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddItem" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_gravity="bottom|end"
+        android:layout_margin="16dp" android:src="@drawable/ic_add"
+        app:backgroundTint="@color/accent_cyan" app:tint="@color/bg_primary"
+        android:contentDescription="Add item"/>
+</LinearLayout>

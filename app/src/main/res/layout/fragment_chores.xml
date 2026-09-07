@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <com.family4.app.ui.common.SectionHeaderView
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:headerTitle="Family Chores"/>
+
+    <!-- Leaderboard card -->
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Family4.Card.Glass"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_margin="12dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="12dp">
+            <TextView android:text="🏆  LEADERBOARD" android:textAppearance="@style/TextAppearance.Family4.Label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="6dp"/>
+            <TextView android:id="@+id/tvLeaderboard" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:textSize="13sp"
+                android:textColor="@color/text_secondary" android:lineSpacingMultiplier="1.6"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView android:text="ACTIVE CHORES" android:textAppearance="@style/TextAppearance.Family4.Label"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginStart="16dp" android:layout_marginBottom="4dp"/>
+
+    <TextView android:id="@+id/tvEmptyChores" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="No chores yet — tap + to add one"
+        android:textSize="13sp" android:textColor="@color/text_muted"
+        android:gravity="center" android:padding="24dp" android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvChores"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:padding="8dp" android:clipToPadding="false"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddChore" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_gravity="bottom|end"
+        android:layout_margin="16dp" android:src="@drawable/ic_add"
+        app:backgroundTint="@color/accent_cyan" app:tint="@color/bg_primary"
+        android:contentDescription="Add Chore"/>
+</LinearLayout>

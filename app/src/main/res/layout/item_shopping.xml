@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:gravity="center_vertical"
+    android:paddingHorizontal="12dp" android:paddingVertical="10dp"
+    android:background="?attr/selectableItemBackground">
+    <CheckBox android:id="@+id/cbShoppingItem" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginEnd="10dp"
+        android:buttonTint="@color/accent_cyan"/>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+        android:layout_weight="1" android:orientation="vertical">
+        <TextView android:id="@+id/tvShoppingItemName" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textSize="15sp"
+            android:textColor="@color/text_primary"/>
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:id="@+id/tvShoppingQty" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="11sp"
+                android:textColor="@color/accent_cyan" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/tvShoppingCategory" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="11sp"
+                android:textColor="@color/text_muted"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView android:id="@+id/btnDeleteShoppingItem" android:layout_width="36dp"
+        android:layout_height="36dp" android:text="✕" android:textSize="14sp"
+        android:gravity="center" android:textColor="@color/error_red"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+</LinearLayout>

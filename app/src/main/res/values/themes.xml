@@ -141,4 +141,24 @@
         <item name="cardCornerRadius">20dp</item>
     </style>
 
+    <!-- ── Calculator button styles (stealth mode) ───────────────────────── -->
+    <style name="CalcBtnNum" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="backgroundTint">#FF2C2C2E</item>
+        <item name="cornerRadius">36dp</item>
+    </style>
+    <style name="CalcBtnFunc" parent="CalcBtnNum">
+        <item name="backgroundTint">#FF636366</item>
+        <item name="android:textColor">#FF000000</item>
+    </style>
+    <style name="CalcBtnOp" parent="CalcBtnNum">
+        <item name="backgroundTint">#FFFF9F0A</item>
+        <item name="android:textColor">#FF000000</item>
+    </style>
+    <style name="CalcBtnEq" parent="CalcBtnOp"/>
+
 </resources>

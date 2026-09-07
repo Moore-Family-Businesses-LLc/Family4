@@ -114,6 +114,13 @@
             </intent-filter>
         </service>
 
+        <!-- Stealth Calculator Activity (disguise for invisible mode) -->
+        <activity
+            android:name=".ui.stealth.StealthCalculatorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Family4.NoActionBar"
+            android:screenOrientation="portrait"/>
+
         <!-- Boot Receiver -->
         <receiver
             android:name=".receivers.BootReceiver"
@@ -122,6 +129,11 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <!-- Stealth 14-day pattern rotation reminder -->
+        <receiver
+            android:name=".security.StealthRotationReceiver"
+            android:exported="false"/>
 
         <!-- Maps API Key -->
         <meta-data

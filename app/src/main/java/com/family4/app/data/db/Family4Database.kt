@@ -19,9 +19,17 @@ import com.family4.app.data.db.entity.*
         HealthRecordEntity::class,
         PhotoAlbumEntity::class,
         PhotoEntity::class,
-        BoardPostEntity::class
+        BoardPostEntity::class,
+        // ── v4 additions ──
+        ScreenTimeEntity::class,
+        KidEventEntity::class,
+        SafeZoneEntity::class,
+        ChoreEntity::class,
+        PollEntity::class,
+        ShoppingItemEntity::class,
+        BedtimeAlertEntity::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -35,4 +43,12 @@ abstract class Family4Database : RoomDatabase() {
     abstract fun healthDao(): HealthDao
     abstract fun albumDao(): AlbumDao
     abstract fun boardDao(): BoardDao
+    // ── v4 DAOs ──
+    abstract fun screenTimeDao(): ScreenTimeDao
+    abstract fun kidEventDao(): KidEventDao
+    abstract fun safeZoneDao(): SafeZoneDao
+    abstract fun choreDao(): ChoreDao
+    abstract fun pollDao(): PollDao
+    abstract fun shoppingDao(): ShoppingDao
+    abstract fun bedtimeDao(): BedtimeDao
 }
