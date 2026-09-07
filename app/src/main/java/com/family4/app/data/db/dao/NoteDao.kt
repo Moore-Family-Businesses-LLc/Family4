@@ -33,4 +33,7 @@ interface NoteDao {
 
     @Query("UPDATE notes SET isArchived = :archived WHERE id = :id")
     suspend fun setArchived(id: Long, archived: Boolean)
+
+    @Query("SELECT COUNT(*) FROM notes WHERE isArchived = 0")
+    suspend fun getNoteCount(): Int
 }

@@ -18,9 +18,10 @@ import com.family4.app.data.db.entity.*
         LocationSnapshotEntity::class,
         HealthRecordEntity::class,
         PhotoAlbumEntity::class,
-        PhotoEntity::class
+        PhotoEntity::class,
+        BoardPostEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -33,4 +34,5 @@ abstract class Family4Database : RoomDatabase() {
     abstract fun locationDao(): LocationDao
     abstract fun healthDao(): HealthDao
     abstract fun albumDao(): AlbumDao
+    abstract fun boardDao(): BoardDao
 }

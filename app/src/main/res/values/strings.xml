@@ -49,6 +49,10 @@
     <string name="nav_ai">FamilyBot AI</string>
     <string name="ai_greeting">Hi! I\'m FamilyBot. How can I help your family today?</string>
 
+    <!-- Family Board -->
+    <string name="nav_board">Family Board</string>
+    <string name="nav_backup">Drive Backup</string>
+
     <!-- General -->
     <string name="loading">Loading…</string>
     <string name="empty_state">Nothing here yet</string>

@@ -156,8 +156,10 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.glide.compiler)
 
-    // WorkManager
+    // WorkManager + Hilt-Work integration
     implementation(libs.workmanager)
+    implementation(libs.hilt.work)
+    kapt(libs.hilt.work.compiler)
 
     // Security
     implementation(libs.biometric)

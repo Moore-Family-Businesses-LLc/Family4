@@ -148,4 +148,11 @@
         android:label="@string/nav_ai"
         tools:layout="@layout/fragment_ai_assistant"/>
 
+    <!-- ── Family Board ── -->
+    <fragment
+        android:id="@+id/nav_family_board"
+        android:name="com.family4.app.ui.board.FamilyBoardFragment"
+        android:label="@string/nav_board"
+        tools:layout="@layout/fragment_family_board"/>
+
 </navigation>

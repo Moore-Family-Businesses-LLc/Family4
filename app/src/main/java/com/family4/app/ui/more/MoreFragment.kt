@@ -32,6 +32,13 @@ class MoreFragment : Fragment() {
         binding.cardFiles.setOnClickListener { findNavController().navigate(R.id.nav_files) }
         binding.cardSettings.setOnClickListener { findNavController().navigate(R.id.nav_settings) }
         binding.cardAi.setOnClickListener { findNavController().navigate(R.id.nav_ai_assistant) }
+        binding.cardBoard.setOnClickListener { findNavController().navigate(R.id.nav_family_board) }
+        binding.cardBackup.setOnClickListener {
+            com.family4.app.workers.DriveBackupWorker.schedule(requireContext())
+            com.google.android.material.snackbar.Snackbar
+                .make(binding.root, "Drive backup scheduled ✓", com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
+                .show()
+        }
     }
 
     override fun onDestroyView() {

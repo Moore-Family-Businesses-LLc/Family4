@@ -30,4 +30,5 @@ object DatabaseModule {
     @Provides fun provideLocationDao(db: Family4Database): LocationDao = db.locationDao()
     @Provides fun provideHealthDao(db: Family4Database): HealthDao = db.healthDao()
     @Provides fun provideAlbumDao(db: Family4Database): AlbumDao = db.albumDao()
+    @Provides fun provideBoardDao(db: Family4Database): BoardDao = db.boardDao()
 }
